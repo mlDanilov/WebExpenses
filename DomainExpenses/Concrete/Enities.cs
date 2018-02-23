@@ -8,7 +8,7 @@ using DomainExpenses.Abstract;
 
 namespace DomainExpenses.Concrete
 {
-    internal class Item : IItem
+    public class Item : IItem
     {
         public Item() { }
         public Item(int id_, int gId_)
@@ -32,7 +32,7 @@ namespace DomainExpenses.Concrete
     /// <summary>
     /// Группа товаров
     /// </summary>
-    internal class Group : IGroup
+    public class Group : IGroup
     {
         public Group() { }
         public Group(int id_)
@@ -54,7 +54,7 @@ namespace DomainExpenses.Concrete
         public string Name { get; set; }
     }
 
-    internal class GroupExt : IGroup
+    public class GroupExt : IGroup
     {
         public GroupExt() { }
         public GroupExt(int id_)
@@ -76,7 +76,7 @@ namespace DomainExpenses.Concrete
         public string Name { get; set; }
     }
 
-    internal class Shop : IShop
+    public class Shop : IShop
     {
         public Shop() { }
         public Shop(int id_)
@@ -97,7 +97,7 @@ namespace DomainExpenses.Concrete
         public string Address { get; set; }
     }
 
-    internal class Purchase : IPurchase
+    public class Purchase : IPurchase
     {
         public Purchase() { }
         public Purchase(int id_)
