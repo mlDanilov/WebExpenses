@@ -21,7 +21,7 @@ namespace WebExpenses.Controllers
             _repository = rep_;
         }
        
-        public ViewResult GroupsAndItems(int? gId_ = null)
+        public ViewResult GroupsAndItems()
         {
             //var groups = _repository.Group.ToList();
             //var groups = _repository.Group.ToList();
@@ -30,13 +30,13 @@ namespace WebExpenses.Controllers
 
             var gListView = new MGroupList()
             {
-                GroupId = gId_,
+                GroupId = _repository.CurrentGId,
                 GroupList = groups
             };
             return View(gListView);
         }
 
-        public PartialViewResult Items(int? gId_ = null)
+       /* public PartialViewResult Items(int gId_)
         {
             var itView = new MItemList();
             itView.GroupId = gId_;
@@ -53,12 +53,33 @@ namespace WebExpenses.Controllers
 
             return PartialView(itView);
         }
+        */
+        public PartialViewResult Items()
+        {
+            int? gId = _repository.CurrentGId;
+            var itView = new MItemList();
+            itView.GroupId = gId;
+            if (gId != null)
+            {
+
+                //var iList = _repository.Item.ToList();
+                itView.ItemList = _repository.Item
+                    .Where(it => (it.GId == gId))
+                    .OrderBy(it => it.Name).ToList();
+            }
+            else
+                itView.ItemList = new List<IItem>();
+
+            return PartialView(itView);
+        }
 
         public PartialViewResult Groups(MGroupList gListView_)
         {
             
             return PartialView(gListView_);
         }
+
+
         public PartialViewResult GroupDropDownList(int gId_, string optionName_)
         {
             var gList = new MGroupList()
@@ -69,6 +90,12 @@ namespace WebExpenses.Controllers
             ViewData["OptionName"] = optionName_;
             return PartialView(gList);
 
+        }
+
+        public void SetCurrentGId(int gId_)
+        {
+            // _repository.SetCurrentGId(gId_);
+            _repository.CurrentGId = gId_;
         }
 
         #region CreateEditDeleteItem
@@ -115,13 +142,14 @@ namespace WebExpenses.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteItemCard(int id_)
+        public PartialViewResult DeleteItemCard(int id_)
         {
             var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
             if (item == null)
                 return Items();
+            _repository.CurrentGId = item.GId;
             _repository.DeleteItem(id_);
-            return Items(item.GId);
+            return Items();
             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
 
@@ -142,9 +170,10 @@ namespace WebExpenses.Controllers
             return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
 
-        public ViewResult EditGroup(int id_)
+        public ViewResult EditGroup()
         {
-            var group = _repository.Group.Where(it => it.Id == id_).FirstOrDefault();
+            int? id = _repository.CurrentGId;
+            var group = _repository.Group.Where(it => it.Id == id).FirstOrDefault();
             var gView = new MGroupCard(group);
             ViewData["Head"] = "Редактировать";
             return View("GroupCard", gView);
@@ -164,9 +193,13 @@ namespace WebExpenses.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteGroup(int id_)
+        public ActionResult DeleteGroup()
         {
-            var item = _repository.DeleteGroup(id_);
+            int? gId = _repository.CurrentGId;
+            if (gId != null)
+            {
+                _repository.DeleteGroup(gId.Value);
+            }
             return RedirectToAction("GroupsAndItems");
         }
 

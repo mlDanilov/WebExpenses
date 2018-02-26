@@ -123,7 +123,30 @@ namespace DomainExpenses.Moq
                    MockDbContext.Setup(m => m.GroupExt).Returns(_groupsExtList.AsQueryable());
                    return 1;
                });
+
+            //Текущая группа
+            MockDbContext.SetupGet(m => m.CurrentGId).Returns(
+                () =>
+                {
+                    return _currentGroup;
+                }
+                );
+            MockDbContext.SetupSet(m=>m.CurrentGId = It.IsAny<int?>()).Callback(
+                (int? gId_) => 
+                {
+                    _currentGroup = gId_;
+                    MockDbContext.SetupGet(m => m.CurrentGId).Returns(
+                      () =>
+                      {
+                          return _currentGroup;
+                      }
+                      );
+                });
+
+            
         }
+
+   
 
 
         public static MockBus Get()
@@ -177,6 +200,8 @@ namespace DomainExpenses.Moq
                 EntitiesFactory.Get().CreateGroup(3, 1, @"Мясо\Говядина"),
                 EntitiesFactory.Get().CreateGroup(4, 1, @"Остальное")
             };
+
+        private int? _currentGroup = null;
 
         public Mock<IExpensesRepository> MockDbContext { get; private set; }
 

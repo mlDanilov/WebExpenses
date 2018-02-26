@@ -1,6 +1,14 @@
 ﻿@using DomainExpenses.Abstract
 @using WebExpenses.Models
 @model MGroupList
+@{
+    AjaxOptions ajaxDeleteGroup = new AjaxOptions()
+    {
+        HttpMethod = "Post",
+         UpdateTargetId = "items",
+         Url="GroupsTable"
+    };
+}
 <div class="dTable">
     <table>
         <thead>
@@ -22,10 +30,10 @@
                         <th class="groupId">@Model.GroupList[i].Id</th>
                         <th class="groupName">@Model.GroupList[i].Name</th>
                         <th>
-                            @Html.ActionLink("Редактировать", "EditGroup", new { id_ = Model.GroupList[i].Id })
+                            @Html.ActionLink("Редактировать", "EditGroup")
                         </th>
                         <th>
-                            @Ajax.ActionLink("Удалить", "DeleteGroup", new { id_ = Model.GroupList[i].Id }, null)
+                            @Ajax.ActionLink("Удалить", "DeleteGroup", ajaxDeleteGroup)
                         </th>
                     </tr>
                 }
@@ -36,10 +44,11 @@
                         <th class="groupId">@Model.GroupList[i].Id</th>
                         <th class="groupName">@Model.GroupList[i].Name</th>
                         <th>
-                            @Html.ActionLink("Редактировать", "EditGroupCard", new { id_ = Model.GroupList[i].Id })
+                            @Html.ActionLink("Редактировать", "EditGroup")
                         </th>
                         <th>
-                            @Html.ActionLink("Удалить", "DeleteGroup", new { id_ = Model.GroupList[i].Id })
+                            
+                            @Ajax.ActionLink("Удалить", "DeleteGroup", ajaxDeleteGroup)
                         </th>
                     </tr>
                 }

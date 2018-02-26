@@ -25,6 +25,12 @@ namespace DomainExpenses.Abstract
         /// </summary>
         IQueryable<IShop> Shop { get; }
         /// <summary>
+        /// Текущая группа товаров
+        /// </summary>
+        /// <param name="gId_"></param>
+        int? CurrentGId { get; set; }
+
+        /// <summary>
         /// Добавить новый товар
         /// </summary>
         /// <param name="name_">Название</param>

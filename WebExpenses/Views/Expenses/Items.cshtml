@@ -2,10 +2,10 @@
 @using WebExpenses.Models;
 <script type="text/javascript">
     function OnSuccess(data) {
-        alert("Запрос был успешно выполнен:\n" + data);
+        alert("Запрос был успешно выполнен:\n" + data.toString());
     }
     function OnFailure(request, error) {
-        alert("Ошибка:\n" + error.toString());
+        alert("Ошибка:\n" + error.toString() + ' '+ request.toString() + ' ');
     }
 </script>
 @model MItemList

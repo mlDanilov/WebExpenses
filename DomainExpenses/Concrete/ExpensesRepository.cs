@@ -44,6 +44,10 @@ namespace DomainExpenses.Concrete
             }
         }
 
+        /// <summary>
+        /// Текущая группа товаров
+        /// </summary>
+        public int?  CurrentGId { get; set; }
 
         public IItem AddNewItem(string name_, int gId_) 
             => _context.AddNewItem(name_, gId_).Result;
@@ -73,6 +77,9 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">Код группы товаров</param>
         public int DeleteGroup(int id_)
             => _context.DeleteGroup(id_);
+
+        private int? _currentGId = null;
+
         private ExpensesDBContext _context = new ExpensesDBContext();
     }
 }
