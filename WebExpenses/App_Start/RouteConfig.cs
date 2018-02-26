@@ -15,8 +15,8 @@ namespace WebExpenses
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Expenses", action = "Items", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{gId_}",
+                defaults: new { controller = "Expenses", action = "Groups", gId_ = UrlParameter.Optional }
             );
         }
     }

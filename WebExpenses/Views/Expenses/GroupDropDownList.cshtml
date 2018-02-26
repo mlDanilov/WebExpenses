@@ -1,0 +1,16 @@
+﻿@model WebExpenses.Models.MGroupList
+
+<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]">
+    @foreach (var group in Model.GroupList)
+    {
+        if (Model.GroupId == group.Id)
+        {
+            <option value="@group.Id" selected>@group.Name</option>
+        }
+        else
+        {
+            <option value="@group.Id">@group.Name</option>
+        }
+
+    }
+</select>

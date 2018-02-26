@@ -1,0 +1,81 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models
+@model MGroupList
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Groups</title>
+    <link href="~/Content/groupsTable.css" rel="stylesheet" />
+    <link href="~/Content/itemsTable.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <h4>Таблица</h4>
+    </div>
+    <div id="groups">
+        @{
+            Html.RenderPartial("GroupsTable", Model);
+            //Html.RenderAction("Groups", "Expenses", Model);
+            //Html.Action("Groups", "Expenses", Model);
+        };
+    </div>
+    <form id="formItems" 
+          action="/Expenses/GroupsAndItems" 
+          data-ajax="true" 
+          data-ajax-mode="replace" 
+          data-ajax-update="#itemsTable" 
+          data-ajax-url="/Expenses/Items/"  
+          method="post"
+          >
+        <div id="items">
+            @{
+                Html.RenderAction("Items", new { gId_ = Model.GroupId });
+            }
+        </div>
+      
+    </form>
+    <script>
+        $(document).ready(function () {
+            var obj = $('div#groups tbody tr').click(
+                 function () {
+
+                     let gId = $(this)[0].getElementsByClassName('groupId')[0].textContent;
+                     //console.log('gId=' + gId);
+                     let trArray = $('div#groups tbody tr');
+                     for (let i = 0; i < trArray.length; i++)
+                     {
+                         let gId_item = trArray[i].getElementsByClassName('groupId')[0].textContent;
+                         trArray[i].removeAttribute('class')
+                         //console.log('gId_item='+gId_item);
+                         if (gId_item == gId) {
+                             trArray[i].setAttribute('class', 'current')
+                         }
+                         else {
+
+                         }
+                     }
+                     $.ajax({
+                         url: "/Expenses/Items",
+                         data: { gId_: gId },
+                         success: function (result)
+                         {
+                             $('#itemsTable')[0].innerHTML = result;
+                         },
+                         error: function ()
+                        {
+                             alert("Ошибка!");
+                         }
+                     });
+                 });
+        });
+    </script>
+</body>
+</html>

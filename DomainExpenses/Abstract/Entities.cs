@@ -16,7 +16,7 @@ namespace DomainExpenses.Abstract
         /// <summary>
         /// Код родительской группы
         /// </summary>
-        int GId { get; }
+        int GId { get; set; }
         /// <summary>
         /// Название
         /// </summary>
@@ -67,9 +67,9 @@ namespace DomainExpenses.Abstract
 
         int Item_Id { get; set; }
 
-        float Price { get; set; }
+        float price { get; set; }
 
-        float Count { get; set; }
+        float count { get; set; }
 
         DateTime Time { get; set; }
     }

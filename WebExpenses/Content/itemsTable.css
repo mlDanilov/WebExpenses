@@ -1,0 +1,45 @@
+﻿
+div#items {
+     float: left;
+      padding-right:  1em;
+}
+div#items table {
+    border-collapse:collapse;
+}
+div#items th {
+        
+    border: 1px solid black;
+    text-align:left;
+    padding: 5px;
+}
+
+div#items thead tr {
+    background:  #53290d;
+    border: 2px solid black;
+}
+
+div#items tfoot tr {
+    background:  #cc5959;
+    border: 2px solid black;
+    font:-moz-info;
+}
+   
+div#items.dTable {
+    border: 3px solid green;
+}
+div#items tbody tr {
+    text-align: left;
+}
+
+div#items tbody > tr:nth-child(n) {
+    background: #93d9a8;
+}
+div#items tbody > tr:nth-child(2n) {
+    background: #ead090;
+}
+div#items tbody tr.current {
+    background:  green;
+}
+div#items tbody tr:hover {
+    background:  gray;
+}

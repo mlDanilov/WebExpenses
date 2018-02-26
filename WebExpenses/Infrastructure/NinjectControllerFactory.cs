@@ -7,6 +7,7 @@ using System.Web.Routing;
 
 using DomainExpenses.Abstract;
 using DomainExpenses.Concrete;
+using DomainExpenses.Moq;
 
 using Ninject;
 
@@ -30,8 +31,12 @@ namespace WebExpenses.Infrastructure
 
         private void addBindings()
         {
-            _ninjectKernel.Bind<IExpensesRepository>().To<ExpensesRepository>();
+            //_ninjectKernel.Bind<IExpensesRepository>().To<ExpensesRepository>();
+            _ninjectKernel.Bind<IExpensesRepository>().ToConstant(MockBus.Get().MockDbContext.Object);
         }
+
+
+       
 
         private IKernel _ninjectKernel;
     }

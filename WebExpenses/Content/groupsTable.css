@@ -1,0 +1,42 @@
+﻿div#groups {
+    border-left: 2px solid green;
+    border-right: 2px solid green;
+    margin-left: 1px 2em;
+    padding-right:  1em;
+    
+    float:  left;
+}
+
+table {
+    border-collapse:collapse;
+    width: auto
+}
+th {
+        
+    border: 1px solid black;
+    text-align:left;
+    padding: 5px;
+}
+
+thead > tr {
+    background:  #53290d;
+}
+   
+.dTable {
+    border: 3px solid green;
+}
+
+tbody > tr:nth-child(n) {
+    background: #93d9a8;
+}
+tbody > tr:nth-child(2n) {
+    background: #ead090;
+}
+tbody tr.current {
+    background:  green;
+}
+tbody tr:hover {
+    background:  gray;
+}
+
+

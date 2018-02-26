@@ -1,17 +1,61 @@
-﻿
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models;
+<script type="text/javascript">
+    function OnSuccess(data) {
+        alert("Запрос был успешно выполнен:\n" + data);
+    }
+    function OnFailure(request, error) {
+        alert("Ошибка:\n" + error.toString());
+    }
+</script>
+@model MItemList
 @{
-   
+    AjaxOptions ajax = new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        UpdateTargetId = "itemsTable",
+        OnSuccess = "OnSuccess",
+        OnFailure = "OnFailure"
+    };
+
+
 }
+<table id="itemsTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Код</th>
+            <th>Товар</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="itemsTableBody">
+        @for (int i = 0; i < Model.ItemList.Count; i++)
+        {
+            <tr>
+                <th>@(i + 1).</th>
+                <th>@Model.ItemList[i].Id</th>
+                <th>@Model.ItemList[i].Name</th>
+                <th>
+                        @Html.ActionLink("Редактировать", "EditItemCard", new { id_ = Model.ItemList[i].Id })
+                </th>
+                <th>
+                       @Ajax.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id }, ajax)
+                </th>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>@Html.ActionLink("Добавить", "CreateItemCard", new { gId_ = Model.GroupId })</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+    
+   
+</table>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Items</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>

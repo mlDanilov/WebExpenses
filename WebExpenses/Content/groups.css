@@ -1,0 +1,37 @@
+﻿div#groups {
+    border-left: 2px solid green;
+    border-right: 2px solid green;
+    margin-left: 2px 9em;
+    padding: 1em;
+    float: left;
+
+}
+div#groups A {
+    font: bold 1.1em "Arial Narrow","Franklin Gothic Medium",Arial; 
+    display: block;
+    text-decoration: none; 
+    padding: .6em; 
+    color: Black;
+    border-bottom: 1px solid silver;
+}
+div#groups A.selected { 
+    background-color: #666; 
+    color: White; 
+}
+div#groups A:hover { 
+    background-color: #CCC; 
+}
+div#groups A.selected:hover {
+     background-color: #666; 
+}
+
+div.group h3 {
+    font-size: 1.3em;
+    margin: 0 0 .25em 0;
+}
+
+div.group h4 {
+    font-size: 1.1em;
+    margin: .4em 0 0 0;
+}
+
