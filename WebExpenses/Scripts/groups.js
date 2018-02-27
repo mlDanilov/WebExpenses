@@ -6,7 +6,8 @@
 //В случае успеха запроса выполняет обновление списка товаров(скрипт ajaxItems)
 function groupTBodyTrClick() {
 
-    let gId = $(this)[0].getElementsByClassName('groupId')[0].textContent;
+    //let gId = $(this)[0].getElementsByClassName('groupId')[0].textContent;
+    let gId = $(this)[0].parentElement.getElementsByClassName('groupId')[0].textContent;
     //console.log('gId=' + gId);
     let trArray = $('div#groups tbody tr');
     for (let i = 0; i < trArray.length; i++)
@@ -21,14 +22,25 @@ function groupTBodyTrClick() {
 
         }
     }
+    
     $.ajax({
         url: "/Expenses/SetCurrentGId",                      
         data: { gId_: gId },
         success: ajaxItems,
+        //success: ajaxItemsJSON,
         error: function () {
             alert('/Expenses/SetCurrentGId ошибка');
-        }
-    });
+        }});
                      
                    
+}
+
+function setCurrentGId()
+{
+    let gId = $(this)[0].parentElement.parentElement.getElementsByClassName('groupId')[0].textContent;
+    $.ajax({
+        url: "/Expenses/SetCurrentGId",
+        data: { gId_: gId },
+        async: false
+    })
 }

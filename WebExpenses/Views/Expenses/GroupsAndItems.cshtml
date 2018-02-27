@@ -14,11 +14,7 @@
 </div>
 <div id="items">
     @{
-        Html.RenderAction("Items");
+        Html.RenderAction("ItemsTable");
     }
 </div>
-<script>
-    $(document).ready(function () {
-        var obj = $('div#groups tbody tr').click(groupTBodyTrClick);
-    });
-</script>
+

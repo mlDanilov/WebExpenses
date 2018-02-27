@@ -35,26 +35,28 @@ namespace WebExpenses.Controllers
             };
             return View(gListView);
         }
+        
+      
 
-       /* public PartialViewResult Items(int gId_)
-        {
-            var itView = new MItemList();
-            itView.GroupId = gId_;
-            if (gId_ != null)
-            {
+        /* public PartialViewResult Items(int gId_)
+         {
+             var itView = new MItemList();
+             itView.GroupId = gId_;
+             if (gId_ != null)
+             {
 
-                //var iList = _repository.Item.ToList();
-                itView.ItemList = _repository.Item
-                    .Where(it => (it.GId == gId_))
-                    .OrderBy(it => it.Name).ToList();
-            }
-            else
-                itView.ItemList = new List<IItem>();
+                 //var iList = _repository.Item.ToList();
+                 itView.ItemList = _repository.Item
+                     .Where(it => (it.GId == gId_))
+                     .OrderBy(it => it.Name).ToList();
+             }
+             else
+                 itView.ItemList = new List<IItem>();
 
-            return PartialView(itView);
-        }
-        */
-        public PartialViewResult Items()
+             return PartialView(itView);
+         }
+         */
+        public PartialViewResult ItemsTable()
         {
             int? gId = _repository.CurrentGId;
             var itView = new MItemList();
@@ -72,6 +74,26 @@ namespace WebExpenses.Controllers
 
             return PartialView(itView);
         }
+
+        public JsonResult ItemsTableJSON()
+        {
+            int? gId = _repository.CurrentGId;
+            var itView = new MItemList();
+            itView.GroupId = gId;
+            if (gId != null)
+            {
+
+                //var iList = _repository.Item.ToList();
+                itView.ItemList = _repository.Item
+                    .Where(it => (it.GId == gId))
+                    .OrderBy(it => it.Name).ToList();
+            }
+            else
+                itView.ItemList = new List<IItem>();
+
+            return Json(itView, JsonRequestBehavior.AllowGet);
+        }
+
 
         public PartialViewResult Groups(MGroupList gListView_)
         {
@@ -92,10 +114,22 @@ namespace WebExpenses.Controllers
 
         }
 
+        public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
+        {
+            if ((gListView_ == null) || (gListView_.GroupList == null))
+                gListView_ = new MGroupList()
+                {
+                    GroupId = null,
+                    GroupList = _repository.GroupExt.Where(g => g.Id== 1).ToList()
+                };
+            return PartialView(gListView_);
+        }
+
         public void SetCurrentGId(int gId_)
         {
             // _repository.SetCurrentGId(gId_);
             _repository.CurrentGId = gId_;
+            //return RedirectToAction("GroupsAndItems");
         }
 
         #region CreateEditDeleteItem
@@ -141,19 +175,19 @@ namespace WebExpenses.Controllers
             return RedirectToAction("GroupsAndItems", new { gId_ = groupId_ });
         }
 
-        [HttpPost]
-        public PartialViewResult DeleteItemCard(int id_)
+        // [HttpPost]
+        public ActionResult DeleteItemCard(int id_)
         {
             var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
-            if (item == null)
-                return Items();
-            _repository.CurrentGId = item.GId;
             _repository.DeleteItem(id_);
-            return Items();
+            return RedirectToAction("GroupsAndItems");
             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
+       
 
         #endregion
+
+        #region CreateEditDeleteGroup
 
         public ActionResult CreateGroupCard(int gId_ = -1)
         {
@@ -174,6 +208,7 @@ namespace WebExpenses.Controllers
         {
             int? id = _repository.CurrentGId;
             var group = _repository.Group.Where(it => it.Id == id).FirstOrDefault();
+            
             var gView = new MGroupCard(group);
             ViewData["Head"] = "Редактировать";
             return View("GroupCard", gView);
@@ -191,17 +226,39 @@ namespace WebExpenses.Controllers
 
             return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
-
         [HttpPost]
+        public PartialViewResult DeleteGroupAjax()
+        {
+            int? gId = _repository.CurrentGId;
+            if (gId != null)
+                _repository.DeleteGroup(gId.Value);
+
+            var gList = new MGroupList()
+            {
+                GroupId = null,
+                GroupList = _repository.GroupExt.ToList()
+            };
+            //return GroupsTableBodyRows(gList);
+            return PartialView("GroupsTableBodyRows", gList);
+            //return RedirectToAction("GroupsAndItems");
+        }
         public ActionResult DeleteGroup()
         {
             int? gId = _repository.CurrentGId;
             if (gId != null)
-            {
                 _repository.DeleteGroup(gId.Value);
-            }
+
+            var gList = new MGroupList()
+            {
+                GroupId = null,
+                GroupList = _repository.GroupExt.ToList()
+            };
+            //return GroupsTableBodyRows(gList);
+            //return PartialView("GroupsTableBodyRows", gList);
             return RedirectToAction("GroupsAndItems");
         }
+
+        #endregion
 
         private IExpensesRepository _repository = null;
     }

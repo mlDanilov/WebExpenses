@@ -149,11 +149,13 @@
     <Content Include="Views\Expenses\GroupsAndItems.cshtml" />
     <Content Include="Views\Expenses\GroupsTable.cshtml" />
     <Content Include="Views\Expenses\Groups.cshtml" />
-    <Content Include="Views\Expenses\Items.cshtml" />
+    <Content Include="Views\Expenses\ItemsTable.cshtml" />
     <Content Include="Views\Expenses\ItemCard.cshtml" />
     <Content Include="Views\Expenses\GroupDropDownList.cshtml" />
     <Content Include="Views\Expenses\GroupCard.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Expenses\GroupsTableBodyRows.cshtml" />
+    <Content Include="Views\Expenses\ItemsTableBodyRows.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
