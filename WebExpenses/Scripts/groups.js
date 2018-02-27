@@ -4,7 +4,7 @@
 //затем, асинхронный запрос к контроллеру, SetCurrentId
 //устанавливает текущую группу
 //В случае успеха запроса выполняет обновление списка товаров(скрипт ajaxItems)
-function groupTBodyTrClick() {
+function setCurrentGroupByClick() {
 
     //let gId = $(this)[0].getElementsByClassName('groupId')[0].textContent;
     let gId = $(this)[0].parentElement.getElementsByClassName('groupId')[0].textContent;
