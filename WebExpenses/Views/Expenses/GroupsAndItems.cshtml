@@ -4,9 +4,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <h4>Таблица</h4>
-</div>
 <div id="groups">
     @{
         Html.RenderPartial("GroupsTable", Model);
@@ -17,4 +14,5 @@
         Html.RenderAction("ItemsTable");
     }
 </div>
+
 

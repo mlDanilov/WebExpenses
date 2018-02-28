@@ -49,6 +49,8 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public int?  CurrentGId { get; set; }
 
+        public int? CurrentIId { get; set; }
+
         public IItem AddNewItem(string name_, int gId_) 
             => _context.AddNewItem(name_, gId_).Result;
 

@@ -1,0 +1,16 @@
+﻿div#menu 
+{
+    float: left;
+    padding-right:  0em;
+}
+
+div#menu div
+{
+    width: 8em;
+    font: bold 1em "Arial Narrow", "Franklin Gothic Medium", Arial;
+    background-color: #444;
+    color: white;
+    margin-bottom: 3px;
+    border: 2px solid #111;
+    
+}

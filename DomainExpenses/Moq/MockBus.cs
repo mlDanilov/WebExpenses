@@ -34,14 +34,14 @@ namespace DomainExpenses.Moq
             MockDbContext.Setup(m => m.GroupExt).Returns(_groupsExtList.AsQueryable());
 
             // Установить для мока поведения для работы с группами товаров
-            AddEditDeleteGroupBehavior();
+            setGroupBehavior();
             // Установить для мока поведение для работы с товарами
-            AddEditDeleteItemBehavior();
+            setItemBehavior();
         }
         /// <summary>
         /// Установить для мока поведение для работы с товарами
         /// </summary>
-        private void AddEditDeleteItemBehavior()
+        private void setItemBehavior()
         {
             var fBus = EntitiesFactory.Get();
             //Добавить новый товар
@@ -75,11 +75,31 @@ namespace DomainExpenses.Moq
                     MockDbContext.Setup(m => m.Item).Returns(_itemList.AsQueryable()); 
                    return 1;
                });
+
+            //Текущий товар(get)
+            MockDbContext.SetupGet(m => m.CurrentIId).Returns(
+                () =>
+                {
+                    return _currentItem;
+                }
+                );
+            //Текущий товар(set)
+            MockDbContext.SetupSet(m => m.CurrentIId = It.IsAny<int?>()).Callback(
+                (int? iid_) =>
+                {
+                    _currentItem = iid_;
+                    MockDbContext.SetupGet(m => m.CurrentIId).Returns(
+                      () =>
+                      {
+                          return _currentItem;
+                      }
+                      );
+                });
         }
         /// <summary>
         /// Установить для мока поведения для работы с группами товаров
         /// </summary>
-        private void AddEditDeleteGroupBehavior()
+        private void setGroupBehavior()
         {
             var fBus = EntitiesFactory.Get();
             //Добавить новую группу
@@ -124,13 +144,14 @@ namespace DomainExpenses.Moq
                    return 1;
                });
 
-            //Текущая группа
+            //Текущая группа(get)
             MockDbContext.SetupGet(m => m.CurrentGId).Returns(
                 () =>
                 {
                     return _currentGroup;
                 }
                 );
+            //Текущая группа(set)
             MockDbContext.SetupSet(m=>m.CurrentGId = It.IsAny<int?>()).Callback(
                 (int? gId_) => 
                 {
@@ -202,6 +223,7 @@ namespace DomainExpenses.Moq
             };
 
         private int? _currentGroup = null;
+        private int? _currentItem = null;
 
         public Mock<IExpensesRepository> MockDbContext { get; private set; }
 

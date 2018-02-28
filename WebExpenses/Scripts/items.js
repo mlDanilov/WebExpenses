@@ -2,37 +2,28 @@
     $.ajax({
         url: "/Expenses/ItemsTable",
         success: function (result) {
+            //асинхронно меняем список товаров
             var table = $('#itemsTable')[0];
             table.innerHTML = result;
-        },
-        error: function () {
-            alert("Ошибка!");
-        }
-    });
-}
-/*
-function ajaxItemsJSON() {
-    $.ajax({
-        url: "/Expenses/ItemsTableJSON",
-        success: function (data) {
-            //alert(JSON.stringify(data));
-            //alert(data.GroupId);
             
-            alert(JSON.stringify(data.ItemList));
-            var tBody = $('#itemsTable tbody');
-            tBody.empty();
-            alert(JSON.stringify(data.ItemList.length));
-            for (let i = 0; i < data.ItemList.length; i++)
-            {
-                let item = data.ItemList[i];
-                tBody.append(
-                    "<tr><th>" + i + "</th><th>" + item.Id + "</th><th>" + item.Name + "</th><th>" + "</th><th></tr>"
-                    );
-            }
+            //Привязываем к кнопкам "редактировать", "удалить"
+            //скрипты, чтобы устанавливались текущие товары перед кликом по линку
+            $('div#items tbody tr th.itemEdit a').click(setCurrentIId);
+            $('div#items tbody tr th.itemDelete a').click(setCurrentIId);
+            console.log('items events');
         },
         error: function () {
             alert("Ошибка!");
         }
     });
 }
-*/
+//синхронно устанавливаем текущий товар
+function setCurrentIId() {
+    let iid = $(this)[0].parentElement.parentElement.getElementsByClassName('itemId')[0].textContent;
+    console.log('currentItemId='+iid);
+    $.ajax({
+        url: "/Expenses/SetCurrentIId",
+        data: { iid_: iid },
+        async: false
+    })
+}

@@ -30,6 +30,8 @@ namespace DomainExpenses.Abstract
         /// <param name="gId_"></param>
         int? CurrentGId { get; set; }
 
+        int? CurrentIId { get; set; }
+
         /// <summary>
         /// Добавить новый товар
         /// </summary>

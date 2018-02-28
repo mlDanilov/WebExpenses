@@ -2,13 +2,13 @@
 @using WebExpenses.Models
 @model MGroupList
 @{
-    var ajaxDeleteOptions = new AjaxOptions
+    var deleteGroupAjaxOption = new AjaxOptions
     {
         HttpMethod="Post",
         Url = "DeleteGroupAjax",
         UpdateTargetId = "groupsTableBody",
-        
-         
+
+
     };
 }
 
@@ -20,11 +20,12 @@
             <th class="groupOrder">@(i + 1).</th>
             <th class="groupId">@Model.GroupList[i].Id</th>
             <th class="groupName">@Model.GroupList[i].Name</th>
-            <th>
+            <th class="groupEdit">
                 @Html.ActionLink("Редактировать", "EditGroup")
             </th>
-            <th>
-                @Ajax.ActionLink("Удалить", "", ajaxDeleteOptions)
+            <th class="groupDelete">
+                <!--Html.ActionLink("Удалить", "DeleteGroup")-->
+                @Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)
             </th>
         </tr>
     }
@@ -38,17 +39,22 @@
                 @Html.ActionLink("Редактировать", "EditGroup")
             </th>
             <th class="groupDelete">
-                @Ajax.ActionLink("Удалить", "", ajaxDeleteOptions)
+                
+                @Html.ActionLink("Удалить", "DeleteGroup");
+                <!--Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)-->
+                <!--Html.ActionLink("Удалить", "DeleteGroup")-->
             </th>
         </tr>
     }
 }
 <script>
     $(document).ready(function () {
+        console.log('groupClick.b');
         $('div#groups tbody tr th.groupOrder').click(setCurrentGroupByClick);
         $('div#groups tbody tr th.groupId').click(setCurrentGroupByClick);
         $('div#groups tbody tr th.groupName').click(setCurrentGroupByClick);
         $('div#groups tbody tr th.groupEdit a').click(setCurrentGId);
         $('div#groups tbody tr th.groupDelete a').click(setCurrentGId);
+        console.log('groupClick.e');
     });
 </script>

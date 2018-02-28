@@ -2,7 +2,13 @@
 @using WebExpenses.Models;
 @model MItemList
 @{
-
+        var deleteItemAjaxOptions = new AjaxOptions
+        {
+            HttpMethod = "Post",
+            Url = "DeleteItemCardAjax",
+            UpdateTargetId = "itemsTableBody",
+            OnSuccess = "OnSuccess"
+    };
 }
 @for (int i = 0; i < Model.ItemList.Count; i++)
 {
@@ -14,17 +20,23 @@
             @Html.ActionLink("Редактировать", "EditItemCard", new { id_ = Model.ItemList[i].Id })
             
         </th>
-        <th >
-            @Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id });
+        <th class="itemDelete">
+            @Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id })
+            <!--Ajax.ActionLink("Удалить", "", deleteItemAjaxOptions)-->
+            <!--Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id })-->
         </th>
       
     </tr>
 }
 <script type="text/javascript">
     function OnSuccess(data) {
-        alert("Items Запрос был успешно выполнен:\n" + data.toString());
+        console.log("Items click установлен:b");
+        $('div#items tbody tr th.itemEdit a').click(setCurrentIId);
+        $('div#items tbody tr th.itemDelete a').click(setCurrentIId);
+        console.log("Items click установлен:e");
     }
     function OnFailure(request, error) {
         alert("Items Ошибка:\n" + error.toString() + ' '+ request.toString() + ' ');
     }
+
 </script>

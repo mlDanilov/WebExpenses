@@ -8,6 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Groups</title>
+    <link href="~/Content/menu.css" rel="stylesheet" />
     <link href="~/Content/groupsTable.css" rel="stylesheet" />
     <link href="~/Content/itemsTable.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.8.0.min.js"></script>
@@ -16,6 +17,15 @@
     <script src="~/Scripts/groups.js" type="text/javascript"></script>
 </head>
 <body>
-    @RenderBody()
+    <div id="root">
+        <div id="menu">
+            <div id="groupsAndItems">Группы и товары</div>
+            <div id="shops">
+                @Html.ActionLink("Магазины","ShopList", "Shop");
+            </div>
+            <div id="checks">Чеки</div>
+        </div>
+        @RenderBody()
+    </div>
 </body>
 </html>

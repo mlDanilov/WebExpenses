@@ -58,24 +58,21 @@ namespace WebExpenses.Controllers
          */
         public PartialViewResult ItemsTable()
         {
-            int? gId = _repository.CurrentGId;
-            var itView = new MItemList();
-            itView.GroupId = gId;
-            if (gId != null)
-            {
-
-                //var iList = _repository.Item.ToList();
-                itView.ItemList = _repository.Item
-                    .Where(it => (it.GId == gId))
-                    .OrderBy(it => it.Name).ToList();
-            }
-            else
-                itView.ItemList = new List<IItem>();
-
+            var itView = getItemsViewByCurrentGId();
             return PartialView(itView);
         }
 
         public JsonResult ItemsTableJSON()
+        {
+            var itView = getItemsViewByCurrentGId();
+            return Json(itView, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Получить список товаров по текущей группе
+        /// </summary>
+        /// <returns></returns>
+        private MItemList getItemsViewByCurrentGId()
         {
             int? gId = _repository.CurrentGId;
             var itView = new MItemList();
@@ -90,8 +87,7 @@ namespace WebExpenses.Controllers
             }
             else
                 itView.ItemList = new List<IItem>();
-
-            return Json(itView, JsonRequestBehavior.AllowGet);
+            return itView;
         }
 
 
@@ -127,9 +123,12 @@ namespace WebExpenses.Controllers
 
         public void SetCurrentGId(int gId_)
         {
-            // _repository.SetCurrentGId(gId_);
             _repository.CurrentGId = gId_;
-            //return RedirectToAction("GroupsAndItems");
+        }
+
+        public void SetCurrentIId(int iid_)
+        {
+            _repository.CurrentIId =iid_;
         }
 
         #region CreateEditDeleteItem
@@ -183,7 +182,17 @@ namespace WebExpenses.Controllers
             return RedirectToAction("GroupsAndItems");
             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
-       
+        [HttpPost]
+        public PartialViewResult DeleteItemCardAjax()
+        {
+            int? iid = _repository.CurrentIId;
+            if (iid != null)
+                _repository.DeleteItem(iid.Value);
+
+            return PartialView("ItemsTableBodyRows", getItemsViewByCurrentGId());
+            //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
+        }
+
 
         #endregion
 
