@@ -1,0 +1,26 @@
+﻿@model WebExpenses.Models.Shop.MShopCard
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShopCard</title>
+</head>
+<body>
+    <h4>Карточка магазина</h4>
+    @using (Html.BeginForm())
+    {
+        if (Model.Id != -1)
+        {
+            <p>Код магазина: @Html.TextBoxFor(sh => sh.Id, new { @readonly = true })</p>
+        }
+        <p>Наименование: @Html.EditorFor(sh => sh.Name)</p>
+        <p>Адрес: @Html.EditorFor(sh => sh.Address)</p>
+        <input type="submit" value="@ViewData["Head"]" />
+    }
+</body>
+</html>

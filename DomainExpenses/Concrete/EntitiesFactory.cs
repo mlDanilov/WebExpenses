@@ -41,7 +41,7 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">уникальный код</param>
         /// <param name="name_">Название</param>
         /// <returns></returns>
-        public IShop CreateShop(int id_, string name_) => new Shop(id_) { Name = name_ };
+        public IShop CreateShop(int id_, string name_, string address_) => new Shop(id_) { Name = name_, Address = address_ };
         /// <summary>
         /// Создать покупку
         /// </summary>

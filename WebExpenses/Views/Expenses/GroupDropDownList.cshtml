@@ -1,4 +1,5 @@
-﻿@model WebExpenses.Models.MGroupList
+﻿@using WebExpenses.Models.Group;
+@model MGroupList
 
 <select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]">
     @foreach (var group in Model.GroupList)

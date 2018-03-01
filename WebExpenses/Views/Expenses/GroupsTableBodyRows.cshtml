@@ -1,5 +1,5 @@
 ﻿@using DomainExpenses.Abstract
-@using WebExpenses.Models
+@using WebExpenses.Models.Group
 @model MGroupList
 @{
     var deleteGroupAjaxOption = new AjaxOptions
@@ -24,8 +24,8 @@
                 @Html.ActionLink("Редактировать", "EditGroup")
             </th>
             <th class="groupDelete">
-                <!--Html.ActionLink("Удалить", "DeleteGroup")-->
-                @Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)
+                @Html.ActionLink("Удалить", "DeleteGroup")
+                <!--Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)-->
             </th>
         </tr>
     }

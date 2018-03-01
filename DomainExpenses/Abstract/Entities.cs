@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainExpenses.Abstract
 {
-
+    /// <summary>
+    /// Товар
+    /// </summary>
     public interface IItem
     {
         /// <summary>
@@ -42,6 +44,9 @@ namespace DomainExpenses.Abstract
         string Name { get; set; }
     }
 
+    /// <summary>
+    /// Магазин
+    /// </summary>
     public interface IShop
     {
         /// <summary>

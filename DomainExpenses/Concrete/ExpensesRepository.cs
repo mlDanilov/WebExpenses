@@ -44,43 +44,98 @@ namespace DomainExpenses.Concrete
             }
         }
 
+       
+
+        #region Item
+        /// <summary>
+        /// Текущий товар
+        /// </summary>
+        public int? CurrentIId { get; set; }
+        /// <summary>
+        /// Добавить новый товар
+        /// </summary>
+        /// <param name="name_">название товара</param>
+        /// <param name="gId_">код группы товаров</param>
+        /// <returns></returns>
+        public IItem AddNewItem(string name_, int gId_) 
+            => _context.AddNewItem(name_, gId_).Result;
+        /// <summary>
+        /// Редактировать товар
+        /// </summary>
+        /// <param name="id_">Уникальный код товара</param>
+        /// <param name="name_">новое название товара</param>
+        /// <param name="gId_">новая код группы товаров</param>
+        public void EditItem(int id_, string name_, int gId_) 
+            => _context.EditItem(id_, name_, gId_);
+
+        /// <summary>
+        /// Удалить товар
+        /// </summary>
+        /// <param name="id_">Код товара</param>
+        public void DeleteItem(int id_)
+            => _context.DeleteItem(id_);
+
+        #endregion
+
+        #region Group
         /// <summary>
         /// Текущая группа товаров
         /// </summary>
-        public int?  CurrentGId { get; set; }
-
-        public int? CurrentIId { get; set; }
-
-        public IItem AddNewItem(string name_, int gId_) 
-            => _context.AddNewItem(name_, gId_).Result;
-
-        public IGroup AddNewGroup(string name_, int gId_)
-            => _context.AddNewGroup(name_, gId_).Result;
-
-        public int EditItem(int id_, string name_, int gId_) 
-            => _context.EditItem(id_, name_, gId_);
+        public int? CurrentGId { get; set; }
+        /// <summary>
+        /// Добавить новую группу товаров
+        /// </summary>
+        /// <param name="name_">Название группы</param>
+        /// <param name="parentGroupId_">Код родительской группы</param>
+        /// <returns></returns>
+        public IGroup AddNewGroup(string name_, int parentGroupId_)
+         => _context.AddNewGroup(name_, parentGroupId_).Result;
         /// <summary>
         /// Редактировать группу товаров
         /// </summary>
         /// <param name="id_">Код группы товаров</param>
         /// <param name="name_">Новое название</param>
         /// <param name="parentGroupId_">Новый код родительской группы</param>
-        public int EditGroup(int id_, string name_, int parentGroupId_) 
+        public void EditGroup(int id_, string name_, int parentGroupId_) 
             => _context.EditGroup(id_, name_, parentGroupId_);
-        /// <summary>
-        /// Удалить товар
-        /// </summary>
-        /// <param name="id_">Код товара</param>
-        public int DeleteItem(int id_) 
-            => _context.DeleteItem(id_);
         /// <summary>
         /// Удалить группу товаров
         /// </summary>
         /// <param name="id_">Код группы товаров</param>
-        public int DeleteGroup(int id_)
+        public void DeleteGroup(int id_)
             => _context.DeleteGroup(id_);
+        #endregion
 
-        private int? _currentGId = null;
+        #region Shop
+        /// <summary>
+        /// Текущая группа товаров
+        /// </summary>
+        public int? CurrentShopId { get; set; }
+
+        /// <summary>
+        /// Добавить новый магазин
+        /// </summary>
+        /// <param name="name_">Название магазина</param>
+        /// <param name="address_">Адрес магазина</param>
+        public IShop AddNewShop(string name_, string address_)
+            => _context.AddNewShop(name_, address_).Result;
+        /// <summary>
+        /// Редактировать группу товаров
+        /// </summary>
+        /// <param name="id_">Код группы товаров</param>
+        /// <param name="name_">Новое название</param>
+        /// <param name="parentGroupId_">Новый код родительской группы</param>
+        public void EditShop(int id_, string name_, string address_)
+            => _context.EditShop(id_, name_, address_);
+        /// <summary>
+        /// Удалить магазин
+        /// </summary>
+        /// <param name="id_">Код товара</param>
+        public void DeleteShop(int id_)
+            => _context.DeleteShop(id_);
+
+
+        #endregion
 
         private ExpensesDBContext _context = new ExpensesDBContext();
     }

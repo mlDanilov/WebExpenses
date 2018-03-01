@@ -32,11 +32,15 @@ namespace DomainExpenses.Moq
             MockDbContext.Setup(m => m.Group).Returns(_groupsList.AsQueryable());
             //Список групп, название указывается с родительскими группми, кроме корневой
             MockDbContext.Setup(m => m.GroupExt).Returns(_groupsExtList.AsQueryable());
+            //Список магазинов
+            MockDbContext.Setup(m => m.Shop).Returns(_shopsList.AsQueryable());
 
             // Установить для мока поведения для работы с группами товаров
             setGroupBehavior();
             // Установить для мока поведение для работы с товарами
             setItemBehavior();
+            //Установить для мока поведения для работы с магазинами
+            setShopBehavior();
         }
         /// <summary>
         /// Установить для мока поведение для работы с товарами
@@ -55,25 +59,22 @@ namespace DomainExpenses.Moq
                 return item;
             });
             //Редактировать существующий товар
-            MockDbContext.Setup<int>(m => m.EditItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
-                .Returns(
+            MockDbContext.Setup(m => m.EditItem(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+                .Callback(
                 (int id_, string name_, int gId_) =>
                 {
                     var item = _itemList.Where(it => it.Id == id_).FirstOrDefault();
-                    if (item == null) return -1;
+                    if (item == null) return;
                     item.Name = name_;
                     item.GId = gId_;
-
-                    return 1;
                 });
             //Удалить товар
-            MockDbContext.Setup<int>(m => m.DeleteItem(It.IsAny<int>()))
-               .Returns(
+            MockDbContext.Setup(m => m.DeleteItem(It.IsAny<int>()))
+               .Callback(
                (int id_) =>
                {
                    _itemList.RemoveAll(it => it.Id == id_);
                     MockDbContext.Setup(m => m.Item).Returns(_itemList.AsQueryable()); 
-                   return 1;
                });
 
             //Текущий товар(get)
@@ -117,57 +118,91 @@ namespace DomainExpenses.Moq
                 return group;
             });
             //Редактировать существующую группу товаров
-            MockDbContext.Setup<int>(m => m.EditGroup(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
-                .Returns(
+            MockDbContext.Setup(m => m.EditGroup(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+                .Callback(
                 (int id_, string name_, int parentGId_) =>
                 {
                     var group = _groupsList.Where(g => g.Id == id_).FirstOrDefault();
                     var groupExt = _groupsExtList.Where(g => g.Id == id_).FirstOrDefault();
-                    if (group == null) return -1;
+                    if (group == null) return;
                     group.Name = name_;
                     group.IdParent = parentGId_;
-                    if (groupExt == null) return -1;
+                    if (groupExt == null) return;
                     groupExt.Name = name_;
                     groupExt.IdParent = parentGId_;
-
-                    return 1;
                 });
             //Удалить группу товаров
-            MockDbContext.Setup<int>(m => m.DeleteGroup(It.IsAny<int>()))
-               .Returns(
+            MockDbContext.Setup(m => m.DeleteGroup(It.IsAny<int>()))
+               .Callback(
                (int id_) =>
                {
                    _groupsList.RemoveAll(g => g.Id == id_);
                    _groupsExtList.RemoveAll(g => g.Id == id_);
                    MockDbContext.Setup(m => m.Group).Returns(_groupsList.AsQueryable());
                    MockDbContext.Setup(m => m.GroupExt).Returns(_groupsExtList.AsQueryable());
-                   return 1;
                });
 
             //Текущая группа(get)
             MockDbContext.SetupGet(m => m.CurrentGId).Returns(
-                () =>
-                {
-                    return _currentGroup;
-                }
-                );
+                () => _currentGroup );
             //Текущая группа(set)
             MockDbContext.SetupSet(m=>m.CurrentGId = It.IsAny<int?>()).Callback(
                 (int? gId_) => 
                 {
                     _currentGroup = gId_;
                     MockDbContext.SetupGet(m => m.CurrentGId).Returns(
-                      () =>
-                      {
-                          return _currentGroup;
-                      }
-                      );
+                      () => _currentGroup );
                 });
 
             
         }
 
-   
+        private void setShopBehavior()
+        {
+            var fBus = EntitiesFactory.Get();
+
+            //Добавить новый магазин
+            MockDbContext.Setup<IShop>(m => m.AddNewShop(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(
+            (string name_, string address_) =>
+            {
+                var shop = fBus.CreateShop(_shopsList.Max(sh => sh.Id) + 1, name_, address_);
+                _shopsList.Add(shop);
+                MockDbContext.Setup(m => m.Shop).Returns(_shopsList.AsQueryable());
+                return shop;
+            });
+            //Редактировать существующий магазин
+            MockDbContext.Setup(m => m.EditShop(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(
+                (int id_, string name_, string address_) =>
+                {
+                    var shop = _shopsList.Where(sh => sh.Id == id_).FirstOrDefault();
+                    if (shop == null)
+                        return;
+                    shop.Name = name_;
+                    shop.Address = address_;
+                });
+            //Удалить магазин
+            MockDbContext.Setup(m => m.DeleteShop(It.IsAny<int>()))
+               .Callback(
+               (int id_) =>
+               {
+                   _shopsList.RemoveAll(sh => sh.Id == id_);
+                   MockDbContext.Setup(m => m.Shop).Returns(_shopsList.AsQueryable());
+               });
+
+            //Текущий магазин(get)
+            MockDbContext.SetupGet(m => m.CurrentShopId).Returns(
+                () => _currentShop );
+            //Текущий магазин(set)
+            MockDbContext.SetupSet(m => m.CurrentShopId = It.IsAny<int?>()).Callback(
+                (int? shopId_) =>
+                {
+                    _currentShop = shopId_;
+                    MockDbContext.SetupGet(m => m.CurrentShopId).Returns(
+                      () => _currentShop );
+                });
+        }
 
 
         public static MockBus Get()
@@ -200,6 +235,17 @@ namespace DomainExpenses.Moq
         };
 
         /// <summary>
+        /// Список магазинов
+        /// </summary>
+        private List<IShop> _shopsList = new List<IShop>
+            {
+                EntitiesFactory.Get().CreateShop(0, "Кировский", "На июльской"),
+                EntitiesFactory.Get().CreateShop(1, "Райт","На сулимова"),
+                EntitiesFactory.Get().CreateShop(2, "Пятёрочка", "Baky plaza"),
+                EntitiesFactory.Get().CreateShop(3, "Аптека", "На июльской"),
+                EntitiesFactory.Get().CreateShop(4, "Аптека", "На сулимова")
+            };
+        /// <summary>
         /// Список групп
         /// </summary>
         private List<IGroup> _groupsList = new List<IGroup>
@@ -215,7 +261,7 @@ namespace DomainExpenses.Moq
         /// </summary>
         private List<IGroup> _groupsExtList = new List<IGroup>
             {
-               EntitiesFactory.Get().CreateGroup(0, null,"Главная группа"),
+                EntitiesFactory.Get().CreateGroup(0, null,"Главная группа"),
                 EntitiesFactory.Get().CreateGroup(1, 0,"Мясо"),
                 EntitiesFactory.Get().CreateGroup(2, 1, @"Мясо\Птица"),
                 EntitiesFactory.Get().CreateGroup(3, 1, @"Мясо\Говядина"),
@@ -224,6 +270,7 @@ namespace DomainExpenses.Moq
 
         private int? _currentGroup = null;
         private int? _currentItem = null;
+        private int? _currentShop= null;
 
         public Mock<IExpensesRepository> MockDbContext { get; private set; }
 

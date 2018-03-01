@@ -8,7 +8,9 @@ using DomainExpenses;
 using DomainExpenses.Abstract;
 using DomainExpenses.Concrete;
 
-using WebExpenses.Models;
+using WebExpenses.Models.Item;
+using WebExpenses.Models.Group;
+
 
 namespace WebExpenses.Controllers
 {
@@ -200,8 +202,6 @@ namespace WebExpenses.Controllers
 
         public ActionResult CreateGroupCard(int gId_ = -1)
         {
-            
-
             var mGroup = new MGroupCard() { IdParent = gId_ };
             ViewData["Head"] = "Добавить";
             return View("GroupCard", mGroup);
@@ -227,12 +227,6 @@ namespace WebExpenses.Controllers
         {
             var group = _repository.Group.Where(g => g.Id == id).FirstOrDefault();
             _repository.EditGroup(id, name, parentGroupId_);
-            if (group != null)
-            {
-                group.Name = name;
-                group.IdParent = parentGroupId_;
-            }
-
             return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
         [HttpPost]
@@ -254,8 +248,15 @@ namespace WebExpenses.Controllers
         public ActionResult DeleteGroup()
         {
             int? gId = _repository.CurrentGId;
+            var group = _repository.Group.Where(g => g.Id == gId).FirstOrDefault();
+            if (group == null)
+                return RedirectToAction("GroupsAndItems");
+
             if (gId != null)
+            {
                 _repository.DeleteGroup(gId.Value);
+                _repository.CurrentGId = group.IdParent;
+            }
 
             var gList = new MGroupList()
             {

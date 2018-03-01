@@ -1,4 +1,5 @@
-﻿@model WebExpenses.Models.MGroupCard
+﻿@using WebExpenses.Models.Group
+@model MGroupCard
 
 @{
     Layout = null;
@@ -12,7 +13,7 @@
     <title>View</title>
 </head>
 <body>
-    <h4>Карточка товара</h4>
+    <h4>Карточка группы</h4>
     @using (Html.BeginForm())
     {
         if (Model.Id != -1)
