@@ -16,15 +16,17 @@ namespace WebExpenses.Controllers
             _repository = rep_;
         }
         // GET: Shop
-        public ActionResult ShopList()
+        public ActionResult List()
         {
             var shops = getShopsView();
+            ViewData["Title"] = "Магазины";
             return View(shops);
         }
 
         public ViewResult CreateShop()
         {
             var shView = new MShopCard();
+            ViewData["Title"] = "Добавить магазин";
             ViewData["Head"] = "Добавить";
             return View("ShopCard", shView);
         }
@@ -33,7 +35,7 @@ namespace WebExpenses.Controllers
         {
             var shop =  _repository.AddNewShop(name, address);
             _repository.CurrentShopId = shop.Id;
-            return RedirectToAction("ShopList");
+            return RedirectToAction("List");
         }
 
         public ViewResult EditShop()
@@ -42,6 +44,7 @@ namespace WebExpenses.Controllers
             var shop = _repository.Shop.Where(sh => sh.Id == shId).FirstOrDefault();
 
             var shView = new MShopCard(shop);
+            ViewData["Title"] = "Редактировать магазин";
             ViewData["Head"] = "Редактировать";
             return View("ShopCard", shView);
         }
@@ -51,7 +54,7 @@ namespace WebExpenses.Controllers
             int? shopId = _repository.CurrentShopId;
             if (shopId != null)
                 _repository.EditShop(shopId.Value, name, address);
-            return RedirectToAction("ShopList");
+            return RedirectToAction("List");
         }
 
         public ActionResult DeleteShop()
@@ -61,7 +64,7 @@ namespace WebExpenses.Controllers
             if ((shop != null) && (shId != null))
                 _repository.DeleteShop(shop.Id);
 
-            return RedirectToAction("ShopList");
+            return RedirectToAction("List");
         }
 
         public void SetCurrentShopId(int shId_) => _repository.CurrentShopId = shId_;

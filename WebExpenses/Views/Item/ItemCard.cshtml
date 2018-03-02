@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>ItemCard</title>
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
         <h4>Карточка товара</h4>
@@ -20,7 +20,7 @@
             <p>Код товара: @Html.TextBoxFor(it => it.Id, new { @readonly = true })</p>
             }
             <p>Наименование: @Html.EditorFor(it => it.Name)</p>
-            Html.RenderAction("GroupDropDownList", new { gId_ = Model.GId, optionName_ = "groupId_" });
+            Html.RenderAction("GroupDropDownList", "Group", new { gId_ = Model.GId, optionName_ = "groupId_" });
             
             <input type="submit" value="@ViewData["Head"]"/>
         }

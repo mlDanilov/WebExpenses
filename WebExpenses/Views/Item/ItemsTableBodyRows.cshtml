@@ -17,23 +17,24 @@
         <th class="itemId">@Model.ItemList[i].Id</th>
         <th class="itemName">@Model.ItemList[i].Name</th>
         <th class="itemEdit">
-            @Html.ActionLink("Редактировать", "EditItemCard", new { id_ = Model.ItemList[i].Id })
+            @Html.ActionLink("Редактировать", "EditItemCard", "Item", new { id_ = Model.ItemList[i].Id })
             
         </th>
         <th class="itemDelete">
-            @Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id })
+            @Html.ActionLink("Удалить", "DeleteItemCard", "Item", new { id_ = Model.ItemList[i].Id })
             <!--Ajax.ActionLink("Удалить", "", deleteItemAjaxOptions)-->
             <!--Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id })-->
         </th>
       
     </tr>
 }
+<script>
+    setEditDeleteItemClickEventHandler();
+</script>
+
 <script type="text/javascript">
     function OnSuccess(data) {
-        console.log("Items click установлен:b");
-        $('div#items tbody tr th.itemEdit a').click(setCurrentIId);
-        $('div#items tbody tr th.itemDelete a').click(setCurrentIId);
-        console.log("Items click установлен:e");
+        setEditDeleteItemClickEventHandler();
     }
     function OnFailure(request, error) {
         alert("Items Ошибка:\n" + error.toString() + ' '+ request.toString() + ' ');

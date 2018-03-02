@@ -135,7 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ExpensesController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -145,6 +147,7 @@
     <Compile Include="Models\Group\MGroupList.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
+    <Compile Include="Models\Purchase\MPurchase.cs" />
     <Compile Include="Models\Shop\MShopCard.cs" />
     <Compile Include="Models\Shop\MShopList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,20 +155,21 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Expenses\GroupsAndItems.cshtml" />
-    <Content Include="Views\Expenses\GroupsTable.cshtml" />
-    <Content Include="Views\Expenses\Groups.cshtml" />
-    <Content Include="Views\Expenses\ItemsTable.cshtml" />
-    <Content Include="Views\Expenses\ItemCard.cshtml" />
-    <Content Include="Views\Expenses\GroupDropDownList.cshtml" />
-    <Content Include="Views\Expenses\GroupCard.cshtml" />
+    <Content Include="Views\Group\GroupsAndItems.cshtml" />
+    <Content Include="Views\Group\GroupsTable.cshtml" />
+    <Content Include="Views\Group\Groups.cshtml" />
+    <Content Include="Views\Item\ItemsTable.cshtml" />
+    <Content Include="Views\Item\ItemCard.cshtml" />
+    <Content Include="Views\Group\GroupDropDownList.cshtml" />
+    <Content Include="Views\Group\GroupCard.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Expenses\GroupsTableBodyRows.cshtml" />
-    <Content Include="Views\Expenses\ItemsTableBodyRows.cshtml" />
-    <Content Include="Views\Shop\ShopList.cshtml" />
+    <Content Include="Views\Group\GroupsTableBodyRows.cshtml" />
+    <Content Include="Views\Item\ItemsTableBodyRows.cshtml" />
+    <Content Include="Views\Shop\List.cshtml" />
     <Content Include="Views\Shop\ShopTable.cshtml" />
     <Content Include="Views\Shop\ShopTableBody.cshtml" />
     <Content Include="Views\Shop\ShopCard.cshtml" />
+    <Content Include="Views\Purchase\Table.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

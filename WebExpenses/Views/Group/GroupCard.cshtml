@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>View</title>
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <h4>Карточка группы</h4>
@@ -21,8 +21,11 @@
             <p>Код  группы: @Html.TextBoxFor(g => g.Id, new { @readonly = true })</p>
         }
         <p>Наименование: @Html.EditorFor(g => g.Name)</p>
-        Html.RenderAction("GroupDropDownList", new { gId_ = Model.IdParent, optionName_ = "parentGroupId_" });
-
+        <p>Родительская группа:
+            @{ 
+                Html.RenderAction("GroupDropDownList", "Group", new { gId_ = Model.IdParent, optionName_ = "parentGroupId_" });
+            }
+        </p>
         <input type="submit" value="@ViewData["Head"]" />
     }
 </body>

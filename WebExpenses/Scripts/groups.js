@@ -24,22 +24,20 @@ function setCurrentGroupByClick() {
     }
     
     $.ajax({
-        url: "/Expenses/SetCurrentGId",                      
+        url: "/Group/SetCurrentGId",                      
         data: { gId_: gId },
         success: ajaxItems,
         //success: ajaxItemsJSON,
         error: function () {
-            alert('/Expenses/SetCurrentGId ошибка');
+            alert('/Group/SetCurrentGId ошибка');
         }});
-                     
-                   
 }
 
 function setCurrentGId()
 {
     let gId = $(this)[0].parentElement.parentElement.getElementsByClassName('groupId')[0].textContent;
     $.ajax({
-        url: "/Expenses/SetCurrentGId",
+        url: "/Group/SetCurrentGId",
         data: { gId_: gId },
         async: false
     })

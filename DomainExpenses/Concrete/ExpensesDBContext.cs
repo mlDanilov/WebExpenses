@@ -1,9 +1,11 @@
 ﻿using DomainExpenses.Abstract;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
+
 
 namespace DomainExpenses.Concrete
 {
@@ -14,12 +16,9 @@ namespace DomainExpenses.Concrete
         {
             
         }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder_)
         {
-            //base.OnModelCreating(modelBuilder);
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            
+            modelBuilder_.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
         public DbSet<Item> Item { get; set; }
@@ -33,6 +32,8 @@ namespace DomainExpenses.Concrete
         }
 
         public DbSet<Shop> Shop { get; set; }
+
+        public DbSet<Purchase> Purchase { get; set; }
 
 
         #region Item
@@ -101,7 +102,6 @@ namespace DomainExpenses.Concrete
 
         #endregion
 
-
         #region Shop
         /// <summary>
         /// Добавить новый магазин
@@ -134,6 +134,57 @@ namespace DomainExpenses.Concrete
         }
         #endregion
 
+        #region Purchase
+        /// <summary>
+        /// Добавить покупку
+        /// </summary>
+        /// <param name="shopId_">код магазина</param>
+        /// <param name="itemId_">код товара</param>
+        /// <param name="price_">цена</param>
+        /// <param name="count_">количество</param>
+        /// <param name="date_">время покупки</param>
+        /// <returns></returns>
+        public Task<Purchase> AddNewPurchase(
+            int shopId_, 
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            )
+        {
+            var rQuery = Database.SqlQuery<Purchase>("AddPurchase", shopId_, itemId_, price_, count_, date_);
+            return rQuery.FirstOrDefaultAsync();
+        }
 
+        /// <summary>
+        /// Редактрировать покупку
+        /// </summary>
+        /// <param name="id_">уникальный код покупки</param>
+        /// <param name="shopIdNew_">новый код магазина</param>
+        /// <param name="itemIdNew_">новы код товара</param>
+        /// <param name="priceNew_">новая цена</param>
+        /// <param name="countNew_">новое количество</param>
+        /// <param name="dateNew_">новое время</param>
+        public void EditPurchase(
+            int id_, 
+            int shopIdNew_,
+            int itemIdNew_,
+            float priceNew_,
+            float countNew_,
+            DateTime dateNew_
+            )
+        {
+
+        }
+       /// <summary>
+       /// Удалить покупку
+       /// </summary>
+       /// <param name="id_">уникальный код покупки</param>
+        public void DeletePurchase(int id_)
+        {
+
+        }
+
+        #endregion
     }
 }

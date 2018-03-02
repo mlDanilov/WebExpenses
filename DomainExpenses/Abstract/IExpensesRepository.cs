@@ -24,8 +24,13 @@ namespace DomainExpenses.Abstract
         /// Магазины
         /// </summary>
         IQueryable<IShop> Shop { get; }
-       
-        
+
+        /// <summary>
+        /// Покупки
+        /// </summary>
+        IQueryable<IPurchase> Purchase { get; }
+
+
 
         #region Shop
         /// <summary>
@@ -116,6 +121,55 @@ namespace DomainExpenses.Abstract
         /// </summary>
         /// <param name="id_">Код группы товаров</param>
         void DeleteGroup(int id_);
+
+        #endregion
+
+
+        #region Purchase
+        /// <summary>
+        /// Текущая покупка
+        /// </summary>
+        /// <param name="gId_"></param>
+        int? CurrentPurchaseId { get; set; }
+
+        /// <summary>
+        /// Добавить новую покупку
+        /// </summary>
+        /// <param name="shopId_">код магазина</param>
+        /// <param name="itemId_">код товара</param>
+        /// <param name="price_">цена</param>
+        /// <param name="count_">количество</param>
+        /// <param name="date_">дата</param>
+        /// <returns></returns>
+        IPurchase AddNewPurchase(
+            int shopId_,
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            );
+        /// <summary>
+        /// Редактировать
+        /// </summary>
+        /// <param name="id_">Уникальный код</param>
+        /// <param name="shopIdNew_">Новый код магазина</param>
+        /// <param name="itemIdNew_">Новый код товара</param>
+        /// <param name="priceNew_">Новая цена</param>
+        /// <param name="countNew_">Новое количество</param>
+        /// <param name="dateNew_">Новая дата</param>
+        void EditPurchase(
+            int id_,
+            int shopIdNew_,
+            int itemIdNew_,
+            float priceNew_,
+            float countNew_,
+            DateTime dateNew_
+            );
+        /// <summary>
+        /// Удалить покупку
+        /// </summary>
+        /// <param name="id_">уникальный код покупки</param>
+        void DeletePurchase(int id_);
 
         #endregion
     }

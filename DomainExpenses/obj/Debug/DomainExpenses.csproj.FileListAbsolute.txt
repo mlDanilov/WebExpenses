@@ -31,5 +31,6 @@ C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpens
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\bin\Debug\Moq.pdb
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\bin\Debug\Moq.xml
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\obj\Debug\DomainExpenses.csprojResolveAssemblyReference.cache
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\obj\Debug\DomainExpenses.dll
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\DomainExpenses\obj\Debug\DomainExpenses.pdb

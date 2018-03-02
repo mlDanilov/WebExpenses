@@ -63,19 +63,34 @@ namespace DomainExpenses.Abstract
         string Address { get; set; }
     }
 
-
+    /// <summary>
+    /// Покупка
+    /// </summary>
     public interface IPurchase
     {
+        /// <summary>
+        /// Уникальный код покупки
+        /// </summary>
         int Id { get; }
-
+        /// <summary>
+        /// Код магазина
+        /// </summary>
         int Shop_Id { get; set; }
-
+        /// <summary>
+        /// Код товара
+        /// </summary>
         int Item_Id { get; set; }
-
-        float price { get; set; }
-
-        float count { get; set; }
-
-        DateTime Time { get; set; }
+        /// <summary>
+        /// Цена
+        /// </summary>
+        float Price { get; set; }
+        /// <summary>
+        /// Количество
+        /// </summary>
+        float Count { get; set; }
+        /// <summary>
+        /// Время покупки
+        /// </summary>
+        DateTime Date { get; set; }
     }
 }

@@ -15,13 +15,18 @@ namespace DomainExpenses.Concrete
         {
            
         }
-
+        /// <summary>
+        /// Товары
+        /// </summary>
         public IQueryable<IItem> Item
         {
             get {
                 return _context.Item;
             }
         }
+        /// <summary>
+        /// Магазины
+        /// </summary>
         public IQueryable<IShop> Shop
         {
             get
@@ -29,7 +34,9 @@ namespace DomainExpenses.Concrete
                 return _context.Shop;
             }
         }
-
+        /// <summary>
+        /// Группы
+        /// </summary>
         public IQueryable<IGroup> Group
         {
             get
@@ -37,13 +44,23 @@ namespace DomainExpenses.Concrete
                 return _context.Group;
             }
         }
-
+        /// <summary>
+        /// Группы с указанием в названии родительских групп, кроме корневой
+        /// </summary>
         public IQueryable<IGroup> GroupExt {
             get {
                 return _context.GroupExt.AsQueryable<IGroup>();
             }
         }
-
+        /// <summary>
+        /// Покупки
+        /// </summary>
+        public IQueryable<IPurchase> Purchases
+        {
+            get {
+                return _context.Purchase;
+            }
+        }
        
 
         #region Item
@@ -134,6 +151,49 @@ namespace DomainExpenses.Concrete
         public void DeleteShop(int id_)
             => _context.DeleteShop(id_);
 
+
+        #endregion
+
+        #region Purchase
+        /// <summary>
+        /// Добавить покупку
+        /// </summary>
+        /// <param name="shopId_">код магазина</param>
+        /// <param name="itemId_">код товара</param>
+        /// <param name="price_">цена</param>
+        /// <param name="count_">количество</param>
+        /// <param name="date_">время покупки</param>
+        /// <returns></returns>
+        public IPurchase AddNewPurchase(
+            int shopId_,
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            ) => _context.AddNewPurchase(shopId_, itemId_, price_, count_, date_).Result;
+
+        /// <summary>
+        /// Редактрировать покупку
+        /// </summary>
+        /// <param name="id_">уникальный код покупки</param>
+        /// <param name="shopIdNew_">новый код магазина</param>
+        /// <param name="itemIdNew_">новы код товара</param>
+        /// <param name="priceNew_">новая цена</param>
+        /// <param name="countNew_">новое количество</param>
+        /// <param name="dateNew_">новое время</param>
+        public void EditPurchase(
+            int id_,
+            int shopIdNew_,
+            int itemIdNew_,
+            float priceNew_,
+            float countNew_,
+            DateTime dateNew_
+            ) => _context.EditPurchase(id_, shopIdNew_, itemIdNew_, priceNew_, countNew_, dateNew_);
+        /// <summary>
+        /// Удалить покупку
+        /// </summary>
+        /// <param name="id_">уникальный код покупки</param>
+        public void DeletePurchase(int id_) => _context.DeletePurchase(id_);
 
         #endregion
 

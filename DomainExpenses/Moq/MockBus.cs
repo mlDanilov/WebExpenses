@@ -34,13 +34,17 @@ namespace DomainExpenses.Moq
             MockDbContext.Setup(m => m.GroupExt).Returns(_groupsExtList.AsQueryable());
             //Список магазинов
             MockDbContext.Setup(m => m.Shop).Returns(_shopsList.AsQueryable());
+            //Список покупок
+            MockDbContext.Setup(m => m.Purchase).Returns(_purchaseList.AsQueryable());
 
             // Установить для мока поведения для работы с группами товаров
             setGroupBehavior();
             // Установить для мока поведение для работы с товарами
             setItemBehavior();
-            //Установить для мока поведения для работы с магазинами
+            //Установить для мока поведение для работы с магазинами
             setShopBehavior();
+            //Установить для мока поведение для работы с покупками
+            setPurchaseBehavior();
         }
         /// <summary>
         /// Установить для мока поведение для работы с товарами
@@ -98,7 +102,7 @@ namespace DomainExpenses.Moq
                 });
         }
         /// <summary>
-        /// Установить для мока поведения для работы с группами товаров
+        /// Установить для мока поведение для работы с группами товаров
         /// </summary>
         private void setGroupBehavior()
         {
@@ -108,7 +112,9 @@ namespace DomainExpenses.Moq
                 .Returns(
             (string name_, int gId_) =>
             {
-                var group = fBus.CreateGroup(_groupsList.Max(g => g.Id) + 1, gId_, name_);
+                var group = fBus.CreateGroup(
+                    _itemList.Max(it => it.GId) + 1, 
+                    gId_, name_);
 
                 _groupsExtList.Add(group);
                 _groupsList.Add(group);
@@ -156,7 +162,9 @@ namespace DomainExpenses.Moq
 
             
         }
-
+        /// <summary>
+        /// Установить для мока поведение для работы с магазинами
+        /// </summary>
         private void setShopBehavior()
         {
             var fBus = EntitiesFactory.Get();
@@ -202,8 +210,72 @@ namespace DomainExpenses.Moq
                     MockDbContext.SetupGet(m => m.CurrentShopId).Returns(
                       () => _currentShop );
                 });
-        }
 
+
+        }
+        /// <summary>
+        /// Установить для мока поведение для работы с покупками
+        /// </summary>
+        private void setPurchaseBehavior()
+        {
+            var fBus = EntitiesFactory.Get();
+
+            //Добавить новый магазин
+            MockDbContext.Setup<IPurchase>(m => m.AddNewPurchase(
+                It.IsAny<int>(), 
+                It.IsAny<int>(),
+                It.IsAny<float>(),
+                It.IsAny<float>(),
+                It.IsAny<DateTime>()))
+                .Returns(
+            (int shopId_, int itemId_,  float price_, float count_, DateTime date_) =>
+            {
+                var purchase = fBus.CreatePurchase(_purchaseList.Max(p => p.Id) + 1, 
+                    shopId_, itemId_, price_, count_, date_);
+                _purchaseList.Add(purchase);
+                MockDbContext.Setup(m => m.Purchase).Returns(_purchaseList.AsQueryable());
+                return purchase;
+            });
+            //Редактировать существующий магазин
+            MockDbContext.Setup(m => m.EditPurchase(
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<float>(),
+                It.IsAny<float>(),
+                It.IsAny<DateTime>())).Callback(
+                 (int id_, int shopId_, int itemId_, float price_, float count_, DateTime date_) =>
+                {
+                    var purchase = _purchaseList.Where(p => p.Id == id_).FirstOrDefault();
+                    if (purchase == null)
+                        return;
+                    purchase.Item_Id = itemId_;
+                    purchase.Shop_Id = shopId_;
+                    purchase.Price = price_;
+                    purchase.Count = count_;
+                    purchase.Date = date_;
+                });
+            //Удалить магазин
+            MockDbContext.Setup(m => m.DeletePurchase(It.IsAny<int>()))
+               .Callback(
+               (int id_) =>
+               {
+                   _purchaseList.RemoveAll(p => p.Id == id_);
+                   MockDbContext.Setup(m => m.Purchase).Returns(_purchaseList.AsQueryable());
+               });
+
+            //Текущий магазин(get)
+            MockDbContext.SetupGet(m => m.CurrentShopId).Returns(
+                () => _currentShop);
+            //Текущий магазин(set)
+            MockDbContext.SetupSet(m => m.CurrentShopId = It.IsAny<int?>()).Callback(
+                (int? shopId_) =>
+                {
+                    _currentShop = shopId_;
+                    MockDbContext.SetupGet(m => m.CurrentShopId).Returns(
+                      () => _currentShop);
+                });
+        }
 
         public static MockBus Get()
         {
@@ -254,7 +326,7 @@ namespace DomainExpenses.Moq
                 EntitiesFactory.Get().CreateGroup(1, 0,"Мясо"),
                 EntitiesFactory.Get().CreateGroup(2, 1, @"Птица"),
                 EntitiesFactory.Get().CreateGroup(3, 1, @"Говядина"),
-                EntitiesFactory.Get().CreateGroup(4, 1, @"Остальное")
+                EntitiesFactory.Get().CreateGroup(4, 0, @"Остальное")
             };
         /// <summary>
         /// Список групп, название указывается с родительскими группами, кроме корневой
@@ -265,12 +337,30 @@ namespace DomainExpenses.Moq
                 EntitiesFactory.Get().CreateGroup(1, 0,"Мясо"),
                 EntitiesFactory.Get().CreateGroup(2, 1, @"Мясо\Птица"),
                 EntitiesFactory.Get().CreateGroup(3, 1, @"Мясо\Говядина"),
-                EntitiesFactory.Get().CreateGroup(4, 1, @"Остальное")
+                EntitiesFactory.Get().CreateGroup(4, 0, @"Остальное")
             };
+        /// <summary>
+        /// Список покупок
+        /// </summary>
+        private List<IPurchase> _purchaseList = new List<IPurchase>
+        {
+            EntitiesFactory.Get().CreatePurchase(0, 1, 2, 10, 5, new DateTime(2018, 6, 1)),
+            EntitiesFactory.Get().CreatePurchase(1, 2, 7, 20, 7, new DateTime(2018, 6, 1)),
+            EntitiesFactory.Get().CreatePurchase(2, 2, 5, 15, 1, new DateTime(2018, 6, 1)),
+            EntitiesFactory.Get().CreatePurchase(3, 1, 3, 54, 1, new DateTime(2018, 6, 1)),
+            EntitiesFactory.Get().CreatePurchase(4, 3, 1, 20, 2, new DateTime(2018, 6, 1)),
+            EntitiesFactory.Get().CreatePurchase(5, 1, 8, 10, 2, new DateTime(2018, 6, 2)),
+            EntitiesFactory.Get().CreatePurchase(6, 2, 9, 8,  6, new DateTime(2018, 6, 2)),
+            EntitiesFactory.Get().CreatePurchase(7, 2, 5, 61, 2, new DateTime(2018, 6, 2)),
+            EntitiesFactory.Get().CreatePurchase(8, 1, 6, 48, 3, new DateTime(2018, 6, 2)),
+            EntitiesFactory.Get().CreatePurchase(9, 3, 7, 48, 3, new DateTime(2018, 6, 2))
+        };
+
 
         private int? _currentGroup = null;
         private int? _currentItem = null;
         private int? _currentShop= null;
+        private int? _currentPurchase = null;
 
         public Mock<IExpensesRepository> MockDbContext { get; private set; }
 

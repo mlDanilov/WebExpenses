@@ -8,6 +8,9 @@ using DomainExpenses.Abstract;
 
 namespace DomainExpenses.Concrete
 {
+    /// <summary>
+    /// Товар
+    /// </summary>
     public class Item : IItem
     {
         public Item() { }
@@ -53,7 +56,9 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public string Name { get; set; }
     }
-
+    /// <summary>
+    /// Магазин
+    /// </summary>
     public class Shop : IShop
     {
         public Shop() { }
@@ -74,7 +79,9 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public string Address { get; set; }
     }
-
+    /// <summary>
+    /// Покупка
+    /// </summary>
     public class Purchase : IPurchase
     {
         public Purchase() { }
@@ -82,17 +89,30 @@ namespace DomainExpenses.Concrete
         {
             Id = id_;
         }
-
+        /// <summary>
+        /// Уникальный код
+        /// </summary>
         public int Id { get; private set; }
+        /// <summary>
+        /// Код магазина
+        /// </summary>
         public int Shop_Id { get; set; }
-
+        /// <summary>
+        /// Код товара
+        /// </summary>
         public int Item_Id { get; set; }
-
-        public float price { get; set; }
-
-        public float count { get; set; }
-
-        public DateTime Time { get; set; }
+        /// <summary>
+        /// Цена
+        /// </summary>
+        public float Price { get; set; }
+        /// <summary>
+        /// Количество
+        /// </summary>
+        public float Count { get; set; }
+        /// <summary>
+        /// Дата
+        /// </summary>
+        public DateTime Date { get; set; }
     }
 }
 

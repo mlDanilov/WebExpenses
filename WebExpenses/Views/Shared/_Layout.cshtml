@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Groups</title>
+    <title>@ViewData["Title"]</title>
     <link href="~/Content/menu.css" rel="stylesheet" />
     <link href="~/Content/groupsTable.css" rel="stylesheet" />
     <link href="~/Content/itemsTable.css" rel="stylesheet" />
@@ -21,11 +21,15 @@
 <body>
     <div id="root">
         <div id="menu">
-            <div id="groupsAndItems">Группы и товары</div>
-            <div id="shops">
-                @Html.ActionLink("Магазины","ShopList", "Shop");
+            <div id="groupsAndItems">
+                @Html.ActionLink("Группы и товары", "GroupsAndItems", "Group");
             </div>
-            <div id="checks">Чеки</div>
+            <div id="shops">
+                @Html.ActionLink("Магазины","List", "Shop");
+            </div>
+            <div id="purchase">
+                @Html.ActionLink("Покупки", "List", "Purchase")
+            </div>
         </div>
         @RenderBody()
     </div>
