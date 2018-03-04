@@ -72,6 +72,7 @@
     <Compile Include="Concrete\EntitiesFactory.cs" />
     <Compile Include="Concrete\ExpensesDBContext.cs" />
     <Compile Include="Concrete\ExpensesRepository.cs" />
+    <Compile Include="Concrete\PurchaseModule.cs" />
     <Compile Include="Moq\MockBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

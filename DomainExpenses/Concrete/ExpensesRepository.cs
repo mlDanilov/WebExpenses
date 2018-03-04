@@ -10,10 +10,22 @@ namespace DomainExpenses.Concrete
 {
     public class ExpensesRepository : IExpensesRepository
     {
+        /*
+        private ExpensesRepository()
+        {
 
+        }
+        private static ExpensesRepository _instance = new ExpensesRepository();
+        public static ExpensesRepository Get()
+        {
+            if (_instance == null)
+                _instance = new ExpensesRepository();
+            return _instance;
+        }
+        */
         public ExpensesRepository()
         {
-           
+            _purchaseModule = new PurchaseModule(_context.SelectWeeksOfCurrentPeriod);
         }
         /// <summary>
         /// Товары
@@ -55,13 +67,13 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Покупки
         /// </summary>
-        public IQueryable<IPurchase> Purchases
+        public IQueryable<IPurchase> Purchase
         {
             get {
                 return _context.Purchase;
             }
         }
-       
+        public int? CurrentPurchaseId { get; set; }
 
         #region Item
         /// <summary>
@@ -195,8 +207,36 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">уникальный код покупки</param>
         public void DeletePurchase(int id_) => _context.DeletePurchase(id_);
 
+
+        /// <summary>
+        /// Загрузить периоды в которых есть покупки
+        /// </summary>
+        public IQueryable<IPeriod> SelectAllPeriods {
+            get {
+                return _context.SelectAllPeriods.AsQueryable<IPeriod>();
+            }
+        }
+
+        public IQueryable<IWeek> SelectWeeksOfCurrentPeriod()
+        => _purchaseModule.SelectWeeksByPeriod().AsQueryable();
+        
+
+        public DateTime? CurrentDay
+        {
+            get {
+                return _purchaseModule.CurrentDay;
+            }
+            set
+            {
+                _purchaseModule.CurrentDay = value;
+            }
+        }
+
+
         #endregion
 
         private ExpensesDBContext _context = new ExpensesDBContext();
+
+        private PurchaseModule _purchaseModule = null;
     }
 }

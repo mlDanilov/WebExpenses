@@ -22,13 +22,13 @@
     <div id="root">
         <div id="menu">
             <div id="groupsAndItems">
-                @Html.ActionLink("Группы и товары", "GroupsAndItems", "Group");
+                @Html.ActionLink("Группы и товары", "GroupsAndItems", "Group")
             </div>
             <div id="shops">
-                @Html.ActionLink("Магазины","List", "Shop");
+                @Html.ActionLink("Магазины","List", "Shop")
             </div>
             <div id="purchase">
-                @Html.ActionLink("Покупки", "List", "Purchase")
+                @Html.ActionLink("Покупки", "Table", "Purchase")
             </div>
         </div>
         @RenderBody()

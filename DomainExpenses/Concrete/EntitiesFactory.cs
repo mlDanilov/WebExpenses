@@ -60,6 +60,24 @@ namespace DomainExpenses.Concrete
                 Price = price_,
                 Date = date_
             };
+        /// <summary>
+        /// Создать период
+        /// </summary>
+        /// <param name="period_">yyyy-MM-01</param>
+        /// <returns></returns>
+        public IPeriod CreatePeriod(DateTime period_)
+            => new Periond()
+            { Period = new DateTime(period_.Year, period_.Month, 1) };
+
+        /// <summary>
+        /// Создать период
+        /// </summary>
+        /// <param name="period_">yyyy-MM-01</param>
+        /// <returns></returns>
+        public IWeek CreateWeek(DateTime bDate_, DateTime eDate_)
+            => new Week()
+            { BDate = bDate_, EDate = eDate_ };
+
 
         public static EntitiesFactory Get()
         {

@@ -147,6 +147,7 @@
     <Compile Include="Models\Group\MGroupList.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
+    <Compile Include="Models\Purchase\MPeriodList.cs" />
     <Compile Include="Models\Purchase\MPurchase.cs" />
     <Compile Include="Models\Shop\MShopCard.cs" />
     <Compile Include="Models\Shop\MShopList.cs" />
@@ -170,6 +171,7 @@
     <Content Include="Views\Shop\ShopTableBody.cshtml" />
     <Content Include="Views\Shop\ShopCard.cshtml" />
     <Content Include="Views\Purchase\Table.cshtml" />
+    <Content Include="Views\Purchase\PeriodSelect.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

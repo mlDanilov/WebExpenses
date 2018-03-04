@@ -2,16 +2,18 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @{
+                        Html.RenderAction("PeriodSelect");
+                    }
+                </th>
+                
+            </tr>
+        </thead>
+    </table>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>List</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+</div>

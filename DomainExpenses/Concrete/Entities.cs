@@ -114,6 +114,30 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public DateTime Date { get; set; }
     }
+    /// <summary>
+    /// Период "Месяц-Год"
+    /// </summary>
+    public class Periond :  IPeriod
+    {
+        /// <summary>
+        ///  yyyy-MM-01
+        /// </summary>
+        public DateTime Period { get; set; }
+    }
+    /// <summary>
+    /// Неделя
+    /// </summary>
+    public class Week : IWeek
+    {
+        /// <summary>
+        /// Начальная дата
+        /// </summary>
+        public DateTime BDate { get; set; }
+        /// <summary>
+        /// Конечная дата
+        /// </summary>
+        public DateTime EDate { get; set; }
+    }
 }
 
 

@@ -93,4 +93,29 @@ namespace DomainExpenses.Abstract
         /// </summary>
         DateTime Date { get; set; }
     }
+
+    /// <summary>
+    /// Период "Месяц-Год"
+    /// </summary>
+    public interface IPeriod
+    {
+        /// <summary>
+        ///  yyyy-MM-01
+        /// </summary>
+        DateTime Period { get; set; }
+    }
+    /// <summary>
+    /// Неделя 
+    /// </summary>
+    public interface IWeek
+    {
+        /// <summary>
+        /// Начальная дата
+        /// </summary>
+        DateTime BDate { get; set; }
+        /// <summary>
+        /// Конечная дата
+        /// </summary>
+        DateTime EDate { get; set; }
+    }
 }

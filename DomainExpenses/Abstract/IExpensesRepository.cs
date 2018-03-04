@@ -16,10 +16,7 @@ namespace DomainExpenses.Abstract
         /// Группы товаров
         /// </summary>
         IQueryable<IGroup> Group { get; }
-        /// <summary>
-        /// Группы товаров, название содержит все родителские группы, кроме корневой
-        /// </summary>
-        IQueryable<IGroup> GroupExt { get; }
+        
         /// <summary>
         /// Магазины
         /// </summary>
@@ -122,6 +119,11 @@ namespace DomainExpenses.Abstract
         /// <param name="id_">Код группы товаров</param>
         void DeleteGroup(int id_);
 
+        /// <summary>
+        /// Группы товаров, название содержит все родителские группы, кроме корневой
+        /// </summary>
+        IQueryable<IGroup> GroupExt { get; }
+
         #endregion
 
 
@@ -131,6 +133,11 @@ namespace DomainExpenses.Abstract
         /// </summary>
         /// <param name="gId_"></param>
         int? CurrentPurchaseId { get; set; }
+
+        /// <summary>
+        /// Текущий день
+        /// </summary>
+        DateTime? CurrentDay { get; set; }
 
         /// <summary>
         /// Добавить новую покупку
@@ -170,6 +177,23 @@ namespace DomainExpenses.Abstract
         /// </summary>
         /// <param name="id_">уникальный код покупки</param>
         void DeletePurchase(int id_);
+
+        /// <summary>
+        /// Текущий период
+        /// </summary>
+        IPeriod CurrentPeriod { get; set; }
+        /// <summary>
+        /// Текущая неделя
+        /// </summary>
+        IWeek CurrentWeek { get; set; }
+        /// <summary>
+        /// Загрузить периоды в которых есть покупки
+        /// </summary>
+        IQueryable<IPeriod> SelectAllPeriods { get; }
+        /// <summary>
+        /// Загрузить все недели текущего периода
+        /// </summary>
+        IQueryable<IWeek> SelectWeeksOfCurrentPeriod();
 
         #endregion
     }

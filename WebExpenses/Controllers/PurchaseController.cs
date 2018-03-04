@@ -4,12 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using DomainExpenses;
 using DomainExpenses.Abstract;
-using DomainExpenses.Concrete;
 
 using WebExpenses.Models.Item;
 using WebExpenses.Models.Group;
+using WebExpenses.Models.Purchase;
 
 
 namespace WebExpenses.Controllers
@@ -28,9 +27,42 @@ namespace WebExpenses.Controllers
 
         public ActionResult Table()
         {
+            ViewData["Title"] = "Покупки";
             return View();
 
         }
+
+        public PartialViewResult PeriodSelect()
+        {
+            var periods = getPeriodModel();
+            return PartialView("PeriodSelect", periods);
+        }
+
+        private MPeriodList getPeriodModel()
+        {
+            var periodList = _repository.SelectAllPeriods.ToList();
+            var mPeriods = new MPeriodList()
+            {
+                Current = periodList[0],
+                PeriodList = periodList
+            };
+            return mPeriods;
+        }
+
+        private MPeriodList getWeekModel()
+        {
+            var periodList = _repository.SelectAllPeriods.ToList();
+            var mPeriods = new MPeriodList()
+            {
+                Current = periodList[0],
+                PeriodList = periodList
+            };
+            return mPeriods;
+        }
+
+
+
+
 
         private IExpensesRepository _repository = null;
     }
