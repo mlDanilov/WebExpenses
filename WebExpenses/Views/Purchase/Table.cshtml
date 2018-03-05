@@ -6,9 +6,19 @@
     <table>
         <thead>
             <tr>
-                <th>
+                <th id="thPeriod">
                     @{
                         Html.RenderAction("PeriodSelect");
+                    }
+                </th>
+                <th id="thWeek">
+                    @{
+                        Html.RenderAction("WeekSelect");
+                    }
+                </th>
+                <th>
+                    @{ 
+                        Html.RenderAction("DaysOfWeekSelect");
                     }
                 </th>
                 

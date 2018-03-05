@@ -4,16 +4,16 @@
 @{ 
     CultureInfo cInfo = new CultureInfo(this.Culture);
 }
-<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]">
+<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]" onchange="setCurrentPeriod()">
     @foreach (var period in Model.PeriodList)
     {
         if (Model.Current == period)
         {
-            <option value="@period.Period" selected>@period.Period.ToString("MMMM yyyy", cInfo)</option>
+            <option value="@period.Period.ToString("yyyy-MM-dd")" selected>@period.Period.ToString("MMMM yyyy", cInfo)</option>
         }
         else
         {
-            <option value="@period.Period">@period.Period.ToString("MMMM yyyy", cInfo)</option>
+            <option value="@period.Period.ToString("yyyy-MM-dd")">@period.Period.ToString("MMMM yyyy", cInfo)</option>
         }
 
     }

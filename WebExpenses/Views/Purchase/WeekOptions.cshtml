@@ -1,0 +1,16 @@
+﻿@using WebExpenses.Models.Purchase;
+@using System.Globalization;
+@model MWeekList
+
+@foreach (var week in Model.WeekList)
+{
+    if (Model.Current == week)
+    {
+        <option value="@week.BDate.ToString("yyyy-MM-dd")" selected>@week.BDate.ToShortDateString() - @week.EDate.ToShortDateString()</option>
+    }
+    else
+    {
+        <option value="@week.BDate.ToString("yyyy-MM-dd")">@week.BDate.ToShortDateString() - @week.EDate.ToShortDateString()</option>
+    }
+
+}

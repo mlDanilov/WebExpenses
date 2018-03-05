@@ -25,9 +25,14 @@ namespace DomainExpenses.Concrete
         public int? CurrentPurchaseId { get; set; } = null;
 
         /// <summary>
-        /// Текущий выбраный период
+        /// Текущий выбранный период
         /// </summary>
         public IPeriod CurrentPeriod { get; set; } = null;
+
+        /// <summary>
+        /// Текущая выбранная неделя
+        /// </summary>
+        public IWeek CurrentWeek { get; set; } = null;
 
         /// <summary>
         /// Текущий день
@@ -39,10 +44,7 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="month_">Месяц</param>
         /// <returns></returns>
-        public DbRawSqlQuery<Week> SelectWeeksByPeriod()
-        {
-            return _selectWeeksDel(CurrentPeriod.Period);
-        }
+        public DbRawSqlQuery<Week> SelectWeeksByPeriod() => _selectWeeksDel(CurrentPeriod.Period);
         private SelectWeeksDelegate _selectWeeksDel = null;
 
 

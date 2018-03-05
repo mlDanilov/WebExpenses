@@ -211,11 +211,10 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Загрузить периоды в которых есть покупки
         /// </summary>
-        public IQueryable<IPeriod> SelectAllPeriods {
-            get {
+        public IQueryable<IPeriod> SelectAllPeriods ()
+            {
                 return _context.SelectAllPeriods.AsQueryable<IPeriod>();
             }
-        }
 
         public IQueryable<IWeek> SelectWeeksOfCurrentPeriod()
         => _purchaseModule.SelectWeeksByPeriod().AsQueryable();
@@ -231,6 +230,31 @@ namespace DomainExpenses.Concrete
                 _purchaseModule.CurrentDay = value;
             }
         }
+
+        public IPeriod CurrentPeriod
+        {
+            get
+            {
+                return _purchaseModule.CurrentPeriod;
+            }
+            set
+            {
+                _purchaseModule.CurrentPeriod = value;
+            }
+        }
+
+        public IWeek CurrentWeek
+        {
+            get
+            {
+                return _purchaseModule.CurrentWeek;
+            }
+            set
+            {
+                _purchaseModule.CurrentWeek = value;
+            }
+        }
+
 
 
         #endregion

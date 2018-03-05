@@ -37,9 +37,18 @@ namespace DomainExpenses.Moq
             //Список покупок
             MockDbContext.Setup(m => m.Purchase).Returns(_purchaseList.AsQueryable());
             //Список покупок
-            MockDbContext.Setup(m => m.SelectAllPeriods).Returns(_periods.AsQueryable());
+            MockDbContext.Setup(m => m.SelectAllPeriods()).Returns(_periods.AsQueryable());
             //Список недель
-            MockDbContext.Setup(m => m.SelectAllPeriods).Returns(_periods.AsQueryable());
+            MockDbContext.Setup(m => m.SelectWeeksOfCurrentPeriod()).Returns(
+                _weeks.Where(
+                    week => 
+                    ((_currentPeriod.Period.Month == week.BDate.Month) && (_currentPeriod.Period.Year == week.BDate.Year)) ||
+                    ((_currentPeriod.Period.Month == week.EDate.Month) && (_currentPeriod.Period.Year == week.EDate.Year))
+                    )
+                .AsQueryable()
+                
+
+                );
 
 
             // Установить для мока поведения для работы с группами товаров
@@ -305,7 +314,7 @@ namespace DomainExpenses.Moq
 
             //Текущая неделя(get)
             MockDbContext.SetupGet(m => m.CurrentWeek).Returns(
-                      () => _currentWeek);
+                      () =>_currentWeek );
         }
 
         public static MockBus Get()
@@ -315,6 +324,8 @@ namespace DomainExpenses.Moq
             return _mBus;
 
         }
+
+        #region eintity lists
         /// <summary>
         /// Список товаров
         /// </summary>
@@ -415,7 +426,6 @@ namespace DomainExpenses.Moq
             EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 27), new DateTime(2017, 12, 3)),
 
             //Декабрь 2017
-            EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 27), new DateTime(2017, 12, 3)),
             EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 4), new DateTime(2017, 12, 10)),
             EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 11), new DateTime(2017, 12, 17)),
             EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 18), new DateTime(2017, 12, 24)),
@@ -429,6 +439,8 @@ namespace DomainExpenses.Moq
             EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 29), new DateTime(2018, 2, 4))
 
         };
+
+        #endregion
 
 
         private int? _currentGroup = null;

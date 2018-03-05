@@ -189,7 +189,7 @@ namespace DomainExpenses.Abstract
         /// <summary>
         /// Загрузить периоды в которых есть покупки
         /// </summary>
-        IQueryable<IPeriod> SelectAllPeriods { get; }
+        IQueryable<IPeriod> SelectAllPeriods();
         /// <summary>
         /// Загрузить все недели текущего периода
         /// </summary>

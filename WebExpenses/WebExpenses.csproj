@@ -131,6 +131,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\shops.js" />
+    <Content Include="Scripts\periodsAndWeeks.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -147,8 +148,10 @@
     <Compile Include="Models\Group\MGroupList.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
+    <Compile Include="Models\Purchase\MDayOfWeek.cs" />
     <Compile Include="Models\Purchase\MPeriodList.cs" />
     <Compile Include="Models\Purchase\MPurchase.cs" />
+    <Compile Include="Models\Purchase\MWeekList.cs" />
     <Compile Include="Models\Shop\MShopCard.cs" />
     <Compile Include="Models\Shop\MShopList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +175,9 @@
     <Content Include="Views\Shop\ShopCard.cshtml" />
     <Content Include="Views\Purchase\Table.cshtml" />
     <Content Include="Views\Purchase\PeriodSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekOptions.cshtml" />
+    <Content Include="Views\Purchase\DaysOfWeekSelect.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
