@@ -25,7 +25,7 @@ namespace WebExpenses.Controllers
             _repository = rep_;
         }
 
-
+        #region Period, Weeks, Days
         public ActionResult Table()
         {
             ViewData["Title"] = "Покупки";
@@ -55,9 +55,9 @@ namespace WebExpenses.Controllers
 
         public PartialViewResult DaysOfWeekSelect()
         {
-            DateTime bDate = _repository.CurrentWeek.BDate;
-            DateTime eDate = _repository.CurrentWeek.EDate;
-            List<DateTime> days = new List<DateTime>();
+            var bDate = _repository.CurrentWeek.BDate;
+            var eDate = _repository.CurrentWeek.EDate;
+            var days = new List<DateTime>();
 
             while (bDate != eDate)
             {
@@ -67,8 +67,6 @@ namespace WebExpenses.Controllers
             days.Add(eDate);
             return PartialView("DaysOfWeekSelect", days);
         }
-
-
 
         public void SetCurrentWeekByBDate(object bDate_)
         {
@@ -87,19 +85,21 @@ namespace WebExpenses.Controllers
 
         }
 
-        public void SetCurrentDay(int dayOfWeek_)
+        public void SetCurrentDay(object dayOfWeek_)
         {
+            object[] array = dayOfWeek_ as object[];
+            int dayOfWeek = Convert.ToInt32(array[0]);
             //За все дни недели
-            if (dayOfWeek_ == 0)
+            if (dayOfWeek == 0)
                 _repository.CurrentDay = null;
 
             DateTime day = _repository.CurrentWeek.BDate;
-            while ((int)day.DayOfWeek != dayOfWeek_)
+            while ((int)day.DayOfWeek != dayOfWeek)
             {
                 day = day.AddDays(1);
             }
 
-            //_repository.CurrentWeek
+            _repository.CurrentDay = day;
         }
 
         /// <summary>
@@ -138,6 +138,45 @@ namespace WebExpenses.Controllers
                 WeekList = weekList
             };
             return mWeeks;
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Вид, отображающий суммы расходов, сгруппированных по группам товаров
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult WeekPurchaseSumByGroupTotal()
+        {
+            var weekPurchSumList = new List<MWeekPurchaseSumByGroup>();
+
+            IWeek week = _repository.CurrentWeek;
+            var purchases = _repository.SelectPurchaseByWeek(week);
+
+            var res =
+                (from g in _repository.GroupExt
+                 join gSum in
+                (from p in purchases
+                 join it in _repository.Item on p.Item_Id equals it.Id
+                 join g in _repository.Group on it.GId equals g.Id
+                 group p by it.GId into pG
+                 select new { GroupId = pG.Key, Sum = pG.Sum(p => p.Price * p.Count) }
+                       ) on g.Id equals gSum.GroupId
+                 select new { GroupId = gSum.GroupId, GroupName = g.Name, Sum = gSum.Sum });
+            /*
+            var res = (from p in purchases
+                           join it in _repository.Item on p.Item_Id equals it.Id
+                           join g in _repository.Group on it.GId equals g.Id
+                       select p
+                      );
+            */
+            var list = res.ToList();
+            foreach (var p in list)
+            {
+
+            }
+            return PartialView("WeekPurchaseSumByGroupTotal");
         }
 
         private IExpensesRepository _repository = null;

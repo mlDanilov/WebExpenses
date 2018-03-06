@@ -151,6 +151,7 @@
     <Compile Include="Models\Purchase\MDayOfWeek.cs" />
     <Compile Include="Models\Purchase\MPeriodList.cs" />
     <Compile Include="Models\Purchase\MPurchase.cs" />
+    <Compile Include="Models\Purchase\MWeekPurchaseSumByGroup.cs" />
     <Compile Include="Models\Purchase\MWeekList.cs" />
     <Compile Include="Models\Shop\MShopCard.cs" />
     <Compile Include="Models\Shop\MShopList.cs" />
@@ -178,6 +179,7 @@
     <Content Include="Views\Purchase\WeekSelect.cshtml" />
     <Content Include="Views\Purchase\WeekOptions.cshtml" />
     <Content Include="Views\Purchase\DaysOfWeekSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekPurchaseSumByGroupTotal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

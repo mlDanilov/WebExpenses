@@ -46,9 +46,11 @@ namespace DomainExpenses.Moq
                     ((_currentPeriod.Period.Month == week.EDate.Month) && (_currentPeriod.Period.Year == week.EDate.Year))
                     )
                 .AsQueryable()
-                
-
                 );
+            //Получить все покупки за неделю
+            MockDbContext.Setup(m => m.SelectPurchaseByWeek(It.IsAny<IWeek>())).Returns
+                ((IWeek week_) => { return SelectPurchaseByWeek(week_); });
+
 
 
             // Установить для мока поведения для работы с группами товаров
@@ -323,6 +325,42 @@ namespace DomainExpenses.Moq
                 _mBus = new MockBus();
             return _mBus;
 
+        }
+
+        /// <summary>
+        /// Получить все подгруппы выбранной группы
+        /// </summary>
+        /// <param name="parent_">родительская группа</param>
+        /// <returns></returns>
+        private void selectSubGroupByParent(IGroup parent_, ref List<IGroup> subGroupList_)
+        {
+            var gEnum = _groupsList.Where(g => g.IdParent == parent_.Id).ToList();
+            subGroupList_.AddRange(gEnum);
+
+            foreach (IGroup g in _groupsList)
+                selectSubGroupByParent(g, ref subGroupList_);
+        }
+
+        // private List<IPurchase> SelectPurchasesBy
+        public IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
+        {
+            /*
+            var groups = new List<IGroup>();
+            var mainGroup = _groupsList.Where(g => g.IdParent == null).FirstOrDefault();
+            if (mainGroup == null)
+                return null;
+
+            selectSubGroupByParent(mainGroup, ref groups);
+            var gIdList = new List<int>();
+            groups.ForEach(g => gIdList.Add(g.Id));
+
+            var items = _itemList.Where(it => gIdList.Contains(it.GId)).ToList();
+            */
+            var purchases =
+                _purchaseList.Where(
+                    p => (p.Date > week_.BDate) &&
+                    (p.Date < week_.EDate)).AsQueryable();
+            return purchases;
         }
 
         #region eintity lists

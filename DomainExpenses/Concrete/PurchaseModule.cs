@@ -44,10 +44,9 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="month_">Месяц</param>
         /// <returns></returns>
-        public DbRawSqlQuery<Week> SelectWeeksByPeriod() => _selectWeeksDel(CurrentPeriod.Period);
+        public DbRawSqlQuery<Week> SelectWeeksByPeriod() => _selectWeeksDel(CurrentPeriod);
         private SelectWeeksDelegate _selectWeeksDel = null;
 
-
-        public delegate DbRawSqlQuery<Week> SelectWeeksDelegate(DateTime month_);
+        public delegate DbRawSqlQuery<Week> SelectWeeksDelegate(IPeriod period_);
     }
 }

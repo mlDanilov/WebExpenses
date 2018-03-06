@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using DomainExpenses.Abstract;
 
+
+
 namespace DomainExpenses.Concrete
 {
     public class ExpensesRepository : IExpensesRepository
@@ -211,14 +213,17 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Загрузить периоды в которых есть покупки
         /// </summary>
-        public IQueryable<IPeriod> SelectAllPeriods ()
-            {
-                return _context.SelectAllPeriods.AsQueryable<IPeriod>();
-            }
+        public IQueryable<IPeriod> SelectAllPeriods()
+            => _context.SelectAllPeriods().AsQueryable<IPeriod>();
 
         public IQueryable<IWeek> SelectWeeksOfCurrentPeriod()
         => _purchaseModule.SelectWeeksByPeriod().AsQueryable();
-        
+
+
+        public IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
+                    => _context.SelectPurchaseByWeek(week_).AsQueryable();
+
+
 
         public DateTime? CurrentDay
         {

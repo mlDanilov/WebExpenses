@@ -195,6 +195,11 @@ namespace DomainExpenses.Abstract
         /// </summary>
         IQueryable<IWeek> SelectWeeksOfCurrentPeriod();
 
+
+        IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_);
+
+        IQueryable<IPurchase> SelectPurchaseByDate(DateTime day_);
+
         #endregion
     }
 }

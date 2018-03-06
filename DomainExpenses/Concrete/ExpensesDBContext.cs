@@ -188,16 +188,22 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Получить все периоды
         /// </summary>
-        public DbRawSqlQuery<Periond> SelectAllPeriods
+        public DbRawSqlQuery<Periond> SelectAllPeriods()
         {
-            get
-            {
-                return Database.SqlQuery<Periond>("SelectAllPeriods");
-            }
+            return Database.SqlQuery<Periond>("SelectAllPeriods");
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="month_"></param>
+        /// <returns></returns>
+        public DbRawSqlQuery<Week> SelectWeeksOfCurrentPeriod(IPeriod period_)
+        => Database.SqlQuery<Week>("SelectWeeksByMonth", period_.Period);
 
-        public DbRawSqlQuery<Week> SelectWeeksOfCurrentPeriod(DateTime month_)
-        => Database.SqlQuery<Week>("SelectWeeksByMonth", month_);
+        public DbRawSqlQuery<Purchase> SelectPurchaseByWeek(IWeek week_)
+        => Database.SqlQuery<Purchase>("SelectPurchaseByWeek", week_);
+
+
         #endregion
     }
 }
