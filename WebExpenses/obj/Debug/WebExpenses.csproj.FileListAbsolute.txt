@@ -47,6 +47,7 @@ C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses
 C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.csprojResolveAssemblyReference.cache
 C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.dll
 C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.pdb
+C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.csprojResolveAssemblyReference.cache
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\roslyn\csc.exe
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -93,6 +94,5 @@ C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Webpages.Razor.xml
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Helpers.xml
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Mvc.xml
-C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.csprojResolveAssemblyReference.cache
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.dll
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.pdb

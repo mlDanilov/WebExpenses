@@ -47,9 +47,7 @@ namespace DomainExpenses.Moq
                     )
                 .AsQueryable()
                 );
-            //Получить все покупки за неделю
-            MockDbContext.Setup(m => m.SelectPurchaseByWeek(It.IsAny<IWeek>())).Returns
-                ((IWeek week_) => { return SelectPurchaseByWeek(week_); });
+          
 
 
 
@@ -238,15 +236,15 @@ namespace DomainExpenses.Moq
 
             //Добавить новый магазин
             MockDbContext.Setup<IPurchase>(m => m.AddNewPurchase(
-                It.IsAny<int>(), 
+                It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<float>(),
                 It.IsAny<float>(),
                 It.IsAny<DateTime>()))
                 .Returns(
-            (int shopId_, int itemId_,  float price_, float count_, DateTime date_) =>
+            (int shopId_, int itemId_, float price_, float count_, DateTime date_) =>
             {
-                var purchase = fBus.CreatePurchase(_purchaseList.Max(p => p.Id) + 1, 
+                var purchase = fBus.CreatePurchase(_purchaseList.Max(p => p.Id) + 1,
                     shopId_, itemId_, price_, count_, date_);
                 _purchaseList.Add(purchase);
                 MockDbContext.Setup(m => m.Purchase).Returns(_purchaseList.AsQueryable());
@@ -294,7 +292,8 @@ namespace DomainExpenses.Moq
 
             //Текущий период(set)
             MockDbContext.SetupSet(m => m.CurrentPeriod = It.IsAny<IPeriod>()).Callback(
-                (IPeriod period_) => {
+                (IPeriod period_) =>
+                {
                     _currentPeriod = period_;
                     MockDbContext.SetupGet(m => m.CurrentPeriod).Returns(
                       () => _currentPeriod);
@@ -307,7 +306,8 @@ namespace DomainExpenses.Moq
 
             //Текущая неделя(set)
             MockDbContext.SetupSet(m => m.CurrentWeek = It.IsAny<IWeek>()).Callback(
-                (IWeek week_) => {
+                (IWeek week_) =>
+                {
                     _currentWeek = week_;
                     MockDbContext.SetupGet(m => m.CurrentWeek).Returns(
                       () => _currentWeek);
@@ -316,7 +316,29 @@ namespace DomainExpenses.Moq
 
             //Текущая неделя(get)
             MockDbContext.SetupGet(m => m.CurrentWeek).Returns(
-                      () =>_currentWeek );
+                      () => _currentWeek);
+
+            //Текущий день (get)
+            MockDbContext.SetupGet(m => m.CurrentDay).Returns(
+                   () => _currentDay);
+
+            //Текущий день (set)
+            MockDbContext.SetupSet(m => m.CurrentDay = It.IsAny<DateTime?>()).Callback(
+                   (DateTime? day_) =>
+                   {
+                       _currentDay = day_;
+                       MockDbContext.SetupGet(m => m.CurrentDay).Returns(
+                    () => _currentDay);
+                   }
+                   );
+
+            //Получить все покупки за неделю
+            MockDbContext.Setup(m => m.SelectPurchaseByWeek(It.IsAny<IWeek>())).Returns
+                ((IWeek week_) => { return SelectPurchaseByWeek(week_); });
+            //Получить все покупки за день
+            MockDbContext.Setup(m => m.SelectPurchaseByDate(It.IsAny<DateTime>())).Returns(
+                (DateTime day_) => { return SelectPurchaseByDay(day_); });
+
         }
 
         public static MockBus Get()
@@ -341,25 +363,30 @@ namespace DomainExpenses.Moq
                 selectSubGroupByParent(g, ref subGroupList_);
         }
 
+        /// <summary>
+        /// Получить все покупки за неделю
+        /// </summary>
+        /// <param name="week_"></param>
+        /// <returns></returns>
         // private List<IPurchase> SelectPurchasesBy
-        public IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
+        private IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
         {
-            /*
-            var groups = new List<IGroup>();
-            var mainGroup = _groupsList.Where(g => g.IdParent == null).FirstOrDefault();
-            if (mainGroup == null)
-                return null;
-
-            selectSubGroupByParent(mainGroup, ref groups);
-            var gIdList = new List<int>();
-            groups.ForEach(g => gIdList.Add(g.Id));
-
-            var items = _itemList.Where(it => gIdList.Contains(it.GId)).ToList();
-            */
             var purchases =
                 _purchaseList.Where(
-                    p => (p.Date > week_.BDate) &&
-                    (p.Date < week_.EDate)).AsQueryable();
+                    p => (p.Date >= week_.BDate) &&
+                    (p.Date <= week_.EDate)).AsQueryable();
+            return purchases;
+        }
+
+        /// <summary>
+        /// Получить все покупки за день
+        /// </summary>
+        /// <param name="day_"></param>
+        /// <returns></returns>
+        public IQueryable<IPurchase> SelectPurchaseByDay(DateTime day_)
+        {
+            var purchases =
+                _purchaseList.Where(p => (p.Date == day_)).AsQueryable();
             return purchases;
         }
 
@@ -488,6 +515,7 @@ namespace DomainExpenses.Moq
 
         private IPeriod _currentPeriod = null;
         private IWeek _currentWeek = null;
+        private DateTime? _currentDay = null;
 
         public Mock<IExpensesRepository> MockDbContext { get; private set; }
 

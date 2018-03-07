@@ -13,19 +13,22 @@ function setCurrentPeriod() {
         data: { period_: period.toLocaleDateString() },
         //data: { bDate_: bDate },
         success: replaceWeekSelect,
-        error: function () { consol.log('/Purchase/SetCurrentPeriod ошибка'); }
+        error: function () { console.log('/Purchase/SetCurrentPeriod ошибка'); }
     });
 }
 //Установить выбранную неделю в контроллер
 //в качестве текущей
 //и обновить select с днями недели
 function setCurrentWeek() {
-    var bDate = new Date($("#week").val());
-
+    var value = $("#week").val();
+    
+    var bDate = new Date(value);
+    
     $.ajax({
         async: false,
         url: "/Purchase/SetCurrentWeekByBDate",
         data: { bDate_: bDate.toLocaleDateString() },
+        //data: { bDate_: bDate },
         success: replaceDaysOfWeekSelect,
         error: function () { console.log('/Purchase/SetCurrentWeekByBDate ошибка'); }
     });
@@ -35,8 +38,8 @@ function setCurrentWeek() {
 function setCurrentDayOfWeek() {
 
     var dayofweek = $("#daysOfWeek").val();
-    var dayofweekInt = 0;
-    if (dayofweek != 0)
+    var dayofweekInt = -1;
+    if (dayofweek != -1)
         dayofweekInt = new Date(dayofweek).getDay();
 
     console.log(dayofweekInt);
@@ -45,6 +48,7 @@ function setCurrentDayOfWeek() {
         url: "/Purchase/SetCurrentDay",
         data: { dayOfWeek_: dayofweekInt },
         success: function () {
+            replacePurchaseTable();
             console.log("/Purchase/SetCurrentDay успех");
         },
         error: function () {
@@ -95,6 +99,23 @@ function replaceDaysOfWeekSelect()
 
     setCurrentDayOfWeek();
 
+}
+//Обновить таблицу расходов
+function replacePurchaseTable()
+{
+    $.ajax({
+        async: false,
+        url: "/Purchase/WeekPurchaseSumByGroupTotal",
+        success: function (result) {
+            var purchTable = $('#purchTBody')[0];
+            purchTable.innerHTML = result;
+
+            console.log('/Purchase/WeekPurchaseSumByGroupTotal успех');
+        },
+        error: function () {
+            console.log('/Purchase/WeekPurchaseSumByGroupTotal ошибка');
+        }
+    })
 }
 
 

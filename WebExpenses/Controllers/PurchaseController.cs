@@ -90,8 +90,11 @@ namespace WebExpenses.Controllers
             object[] array = dayOfWeek_ as object[];
             int dayOfWeek = Convert.ToInt32(array[0]);
             //За все дни недели
-            if (dayOfWeek == 0)
+            if (dayOfWeek == -1)
+            {
                 _repository.CurrentDay = null;
+                return;
+            }
 
             DateTime day = _repository.CurrentWeek.BDate;
             while ((int)day.DayOfWeek != dayOfWeek)
@@ -142,41 +145,94 @@ namespace WebExpenses.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Сумма расходов по группам за текущую выбранную неделю
+        /// </summary>
+        /// <returns></returns>
+        private IQueryable<MWeekPurchaseSumByGroup> weekPurchSumByGroupTotal()
+        {
+            var weekPurchSumList = new List<MWeekPurchaseSumByGroup>();
 
+            IWeek week = _repository.CurrentWeek;
+            var purchases = _repository.SelectPurchaseByWeek(week);
+            //Суммы затрат по группам за неделю
+            var groupSum = (from p in purchases
+                            join it in _repository.Item on p.Item_Id equals it.Id
+                            join g in _repository.Group on it.GId equals g.Id
+                            group p by it.GId into pG
+                            select new { GroupId = pG.Key, Sum = pG.Sum(p => p.Price * p.Count) }
+                       );
+            //результат
+            var res =
+                (from g in _repository.GroupExt
+                 join gSum in groupSum
+                 on g.Id equals gSum.GroupId
+                 select
+                 new
+                   MWeekPurchaseSumByGroup(week,
+                   g)
+                 { Sum = gSum.Sum });
+            return res;
+        }
+        private IQueryable<MDayPurchaseSumByGroup> dayPurchSumByGroupTotal()
+        {
+            var weekPurchSumList = new List<MWeekPurchaseSumByGroup>();
+
+            DateTime? date = _repository.CurrentDay;
+            if (date == null)
+                throw new Exception("такого не может быть");
+
+            var purchases = _repository.SelectPurchaseByDate(date.Value);
+            //Суммы затрат по группам за неделю
+            var groupSum = (from p in purchases
+                            join it in _repository.Item on p.Item_Id equals it.Id
+                            join g in _repository.Group on it.GId equals g.Id
+                            group p by it.GId into pG
+                            select new { GroupId = pG.Key, Sum = pG.Sum(p => p.Price * p.Count) }
+                       );
+            //результат
+            var res =
+                (from g in _repository.GroupExt
+                 join gSum in groupSum
+                 on g.Id equals gSum.GroupId
+                 select
+                 new
+                   MDayPurchaseSumByGroup(date.Value,
+                   g)
+                 { Sum = gSum.Sum });
+            return res;
+        }
         /// <summary>
         /// Вид, отображающий суммы расходов, сгруппированных по группам товаров
         /// </summary>
         /// <returns></returns>
         public PartialViewResult WeekPurchaseSumByGroupTotal()
         {
-            var weekPurchSumList = new List<MWeekPurchaseSumByGroup>();
-
-            IWeek week = _repository.CurrentWeek;
-            var purchases = _repository.SelectPurchaseByWeek(week);
-
-            var res =
-                (from g in _repository.GroupExt
-                 join gSum in
-                (from p in purchases
-                 join it in _repository.Item on p.Item_Id equals it.Id
-                 join g in _repository.Group on it.GId equals g.Id
-                 group p by it.GId into pG
-                 select new { GroupId = pG.Key, Sum = pG.Sum(p => p.Price * p.Count) }
-                       ) on g.Id equals gSum.GroupId
-                 select new { GroupId = gSum.GroupId, GroupName = g.Name, Sum = gSum.Sum });
-            /*
-            var res = (from p in purchases
-                           join it in _repository.Item on p.Item_Id equals it.Id
-                           join g in _repository.Group on it.GId equals g.Id
-                       select p
-                      );
-            */
-            var list = res.ToList();
-            foreach (var p in list)
+            if (_repository.CurrentDay == null)
             {
-
+                IQueryable<MWeekPurchaseSumByGroup> purchTotal = weekPurchSumByGroupTotal();
+                var list = purchTotal.ToList();
+                return PartialView("WeekPurchaseSumByGroupTotal", list);
             }
-            return PartialView("WeekPurchaseSumByGroupTotal");
+            else
+            {
+                IQueryable<MDayPurchaseSumByGroup> purchTotal = dayPurchSumByGroupTotal();
+                var list = purchTotal.ToList();
+                return PartialView("DayPurchaseSumByGroupTotal", list);
+            }
+
+            
+        }
+
+        public PartialViewResult InnerPurchases()
+        {
+
+            var week = _repository.CurrentWeek;
+            var purch =  _repository.SelectPurchaseByWeek(week);
+
+            //IQueryable<IPurchase> SelectPurchaseByDate(DateTime day_);
+            return PartialView("Rows");
+
         }
 
         private IExpensesRepository _repository = null;

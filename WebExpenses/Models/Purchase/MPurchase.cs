@@ -33,6 +33,11 @@ namespace WebExpenses.Models.Purchase
         /// Код товара
         /// </summary>
         public int Item_Id { get; set; }
+
+        /// <summary>
+        /// Название товара
+        /// </summary>
+        public string ItemName { get; set; }
         /// <summary>
         /// Код группы
         /// </summary>
@@ -42,10 +47,7 @@ namespace WebExpenses.Models.Purchase
         /// Название группы с родительскими группами кроме корневой
         /// </summary>
         public int GroupExtName { get; set; }
-        /// <summary>
-        /// Название товара
-        /// </summary>
-        public string ItemName { get; set; }
+       
         /// <summary>
         /// Цена
         /// </summary>

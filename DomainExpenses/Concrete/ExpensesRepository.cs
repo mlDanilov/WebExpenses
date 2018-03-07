@@ -215,13 +215,27 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public IQueryable<IPeriod> SelectAllPeriods()
             => _context.SelectAllPeriods().AsQueryable<IPeriod>();
-
+        /// <summary>
+        /// Получить все недели текущего периода
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<IWeek> SelectWeeksOfCurrentPeriod()
         => _purchaseModule.SelectWeeksByPeriod().AsQueryable();
 
-
+        /// <summary>
+        /// Получить все расходы за неделю
+        /// </summary>
+        /// <param name="week_"></param>
+        /// <returns></returns>
         public IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
                     => _context.SelectPurchaseByWeek(week_).AsQueryable();
+        /// <summary>
+        /// Получить все расходы за день
+        /// </summary>
+        /// <param name="date_"></param>
+        /// <returns></returns>
+        public IQueryable<IPurchase> SelectPurchaseByDate(DateTime date_)
+                   => _context.SelectPurchaseByDay(date_).AsQueryable();
 
 
 

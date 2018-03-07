@@ -1,0 +1,13 @@
+﻿div#header {
+  padding: 3px;    
+    margin: 3px;    
+    background: #feae6a;
+}
+
+div#header select{
+    margin-left: 3px;                
+}
+
+tbody#purchTBody .wPurchGroupSum{
+    text-align: right
+}

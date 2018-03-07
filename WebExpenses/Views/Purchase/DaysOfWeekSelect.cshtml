@@ -5,11 +5,11 @@
     CultureInfo cInfo = new CultureInfo("ru-RU");
 }
 <select id="daysOfWeek" name="daysOfWeek" onchange="setCurrentDayOfWeek()">
-    <option value="0">-</option>
+    <option value="-1">-</option>
    
     @foreach (DateTime date in @Model)
     {
-        <option value=@date.ToString("yyyy-MM-dd")>@cInfo.DateTimeFormat.GetAbbreviatedDayName(date.DayOfWeek) - @date.ToShortDateString()</option>
+        <option value=@date.ToString("yyyy-MM-dd")>@cInfo.DateTimeFormat.GetAbbreviatedDayName(date.DayOfWeek) - @date.ToShortDateString().TrimEnd(' ')</option>
     } 
     <!--option value="2">ПН</!--option>
     <option value="3">ВТ</option>

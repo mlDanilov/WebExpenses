@@ -2,37 +2,39 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <table>
+<div id="header">
+        @{
+            Html.RenderAction("PeriodSelect");
+        }
+        @{
+            Html.RenderAction("WeekSelect");
+        }
+        @{
+            Html.RenderAction("DaysOfWeekSelect");
+        }
+</div>
+    <table id="purchTable">
         <thead>
             <tr>
-                <th id="thPeriod">
-                    @{
-                        Html.RenderAction("PeriodSelect");
-                    }
-                </th>
-                <th id="thWeek">
-                    @{
-                        Html.RenderAction("WeekSelect");
-                    }
+                <th>
                 </th>
                 <th>
-                    @{ 
-                        Html.RenderAction("DaysOfWeekSelect");
-                    }
+                    Код
                 </th>
-                
+                <th>
+                    Группа
+                </th>
+                <th>
+                    Сумма, руб
+                </th>
+                <th>
+
+                </th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th>
-                    @{ 
+        <tbody id="purchTBody">
+                    @{
                         Html.RenderAction("WeekPurchaseSumByGroupTotal");
-                    }
-                </th>
-            </tr>
+                     };
         </tbody>
     </table>
-
-</div>
