@@ -12,6 +12,10 @@ namespace WebExpenses.Models.Purchase
     /// </summary>
     public class MWeekPurchaseSumByGroup
     {
+        public MWeekPurchaseSumByGroup()
+        {
+
+        }
         public MWeekPurchaseSumByGroup(IWeek week_, IGroup group_)
         {
             Week = week_;
@@ -20,11 +24,11 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Неделя
         /// </summary>
-        public IWeek Week { get; private set; }
+        public IWeek Week { get; set; }
         /// <summary>
         /// Группа
         /// </summary>
-        public IGroup Group { get; private set; }
+        public IGroup Group { get; set; }
 
         /// <summary>
         /// Сумма

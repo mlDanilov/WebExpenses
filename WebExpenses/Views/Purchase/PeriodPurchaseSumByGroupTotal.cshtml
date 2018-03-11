@@ -1,7 +1,7 @@
-﻿@using DomainExpenses.Abstract;
-@using WebExpenses.Models.Purchase;
+﻿@using WebExpenses.Models.Purchase;
+@using DomainExpenses.Abstract;
 
-@model List<MPurchaseSumByGroup<IWeek>>
+@model List<MPurchaseSumByGroup<IPeriod>>
 
 
 @for (int i = 0; i < @Model.Count; i++)
@@ -11,15 +11,15 @@
         <th class="wPurchGroupId">@Model[i].Group.Id</th>
         <th class="wPurchGroupName">@Model[i].Group.Name</th>
         <th class="wPurchGroupSum">@Model[i].Sum.ToString("### ##0.00").TrimStart(' ')</th>
-        <th class="wPurchGroupDetail">Подробнее</th>
+        <th class="wPurchGroupDetail">Свернуть</th>
     </tr>
     <tr>
         @{
             Html.RenderAction("InnerPurchasesByGId", new { gId_ = Model[i].Group.Id });
-        }
+         }
     </tr>
-
 }
+
 
 <script>
     setPurchaseDetailClickHandler();

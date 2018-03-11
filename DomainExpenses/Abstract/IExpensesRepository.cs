@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DomainExpenses.Concrete
+     
+
 namespace DomainExpenses.Abstract
 {
     public interface IExpensesRepository
@@ -11,21 +14,21 @@ namespace DomainExpenses.Abstract
         /// <summary>
         /// Товары
         /// </summary>
-        IQueryable<IItem> Item { get; }
+        IQueryable<Item> Item { get; }
         /// <summary>
         /// Группы товаров
         /// </summary>
-        IQueryable<IGroup> Group { get; }
+        IQueryable<Group> Group { get; }
         
         /// <summary>
         /// Магазины
         /// </summary>
-        IQueryable<IShop> Shop { get; }
+        IQueryable<Shop> Shop { get; }
 
         /// <summary>
         /// Покупки
         /// </summary>
-        IQueryable<IPurchase> Purchase { get; }
+        IQueryable<Purchase> Purchase { get; }
 
 
 
@@ -135,6 +138,12 @@ namespace DomainExpenses.Abstract
         int? CurrentPurchaseId { get; set; }
 
         /// <summary>
+        /// Текущая группа товаров покупок
+        /// </summary>
+        int? CurrentPurchaseGId { get; set; }
+
+
+        /// <summary>
         /// Текущий день
         /// </summary>
         DateTime? CurrentDay { get; set; }
@@ -196,7 +205,9 @@ namespace DomainExpenses.Abstract
         IQueryable<IWeek> SelectWeeksOfCurrentPeriod();
 
 
-        IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_);
+        IQueryable<IPurchase> SelectPurchasesByPeriod(IPeriod period_);
+
+        IQueryable<IPurchase> SelectPurchasesByWeek(IWeek week_);
 
         IQueryable<IPurchase> SelectPurchaseByDate(DateTime day_);
 

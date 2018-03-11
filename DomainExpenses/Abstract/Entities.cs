@@ -75,7 +75,7 @@ namespace DomainExpenses.Abstract
         /// <summary>
         /// Код магазина
         /// </summary>
-        int Shop_Id { get; set; }
+        int? Shop_Id { get; set; }
         /// <summary>
         /// Код товара
         /// </summary>
@@ -102,7 +102,7 @@ namespace DomainExpenses.Abstract
         /// <summary>
         ///  yyyy-MM-01
         /// </summary>
-        DateTime Period { get; set; }
+        DateTime MonthYear { get; set; }
     }
     /// <summary>
     /// Неделя 

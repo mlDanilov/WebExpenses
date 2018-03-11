@@ -1,10 +1,14 @@
 ﻿using DomainExpenses.Abstract;
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
+
+
 
 
 namespace DomainExpenses.Concrete
@@ -43,9 +47,15 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">Название</param>
         /// <param name="gId_">родительская группа</param>
         /// <returns></returns>
-        public Task<Item> AddNewItem(string name_, int gId_)
+        public Task<Item> AddItem(string name_, int gId_)
         {
-            var rQuery = Database.SqlQuery<Item>("AddItem", name_, gId_);
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pGId = new SqlParameter("@GId", System.Data.SqlDbType.Int)
+            { Value = gId_ };
+
+            var rQuery = Database.SqlQuery<Item>("exec AddItem @Name, @GId", pName, pGId);
             return rQuery.FirstOrDefaultAsync();
         }
         /// <summary>
@@ -56,7 +66,16 @@ namespace DomainExpenses.Concrete
         /// <param name="gId_">Новый код группы товаров</param>
         public void EditItem(int id_, string name_, int gId_)
         {
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
 
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pGId = new SqlParameter("@GId", System.Data.SqlDbType.Int)
+            { Value = gId_ };
+
+            var rQuery = Database.ExecuteSqlCommand("exec EditItem @Id, @Name, @GId", pId, pName, pGId);
         }
         /// <summary>
         /// Удалить товар
@@ -64,7 +83,9 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">Код товара</param>
         public void DeleteItem(int id_)
         {
-
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
+            Database.ExecuteSqlCommand("exec DeleteItem @Id", pId);
         }
 
         #endregion
@@ -78,7 +99,13 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public Task<Group> AddNewGroup(string name_, int gId_)
         {
-            var rQuery = Database.SqlQuery<Group>("AddGroup", name_, gId_);
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pGId = new SqlParameter("@IdParent", System.Data.SqlDbType.Int)
+            { Value = gId_ };
+
+            var rQuery = Database.SqlQuery<Group>("exec AddGroup @Name, @IdParent", pName, pGId);
             return rQuery.FirstOrDefaultAsync();
         }
 
@@ -91,6 +118,16 @@ namespace DomainExpenses.Concrete
         /// <param name="parentGroupId_">Новый код родительской группы</param>
         public void EditGroup(int id_, string name_, int parentGroupId_)
         {
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
+
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pIdParent = new SqlParameter("@IdParent", System.Data.SqlDbType.Int)
+            { Value = parentGroupId_ };
+
+            var rQuery = Database.ExecuteSqlCommand("exec EditGroup @Id, @IdParent, @Name", pId, pIdParent, pName);
         }
         /// <summary>
         /// Удалить группу товаров
@@ -98,6 +135,9 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">Код группы товаров</param>
         public void DeleteGroup(int id_)
         {
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
+            Database.ExecuteSqlCommand("exec DeleteGroup @Id", pId);
         }
 
         #endregion
@@ -111,7 +151,13 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public Task<Shop> AddNewShop(string name_, string address_)
         {
-            var rQuery = Database.SqlQuery<Shop>("AddShop", name_, address_);
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pAddress = new SqlParameter("@Address", System.Data.SqlDbType.Char)
+            { Value = address_ };
+
+            var rQuery = Database.SqlQuery<Shop>("exec AddShop @Name, @Address", pName, pAddress);
             return rQuery.FirstOrDefaultAsync();
         }
         /// <summary>
@@ -122,7 +168,16 @@ namespace DomainExpenses.Concrete
         /// <param name="gId_">Новый адрес</param>
         public void EditShop(int id_, string name_, string address_)
         {
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
 
+            var pName = new SqlParameter("@Name", System.Data.SqlDbType.Char)
+            { Value = name_ };
+
+            var pAddress = new SqlParameter("@Address", System.Data.SqlDbType.Char)
+            { Value = address_ };
+
+            var rQuery = Database.ExecuteSqlCommand("exec EditShop @Id, @Name, @Address", pId, pName, pAddress);
         }
         /// <summary>
         /// Удалить магазин
@@ -130,7 +185,9 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">Код магазина</param>
         public void DeleteShop(int id_)
         {
-
+            var pId = new SqlParameter("@Id", System.Data.SqlDbType.Int)
+            { Value = id_ };
+            Database.ExecuteSqlCommand("exec DeleteShop @Id", pId);
         }
         #endregion
 
@@ -188,33 +245,67 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Получить все периоды
         /// </summary>
-        public DbRawSqlQuery<Periond> SelectAllPeriods()
+        public DbRawSqlQuery<Period> SelectAllPeriods()
         {
-            return Database.SqlQuery<Periond>("SelectAllPeriods");
+            return Database.SqlQuery<Period>("SelectAllPeriods");
         }
-          /// <summary>
-          /// Получить все недели текущего периода
-          /// </summary>
-          /// <param name="period_"></param>
-          /// <returns></returns>
+        /// <summary>
+        /// Получить все недели текущего периода
+        /// </summary>
+        /// <param name="period_"></param>
+        /// <returns></returns>
         public DbRawSqlQuery<Week> SelectWeeksOfCurrentPeriod(IPeriod period_)
-        => Database.SqlQuery<Week>("SelectWeeksByMonth", period_.Period);
+        {
+            //Database.SqlQuery<Week>("SelectWeeksByMonth", period_.Period);
+            var pMonth = new SqlParameter("@Month", System.Data.SqlDbType.Date)
+            { Value = period_.MonthYear };
+
+            var rQuery = Database.SqlQuery<Week>("exec SelectWeeksByMonth @Month", pMonth);
+            return rQuery;
+           
+        }
 
         /// <summary>
         /// Получить все расходы за неделю
         /// </summary>
         /// <param name="week_"></param>
         /// <returns></returns>
-        public DbRawSqlQuery<Purchase> SelectPurchaseByWeek(IWeek week_)
-        => Database.SqlQuery<Purchase>("SelectPurchaseByWeek", week_);
+        public DbRawSqlQuery<Purchase> SelectPurchasesByWeek(IWeek week_)
+        {
+            var pBDate = new SqlParameter("@BDate", SqlDbType.Date)
+            { Value = week_.BDate };
+            var pEDate = new SqlParameter("@EDate", SqlDbType.Date)
+            { Value = week_.EDate };
+            var rQuery = Database.SqlQuery<Purchase>("SelectPurchasesByWeek", pBDate, pEDate);
+            return rQuery;
+        }
         /// <summary>
         /// Получить все расходы за день
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
-        public DbRawSqlQuery<Purchase> SelectPurchaseByDay(DateTime date_)
-       => Database.SqlQuery<Purchase>("SelectPurchaseByDay", date_);
+        public DbRawSqlQuery<Purchase> SelectPurchasesByDay(DateTime date_)
+        {
+            var pDay = new SqlParameter("@Day", SqlDbType.Date)
+            { Value = date_ };
 
+            var rQuery = Database.SqlQuery<Purchase>("exec SelectPurchasesByDay @Day", pDay);
+            return rQuery;
+        }
+
+        /// <summary>
+        /// Получить все расходы за период
+        /// </summary>
+        /// <param name="period_"></param>
+        /// <returns></returns>
+        public DbRawSqlQuery<Purchase> SelectPurchasesByPeriod(IPeriod period_)
+        {
+            var pPeriod = new SqlParameter("@Period", SqlDbType.Date)
+            { Value = period_.MonthYear };
+
+            var rQuery = Database.SqlQuery<Purchase>("exec SelectPurchasesByPeriod @Period", pPeriod);
+            return rQuery;
+        }
 
         #endregion
     }

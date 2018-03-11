@@ -42,6 +42,8 @@ namespace DomainExpenses.Concrete
         {
             Id = id_;
         }
+        
+        
         /// <summary>
         /// Уникальный код
         /// </summary>
@@ -96,7 +98,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Код магазина
         /// </summary>
-        public int Shop_Id { get; set; }
+        public int? Shop_Id { get; set; }
         /// <summary>
         /// Код товара
         /// </summary>
@@ -117,12 +119,21 @@ namespace DomainExpenses.Concrete
     /// <summary>
     /// Период "Месяц-Год"
     /// </summary>
-    public class Periond :  IPeriod
+    public class Period :  IPeriod
     {
+        public Period()
+        {
+
+        }
+        public Period(IPeriod period_)
+        {
+            MonthYear = period_.MonthYear;
+        }
+
         /// <summary>
         ///  yyyy-MM-01
         /// </summary>
-        public DateTime Period { get; set; }
+        public DateTime MonthYear { get; set; }
     }
     /// <summary>
     /// Неделя

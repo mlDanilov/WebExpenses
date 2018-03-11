@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DomainExpenses.Abstract;
+using DomainExpenses.Concrete;
 
 
 
@@ -32,7 +33,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Товары
         /// </summary>
-        public IQueryable<IItem> Item
+        public IQueryable<Item> Item
         {
             get {
                 return _context.Item;
@@ -41,7 +42,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Магазины
         /// </summary>
-        public IQueryable<IShop> Shop
+        public IQueryable<Shop> Shop
         {
             get
             {
@@ -51,7 +52,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Группы
         /// </summary>
-        public IQueryable<IGroup> Group
+        public IQueryable<Group> Group
         {
             get
             {
@@ -61,15 +62,15 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Группы с указанием в названии родительских групп, кроме корневой
         /// </summary>
-        public IQueryable<IGroup> GroupExt {
+        public IQueryable<Group> GroupExt {
             get {
-                return _context.GroupExt.AsQueryable<IGroup>();
+                return _context.GroupExt.AsQueryable<Group>();
             }
         }
         /// <summary>
         /// Покупки
         /// </summary>
-        public IQueryable<IPurchase> Purchase
+        public IQueryable<Purchase> Purchase
         {
             get {
                 return _context.Purchase;
@@ -88,23 +89,39 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">название товара</param>
         /// <param name="gId_">код группы товаров</param>
         /// <returns></returns>
-        public IItem AddNewItem(string name_, int gId_) 
-            => _context.AddNewItem(name_, gId_).Result;
+        public IItem AddNewItem(string name_, int gId_)
+        {
+            var item = _context.AddItem(name_, gId_).Result;
+            _context.SaveChanges();
+            return item;
+        }
         /// <summary>
         /// Редактировать товар
         /// </summary>
         /// <param name="id_">Уникальный код товара</param>
         /// <param name="name_">новое название товара</param>
         /// <param name="gId_">новая код группы товаров</param>
-        public void EditItem(int id_, string name_, int gId_) 
-            => _context.EditItem(id_, name_, gId_);
+        public void EditItem(int id_, string name_, int gId_)
+        {
+            _context.EditItem(id_, name_, gId_);
+            var item = _context.Item.Where(it => it.Id == id_).FirstOrDefault();
+            if (item != null)
+            {
+                item.Name = name_;
+                item.GId = gId_;
+            }
+            _context.SaveChanges();
+        }
 
         /// <summary>
         /// Удалить товар
         /// </summary>
         /// <param name="id_">Код товара</param>
         public void DeleteItem(int id_)
-            => _context.DeleteItem(id_);
+        {
+            _context.DeleteItem(id_);
+            _context.SaveChanges();
+        }
 
         #endregion
 
@@ -120,21 +137,38 @@ namespace DomainExpenses.Concrete
         /// <param name="parentGroupId_">Код родительской группы</param>
         /// <returns></returns>
         public IGroup AddNewGroup(string name_, int parentGroupId_)
-         => _context.AddNewGroup(name_, parentGroupId_).Result;
+        {
+            var group = _context.AddNewGroup(name_, parentGroupId_).Result;
+            _context.SaveChanges();
+            return group;
+        }
         /// <summary>
         /// Редактировать группу товаров
         /// </summary>
         /// <param name="id_">Код группы товаров</param>
         /// <param name="name_">Новое название</param>
         /// <param name="parentGroupId_">Новый код родительской группы</param>
-        public void EditGroup(int id_, string name_, int parentGroupId_) 
-            => _context.EditGroup(id_, name_, parentGroupId_);
+        public void EditGroup(int id_, string name_, int parentGroupId_)
+        {
+            _context.EditGroup(id_, name_, parentGroupId_);
+            var group = Group.Where(g => g.Id == id_).FirstOrDefault();
+            if (group != null)
+            {
+                group.Name = name_;
+                group.IdParent = parentGroupId_;
+            }
+
+            _context.SaveChanges();
+        }
         /// <summary>
         /// Удалить группу товаров
         /// </summary>
         /// <param name="id_">Код группы товаров</param>
         public void DeleteGroup(int id_)
-            => _context.DeleteGroup(id_);
+        {
+            _context.DeleteGroup(id_);
+            _context.SaveChanges();
+        }
         #endregion
 
         #region Shop
@@ -149,7 +183,11 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">Название магазина</param>
         /// <param name="address_">Адрес магазина</param>
         public IShop AddNewShop(string name_, string address_)
-            => _context.AddNewShop(name_, address_).Result;
+        {
+            var shop = _context.AddNewShop(name_, address_).Result;
+            _context.SaveChanges();
+            return shop;
+        }
         /// <summary>
         /// Редактировать группу товаров
         /// </summary>
@@ -157,13 +195,19 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">Новое название</param>
         /// <param name="parentGroupId_">Новый код родительской группы</param>
         public void EditShop(int id_, string name_, string address_)
-            => _context.EditShop(id_, name_, address_);
+        {
+            _context.EditShop(id_, name_, address_);
+            _context.SaveChanges();
+        }
         /// <summary>
         /// Удалить магазин
         /// </summary>
         /// <param name="id_">Код товара</param>
         public void DeleteShop(int id_)
-            => _context.DeleteShop(id_);
+        {
+            _context.DeleteShop(id_);
+            _context.SaveChanges();
+        }
 
 
         #endregion
@@ -221,24 +265,30 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public IQueryable<IWeek> SelectWeeksOfCurrentPeriod()
         => _purchaseModule.SelectWeeksByPeriod().AsQueryable();
-
+        /// <summary>
+        /// Получить все расходы за месяц
+        /// </summary>
+        /// <param name="period_"></param>
+        /// <returns></returns>
+        public IQueryable<IPurchase> SelectPurchasesByPeriod(IPeriod period_)
+           => _context.SelectPurchasesByPeriod(period_).AsQueryable();
         /// <summary>
         /// Получить все расходы за неделю
         /// </summary>
         /// <param name="week_"></param>
         /// <returns></returns>
-        public IQueryable<IPurchase> SelectPurchaseByWeek(IWeek week_)
-                    => _context.SelectPurchaseByWeek(week_).AsQueryable();
+        public IQueryable<IPurchase> SelectPurchasesByWeek(IWeek week_)
+                    => _context.SelectPurchasesByWeek(week_).AsQueryable();
         /// <summary>
         /// Получить все расходы за день
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
         public IQueryable<IPurchase> SelectPurchaseByDate(DateTime date_)
-                   => _context.SelectPurchaseByDay(date_).AsQueryable();
+                   => _context.SelectPurchasesByDay(date_).AsQueryable();
 
-
-
+       
+        public int? CurrentPurchaseGId { get; set; }
         public DateTime? CurrentDay
         {
             get {

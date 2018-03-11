@@ -21,13 +21,15 @@ function setCurrentPeriod() {
 //и обновить select с днями недели
 function setCurrentWeek() {
     var value = $("#week").val();
-    
-    var bDate = new Date(value);
+    var bDate = -1;
+    console.log('(#week").val=' + value);
+    if (value != -1)
+        bDate = new Date(value).toLocaleDateString();
     
     $.ajax({
         async: false,
         url: "/Purchase/SetCurrentWeekByBDate",
-        data: { bDate_: bDate.toLocaleDateString() },
+        data: { bDate_: bDate },
         //data: { bDate_: bDate },
         success: replaceDaysOfWeekSelect,
         error: function () { console.log('/Purchase/SetCurrentWeekByBDate ошибка'); }
@@ -90,6 +92,7 @@ function replaceDaysOfWeekSelect()
             weekSelect.options.length = 0;
             weekSelect.innerHTML = result;
 
+            setPurchaseDetailClickHandler();
             console.log('/Purchase/DaysOfWeekSelect успех');
         },
         error: function () {
@@ -105,17 +108,69 @@ function replacePurchaseTable()
 {
     $.ajax({
         async: false,
-        url: "/Purchase/WeekPurchaseSumByGroupTotal",
+        url: "/Purchase/PurchaseSumByGroupTotal",
         success: function (result) {
             var purchTable = $('#purchTBody')[0];
             purchTable.innerHTML = result;
 
-            console.log('/Purchase/WeekPurchaseSumByGroupTotal успех');
+            setPurchaseDetailClickHandler();
+            console.log('/Purchase/PurchaseSumByGroupTotal успех');
         },
         error: function () {
-            console.log('/Purchase/WeekPurchaseSumByGroupTotal ошибка');
+            console.log('/Purchase/PurchaseSumByGroupTotal ошибка');
         }
     })
 }
 
+function setCurrentPurchaseGId() {
+
+    let groupPurchTr = $(this)[0].parentElement.getElementsByClassName('wPurchGroupId')[0];
+    /*
+    let thDetail = $(this)[0].parentElement.getElementsByClassName('wPurchGroupDetail')[0];
+    if (thDetail.textContent == "Подробнее")
+        thDetail.textContent = "Свернуть";
+    else
+        thDetail.textContent = "Подробнее";
+    */
+    let gId = groupPurchTr.textContent;
+
+    $.ajax({
+        url: "/Purchase/SetCurrentPurchaseGId",
+        data: { gId_: gId },
+        async: false,
+        success: function () { console.log('func setCurrentPurchaseGId успех');},
+        error: function () { console.log('func setCurrentPurchaseGId ошибка'); }
+    })
+    let selector = 'tr#purchDetail' + gId.toString();
+    console.log('selector=' + selector);
+    //let trArray = groupPurchTr.querySelectorAll(selector);
+    let trArray = $(selector);
+    console.log(trArray.length);
+    for (let i = 0; i < trArray.length; i++) {
+        var tr = trArray[i];
+        var c = tr.getAttribute('class');
+        console.log(c);
+        tr.removeAttribute('class');
+        if (c != 'detail_none')
+            tr.setAttribute('class', 'detail_none');
+        else {
+            if (i != 0)
+                tr.setAttribute('class', 'detail_visible' + ((i % 2) + 1).toString());
+            else
+                tr.setAttribute('class', 'detailHeader_visible');
+        }
+        console.log('set display none success')
+    }
+    
+    //weekSelect.innerHTML = result;
+}
+
+function setPurchaseDetailClickHandler()
+{
+    $(document).ready(function () {
+        console.log('PurchGroupDetail.b');
+        $('tbody#purchTBody tr th.wPurchGroupDetail').click(setCurrentPurchaseGId);
+        console.log('PurchGroupDetail.e');
+    });
+}
 

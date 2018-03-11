@@ -24,11 +24,16 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Код магазина
         /// </summary>
-        public int Shop_Id { get; set; }
+        public int? Shop_Id { get; set; }
         /// <summary>
         /// Название магазина
         /// </summary>
         public string ShopName { get; set; }
+
+        /// <summary>
+        /// Адрес магазина
+        /// </summary>
+        public string ShopAddress { get; set; }
         /// <summary>
         /// Код товара
         /// </summary>
@@ -46,7 +51,7 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Название группы с родительскими группами кроме корневой
         /// </summary>
-        public int GroupExtName { get; set; }
+        public string GroupExtName { get; set; }
        
         /// <summary>
         /// Цена

@@ -42,8 +42,8 @@ namespace DomainExpenses.Moq
             MockDbContext.Setup(m => m.SelectWeeksOfCurrentPeriod()).Returns(
                 _weeks.Where(
                     week => 
-                    ((_currentPeriod.Period.Month == week.BDate.Month) && (_currentPeriod.Period.Year == week.BDate.Year)) ||
-                    ((_currentPeriod.Period.Month == week.EDate.Month) && (_currentPeriod.Period.Year == week.EDate.Year))
+                    ((_currentPeriod.MonthYear.Month == week.BDate.Month) && (_currentPeriod.MonthYear.Year == week.BDate.Year)) ||
+                    ((_currentPeriod.MonthYear.Month == week.EDate.Month) && (_currentPeriod.MonthYear.Year == week.EDate.Year))
                     )
                 .AsQueryable()
                 );
@@ -332,12 +332,31 @@ namespace DomainExpenses.Moq
                    }
                    );
 
+            //Получить все покупки за период
+            MockDbContext.Setup(m => m.SelectPurchasesByPeriod(It.IsAny<IPeriod>())).Returns(
+                ((IPeriod period_) => { return SelectPurchaseByPeriod(period_); })
+                );
+            
+
             //Получить все покупки за неделю
-            MockDbContext.Setup(m => m.SelectPurchaseByWeek(It.IsAny<IWeek>())).Returns
+            MockDbContext.Setup(m => m.SelectPurchasesByWeek(It.IsAny<IWeek>())).Returns
                 ((IWeek week_) => { return SelectPurchaseByWeek(week_); });
             //Получить все покупки за день
             MockDbContext.Setup(m => m.SelectPurchaseByDate(It.IsAny<DateTime>())).Returns(
                 (DateTime day_) => { return SelectPurchaseByDay(day_); });
+
+            //Текущая группа покупок(get)
+            MockDbContext.SetupGet(m => m.CurrentPurchaseGId).Returns(
+                   () => _currentPurchaseGId);
+
+            //Текущая группа покупок(set)
+            MockDbContext.SetupSet(m => m.CurrentPurchaseGId = It.IsAny<int?>()).Callback(
+                   (int? currentPurchaseGId_) =>
+                   {
+                       _currentPurchaseGId = currentPurchaseGId_;
+                       MockDbContext.SetupGet(m => m.CurrentPurchaseGId).Returns(
+                    () => _currentPurchaseGId);
+                   });
 
         }
 
@@ -363,6 +382,20 @@ namespace DomainExpenses.Moq
                 selectSubGroupByParent(g, ref subGroupList_);
         }
 
+        /// <summary>
+        /// Получить все покупки за месяц
+        /// </summary>
+        /// <param name="week_"></param>
+        /// <returns></returns>
+        // private List<IPurchase> SelectPurchasesBy
+        private IQueryable<IPurchase> SelectPurchaseByPeriod(IPeriod period_)
+        {
+            var purchases =
+                _purchaseList.Where(
+                    p => (p.Date.Month == period_.MonthYear.Month) &&
+                    (p.Date.Year == period_.MonthYear.Year)).AsQueryable();
+            return purchases;
+        }
         /// <summary>
         /// Получить все покупки за неделю
         /// </summary>
@@ -451,6 +484,7 @@ namespace DomainExpenses.Moq
         /// </summary>
         private List<IPurchase> _purchaseList = new List<IPurchase>
         {
+            //Декабрь 2018 1 неделя
             EntitiesFactory.Get().CreatePurchase(0, 1, 2, 10, 5, new DateTime(2018, 1, 1)),
             EntitiesFactory.Get().CreatePurchase(1, 2, 7, 20, 7, new DateTime(2018, 1, 1)),
             EntitiesFactory.Get().CreatePurchase(2, 2, 5, 15, 1, new DateTime(2018, 1, 2)),
@@ -462,6 +496,8 @@ namespace DomainExpenses.Moq
             EntitiesFactory.Get().CreatePurchase(8, 1, 6, 48, 3, new DateTime(2018, 1, 5)),
             EntitiesFactory.Get().CreatePurchase(9, 3, 7, 48, 3, new DateTime(2018, 1, 5)),
 
+
+            //Ноябрь 2017 1 неделя
             EntitiesFactory.Get().CreatePurchase(10, 5, 7, 33, 5, new DateTime(2017, 11, 1)),
             EntitiesFactory.Get().CreatePurchase(11, 6, 8, 20, 7, new DateTime(2017, 11, 1)),
             EntitiesFactory.Get().CreatePurchase(12, 3, 8, 27, 1, new DateTime(2017, 11, 1)),
@@ -471,7 +507,19 @@ namespace DomainExpenses.Moq
             EntitiesFactory.Get().CreatePurchase(16, 4, 3, 43,  6, new DateTime(2017, 11, 4)),
             EntitiesFactory.Get().CreatePurchase(17, 8, 4, 61, 2, new DateTime(2017, 11, 4)),
             EntitiesFactory.Get().CreatePurchase(18, 7, 5, 21, 3, new DateTime(2017, 11, 4)),
-            EntitiesFactory.Get().CreatePurchase(19, 3, 5, 55, 3, new DateTime(2018, 11, 4))
+            EntitiesFactory.Get().CreatePurchase(19, 3, 5, 55, 3, new DateTime(2018, 11, 4)),
+
+            //Ноябрь 2017 2-3 недели
+             EntitiesFactory.Get().CreatePurchase(20, 5, 7, 45, 3, new DateTime(2017, 11, 16)),
+            EntitiesFactory.Get().CreatePurchase(21, 6, 8, 43, 4, new DateTime(2017, 11, 16)),
+            EntitiesFactory.Get().CreatePurchase(22, 3, 8, 28, 8, new DateTime(2017, 11, 16)),
+            EntitiesFactory.Get().CreatePurchase(23, 4, 9, 12, 9, new DateTime(2017, 11, 18)),
+            EntitiesFactory.Get().CreatePurchase(24, 2, 2, 76, 4, new DateTime(2017, 11, 18)),
+            EntitiesFactory.Get().CreatePurchase(25, 2, 1,20, 5, new DateTime(2017, 11, 18)),
+            EntitiesFactory.Get().CreatePurchase(26, 4, 3, 65,  7, new DateTime(2017, 11, 19)),
+            EntitiesFactory.Get().CreatePurchase(27, 8, 4, 36, 3, new DateTime(2017, 11, 19)),
+            EntitiesFactory.Get().CreatePurchase(28, 7, 5, 87, 3, new DateTime(2017, 11, 19)),
+            EntitiesFactory.Get().CreatePurchase(29, 3, 5, 29, 1, new DateTime(2018, 11, 19))
         };
 
         private List<IPeriod> _periods = new List<IPeriod>
@@ -512,6 +560,7 @@ namespace DomainExpenses.Moq
         private int? _currentItem = null;
         private int? _currentShop= null;
         private int? _currentPurchaseId = null;
+        private int? _currentPurchaseGId = null;
 
         private IPeriod _currentPeriod = null;
         private IWeek _currentWeek = null;

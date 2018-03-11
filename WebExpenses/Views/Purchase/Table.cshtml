@@ -16,25 +16,16 @@
     <table id="purchTable">
         <thead>
             <tr>
-                <th>
-                </th>
-                <th>
-                    Код
-                </th>
-                <th>
-                    Группа
-                </th>
-                <th>
-                    Сумма, руб
-                </th>
-                <th>
-
-                </th>
+                <th></th>
+                <th>Код</th>
+                <th>Группа</th>
+                <th>Сумма, руб</th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="purchTBody">
                     @{
-                        Html.RenderAction("WeekPurchaseSumByGroupTotal");
+                        Html.RenderAction("PurchaseSumByGroupTotal");
                      };
         </tbody>
     </table>

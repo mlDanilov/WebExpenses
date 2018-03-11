@@ -31,6 +31,8 @@ namespace WebExpenses.Controllers
 
         public PartialViewResult GroupDropDownList(int gId_, string optionName_)
         {
+            if (gId_ == -1)
+                gId_ = _repository.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
             var gList = new MGroupList()
             {
                 GroupId = gId_,
@@ -98,8 +100,7 @@ namespace WebExpenses.Controllers
         }
         [HttpPost]
         public ActionResult EditGroup(string name, int parentGroupId_, int id = -1)
-        {
-            var group = _repository.Group.Where(g => g.Id == id).FirstOrDefault();
+        {           
             _repository.EditGroup(id, name, parentGroupId_);
             return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }

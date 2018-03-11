@@ -93,24 +93,26 @@ namespace WebExpenses.Controllers
             return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
         }
 
-        public ViewResult EditItemCard(int id_)
+        public ViewResult EditItemCard()
         {
-            var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
+            var item = _repository.Item.Where(it => it.Id == _repository.CurrentIId).FirstOrDefault();
             var itView = new MItemCard(item);
             ViewData["Title"] = "Редактировать карточку товара";
             ViewData["Head"] = "Редактировать";
             return View("ItemCard", itView);
         }
 
+
         [HttpPost]
         public ActionResult EditItemCard(string name, int groupId_, int id = -1)
         {
-            var item = _repository.Item.Where(it => it.Id == id).FirstOrDefault();
+            /*var item = _repository.Item.Where(it => it.Id == id).FirstOrDefault();
             if (item != null)
             {
                 item.Name = name;
                 item.GId = groupId_;
-            }
+            }*/
+            _repository.EditItem(id, name, groupId_);
 
             return RedirectToAction("GroupsAndItems","Group", new { gId_ = groupId_ });
         }

@@ -26,7 +26,8 @@ namespace DomainExpenses.Concrete
         /// <param name="gId_">код родительской группы</param>
         /// <param name="name_">Название товара</param>
         /// <returns></returns>
-        public IItem CreateItem(int id_, int gId_, string name_) => new Item(id_, gId_) { Name = name_ };
+        public IItem CreateItem(int id_, int gId_, string name_) 
+            => new Item(id_, gId_) { Name = name_ };
         /// <summary>
         /// Создать группу товаров
         /// </summary>
@@ -34,14 +35,16 @@ namespace DomainExpenses.Concrete
         /// <param name="idParent_">код родительской группы</param>
         /// <param name="name_">название</param>
         /// <returns></returns>
-        public IGroup CreateGroup(int id_, int? idParent_, string name_) => new Group(id_) { IdParent = idParent_, Name = name_ };
+        public IGroup CreateGroup(int id_, int? idParent_, string name_) 
+            => new Group() { Id = id_, IdParent = idParent_, Name = name_ };
         /// <summary>
         /// Создать магазин
         /// </summary>
         /// <param name="id_">уникальный код</param>
         /// <param name="name_">Название</param>
         /// <returns></returns>
-        public IShop CreateShop(int id_, string name_, string address_) => new Shop(id_) { Name = name_, Address = address_ };
+        public IShop CreateShop(int id_, string name_, string address_) 
+            => new Shop(id_) { Name = name_, Address = address_ };
         /// <summary>
         /// Создать покупку
         /// </summary>
@@ -66,8 +69,8 @@ namespace DomainExpenses.Concrete
         /// <param name="period_">yyyy-MM-01</param>
         /// <returns></returns>
         public IPeriod CreatePeriod(DateTime period_)
-            => new Periond()
-            { Period = new DateTime(period_.Year, period_.Month, 1) };
+            => new Period()
+            { MonthYear = new DateTime(period_.Year, period_.Month, 1) };
 
         /// <summary>
         /// Создать период

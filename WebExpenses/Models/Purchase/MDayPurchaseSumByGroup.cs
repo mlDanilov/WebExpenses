@@ -9,6 +9,10 @@ namespace WebExpenses.Models.Purchase
 {
     public class MDayPurchaseSumByGroup
     {
+        public MDayPurchaseSumByGroup()
+        {
+
+        }
         public MDayPurchaseSumByGroup(DateTime day_, IGroup group_)
         {
             Day = day_;
@@ -17,11 +21,11 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Неделя
         /// </summary>
-        public DateTime Day { get; private set; }
+        public DateTime Day { get; set; }
         /// <summary>
         /// Группа
         /// </summary>
-        public IGroup Group { get; private set; }
+        public IGroup Group { get; set; }
 
         /// <summary>
         /// Сумма
