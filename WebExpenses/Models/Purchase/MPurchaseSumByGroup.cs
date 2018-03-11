@@ -33,7 +33,7 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Группа
         /// </summary>
-        public DomainExpenses.Concrete.Group Group { get; set; }
+        public IGroup Group { get; set; }
 
         /// <summary>
         /// Сумма

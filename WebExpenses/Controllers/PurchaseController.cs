@@ -186,7 +186,7 @@ namespace WebExpenses.Controllers
                  new
                    MPeriodPurchaseSumByGroup()
                  {
-                     Group = (from gi in _repository.Group where gi.Id == g.Id select new Group() { Id = gi.Id, IdParent = gi.IdParent, Name = gi.Name }).FirstOrDefault(),
+                     Group = g,
                      TimeSpan = pp,
                      Sum = gSum.Sum
                  });
@@ -220,7 +220,7 @@ namespace WebExpenses.Controllers
                  new
                    MPeriodPurchaseSumByGroup()
                  {
-                     Group = (from gi in _repository.Group where gi.Id == g.Id select new Group() { Id = gi.Id, IdParent = gi.IdParent, Name = gi.Name }).FirstOrDefault(),
+                     Group = g,
                      TimeSpan = pp,
                      Sum = gSum.Sum
                  }

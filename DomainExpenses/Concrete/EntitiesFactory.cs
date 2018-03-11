@@ -36,7 +36,7 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">название</param>
         /// <returns></returns>
         public IGroup CreateGroup(int id_, int? idParent_, string name_) 
-            => new Group() { Id = id_, IdParent = idParent_, Name = name_ };
+            => new Group(id_) { IdParent = idParent_, Name = name_ };
         /// <summary>
         /// Создать магазин
         /// </summary>

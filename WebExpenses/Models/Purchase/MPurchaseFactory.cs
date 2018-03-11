@@ -19,17 +19,8 @@ namespace WebExpenses.Models.Purchase
         public MPeriodPurchaseSumByGroup CreatePeriodPurchaseSumByGroup(
             IPeriod period_, IGroup group_, float sum_)
         {
-            return new MPeriodPurchaseSumByGroup()
-            {
-                Group = new DomainExpenses.Concrete.Group()
-                {
-                    Id = group_.Id,
-                    Name = group_.Name,
-                    IdParent = group_.IdParent
-                },
-                TimeSpan = new Period(period_),
-                Sum = sum_
-            };
+            return new MPeriodPurchaseSumByGroup();
+            
         }
 
 

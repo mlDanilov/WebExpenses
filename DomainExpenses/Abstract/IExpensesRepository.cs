@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DomainExpenses.Concrete
+using DomainExpenses.Concrete;
      
 
 namespace DomainExpenses.Abstract
@@ -14,21 +14,21 @@ namespace DomainExpenses.Abstract
         /// <summary>
         /// Товары
         /// </summary>
-        IQueryable<Item> Item { get; }
+        IQueryable<IItem> Item { get; }
         /// <summary>
         /// Группы товаров
         /// </summary>
-        IQueryable<Group> Group { get; }
+        IQueryable<IGroup> Group { get; }
         
         /// <summary>
         /// Магазины
         /// </summary>
-        IQueryable<Shop> Shop { get; }
+        IQueryable<IShop> Shop { get; }
 
         /// <summary>
         /// Покупки
         /// </summary>
-        IQueryable<Purchase> Purchase { get; }
+        IQueryable<IPurchase> Purchase { get; }
 
 
 

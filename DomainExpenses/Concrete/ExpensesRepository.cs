@@ -33,7 +33,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Товары
         /// </summary>
-        public IQueryable<Item> Item
+        public IQueryable<IItem> Item
         {
             get {
                 return _context.Item;
@@ -42,7 +42,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Магазины
         /// </summary>
-        public IQueryable<Shop> Shop
+        public IQueryable<IShop> Shop
         {
             get
             {
@@ -52,7 +52,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Группы
         /// </summary>
-        public IQueryable<Group> Group
+        public IQueryable<IGroup> Group
         {
             get
             {
@@ -62,7 +62,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Группы с указанием в названии родительских групп, кроме корневой
         /// </summary>
-        public IQueryable<Group> GroupExt {
+        public IQueryable<IGroup> GroupExt {
             get {
                 return _context.GroupExt.AsQueryable<Group>();
             }
@@ -70,7 +70,7 @@ namespace DomainExpenses.Concrete
         /// <summary>
         /// Покупки
         /// </summary>
-        public IQueryable<Purchase> Purchase
+        public IQueryable<IPurchase> Purchase
         {
             get {
                 return _context.Purchase;
