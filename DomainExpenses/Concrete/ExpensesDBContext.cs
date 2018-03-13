@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
@@ -224,13 +225,22 @@ namespace DomainExpenses.Concrete
         /// <param name="dateNew_">новое время</param>
         public void EditPurchase(
             int id_, 
-            int shopIdNew_,
+            int? shopIdNew_,
             int itemIdNew_,
             float priceNew_,
             float countNew_,
             DateTime dateNew_
             )
         {
+            var purchase = Purchase.Where(p => p.Id == id_).FirstOrDefault();
+            if (purchase == null)
+                return;
+
+            purchase.Shop_Id = shopIdNew_;
+            purchase.Item_Id = itemIdNew_;
+            purchase.Price = priceNew_;
+            purchase.Count = countNew_;
+            purchase.Date = dateNew_;
 
         }
        /// <summary>

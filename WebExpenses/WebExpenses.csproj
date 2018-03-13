@@ -131,6 +131,7 @@
     <Content Include="Scripts\jquery-1.8.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\purchase.js" />
     <Content Include="Scripts\shops.js" />
     <Content Include="Scripts\periodsAndWeeks.js" />
     <Content Include="Web.config" />
@@ -148,11 +149,11 @@
     <Compile Include="Models\Group\MGroupCard.cs" />
     <Compile Include="Models\Group\MGroupList.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
+    <Compile Include="Models\Item\MItemDDList.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
     <Compile Include="Models\Purchase\MDayOfWeek.cs" />
     <Compile Include="Models\Purchase\MDayPurchaseSumByGroup.cs" />
     <Compile Include="Models\Purchase\MPeriodList.cs" />
-    <Compile Include="Models\Purchase\MPurchaseFactory.cs" />
     <Compile Include="Models\Purchase\MPurchaseSumByGroup.cs" />
     <Compile Include="Models\Purchase\MPurchase.cs" />
     <Compile Include="Models\Purchase\MWeekPurchaseSumByGroup.cs" />
@@ -187,6 +188,10 @@
     <Content Include="Views\Purchase\DayPurchaseSumByGroupTotal.cshtml" />
     <Content Include="Views\Purchase\PurchaseDetail.cshtml" />
     <Content Include="Views\Purchase\PeriodPurchaseSumByGroupTotal.cshtml" />
+    <Content Include="Views\Purchase\PurchaseCard.cshtml" />
+    <Content Include="Views\Shop\ShopDropDownList.cshtml" />
+    <Content Include="Views\Item\ItemDropDownList.cshtml" />
+    <Content Include="Views\Purchase\PurchaseItemDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

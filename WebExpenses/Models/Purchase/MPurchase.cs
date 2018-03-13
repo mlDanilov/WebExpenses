@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 using DomainExpenses.Abstract;
 
@@ -19,6 +20,15 @@ namespace WebExpenses.Models.Purchase
         public MPurchase(int id_)
         {
             Id = id_;
+        }
+        public MPurchase(IPurchase purch_)
+        {
+            Id = purch_.Id;
+            Shop_Id = purch_.Shop_Id;
+            Item_Id  = purch_.Item_Id;
+            Price = purch_.Price;
+            Count = purch_.Count;
+            Date = purch_.Date;
         }
         public int Id { get; private set; }
         /// <summary>
@@ -64,6 +74,7 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Время покупки
         /// </summary>
+        [DisplayFormat( DataFormatString = "{0:dd.MM.yyyy}" )]
         public DateTime Date { get; set; }
     }
 }

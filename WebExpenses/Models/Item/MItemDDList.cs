@@ -7,20 +7,15 @@ using DomainExpenses.Abstract;
 
 namespace WebExpenses.Models.Item
 {
-    /// <summary>
-    /// Список товаров + текущая группа
-    /// </summary>
-    public class MItemList
+    public class MItemDDList
     {
         /// <summary>
-        /// Текущая группа
+        /// Текущий товар
         /// </summary>
-        public int? GroupId { get; set; } = null;
+        public int? ItemId { get; set; } = null;
         /// <summary>
         /// Список товаров
         /// </summary>
         public List<IItem> ItemList { get; set; }
     }
-
-    
 }

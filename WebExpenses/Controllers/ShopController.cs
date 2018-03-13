@@ -66,6 +66,20 @@ namespace WebExpenses.Controllers
 
             return RedirectToAction("List");
         }
+        /// <summary>
+        /// Список магазинов
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult ShopDropDownList(int? shopId_ = -1)
+        {
+            var shops = getShopsView();
+            if (shopId_ != -1)
+                shops.ShopId = shopId_;
+            else
+                shops.ShopId = null;
+
+            return PartialView(shops);
+        }
 
         public void SetCurrentShopId(int shId_) => _repository.CurrentShopId = shId_;
 

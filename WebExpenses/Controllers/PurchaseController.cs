@@ -157,6 +157,8 @@ namespace WebExpenses.Controllers
         }
 
         #endregion
+
+        #region Purchases
         /// <summary>
         /// Сумма расходов по группам за текущую выбранный месяц
         /// </summary>
@@ -398,6 +400,90 @@ namespace WebExpenses.Controllers
             return PartialView("PurchaseDetail", purchDetailList);
 
         }
+
+        public void SetCurrentPurchaseId(int purchaseId_)
+        {
+            _repository.CurrentPurchaseId = purchaseId_;
+        }
+
+        public ViewResult CreatePurchase(int gId_)
+        {
+            var itView = new MItemCard() { GId = gId_ };
+            ViewData["Title"] = "Добавить товар";
+            ViewData["Head"] = "Добавить";
+            return View("ItemCard", itView);
+        }
+        [HttpPost]
+        public ActionResult CreatePurchase(string name, int groupId_)
+        {
+            /*
+            if (string.IsNullOrEmpty(name))
+                ModelState.AddModelError("name", "Не задано название товара");
+
+            if (!ModelState.IsValid)
+                return CreateItemCard(groupId_);
+            */
+
+            var item = _repository.AddNewItem(name, groupId_);
+            return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
+        }
+
+        public ViewResult EditPurchase()
+        {
+            var purchase =
+                (from p in _repository.Purchase
+                 join it in _repository.Item on p.Item_Id equals it.Id
+                 join g in _repository.GroupExt on it.GId equals g.Id
+                 join sh in _repository.Shop on p.Shop_Id equals sh.Id
+                 where p.Id == _repository.CurrentPurchaseId
+                 select new MPurchase(p.Id) {
+                     Item_Id = p.Item_Id,
+                     ItemName = it.Name,
+                     GroupId = it.GId,
+                     GroupExtName = g.Name,
+                     Shop_Id = p.Shop_Id,
+                     ShopName = sh.Name,
+                      ShopAddress = sh.Address,
+                       Price = p.Price,
+                       Count = p.Count,
+                        Date = p.Date,
+                 }).FirstOrDefault();
+                //.Where(p => p.Id == _repository.CurrentPurchaseId).FirstOrDefault();
+            
+
+            ViewData["Title"] = "Редактировать покупку";
+            ViewData["Head"] = "Редактировать";
+            
+            return View("PurchaseCard",purchase);
+        }
+
+
+        [HttpPost]
+        public ActionResult EditPurchase(int purchId_, int? shopId_, int itemId_, float count_, float price, DateTime date_)
+        {
+            _repository.EditPurchase(purchId_, shopId_, itemId_, price, count_, date_);
+            return RedirectToAction("Table");
+        }
+
+        public ActionResult DeletePurchase()
+        {
+            int? purchId = _repository.CurrentPurchaseId;
+            if (purchId.HasValue)
+                _repository.DeletePurchase(purchId.Value);
+            return RedirectToAction("Table");
+            //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
+        }
+        [HttpPost]
+        public ActionResult DeletePurchaseAjax()
+        {
+            int? purchId = _repository.CurrentPurchaseId;
+            if (purchId != null)
+                _repository.DeletePurchase(purchId.Value);
+
+            return PurchaseSumByGroupTotal();
+        }
+
+        #endregion
 
         private IExpensesRepository _repository = null;
     }

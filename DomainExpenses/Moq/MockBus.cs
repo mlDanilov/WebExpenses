@@ -253,12 +253,12 @@ namespace DomainExpenses.Moq
             //Редактировать существующую покупку
             MockDbContext.Setup(m => m.EditPurchase(
                 It.IsAny<int>(),
-                It.IsAny<int>(),
+                It.IsAny<int?>(),
                 It.IsAny<int>(),
                 It.IsAny<float>(),
                 It.IsAny<float>(),
                 It.IsAny<DateTime>())).Callback(
-                 (int id_, int shopId_, int itemId_, float price_, float count_, DateTime date_) =>
+                 (int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_) =>
                 {
                     var purchase = _purchaseList.Where(p => p.Id == id_).FirstOrDefault();
                     if (purchase == null)

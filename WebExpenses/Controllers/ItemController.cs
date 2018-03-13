@@ -42,23 +42,23 @@ namespace WebExpenses.Controllers
         /// Получить список товаров по текущей группе
         /// </summary>
         /// <returns></returns>
-        private MItemList getItemsViewByCurrentGId()
+        private MItemList getItemsViewByCurrentGId() => getItemsViewByGId(_repository.CurrentGId);
+        private MItemList getItemsViewByGId(int? gId_)
         {
-            int? gId = _repository.CurrentGId;
             var itView = new MItemList();
-            itView.GroupId = gId;
-            if (gId != null)
+            itView.GroupId = gId_;
+            if (gId_ != null)
             {
-
                 //var iList = _repository.Item.ToList();
                 itView.ItemList = _repository.Item
-                    .Where(it => (it.GId == gId))
+                    .Where(it => (it.GId == gId_))
                     .OrderBy(it => it.Name).ToList();
             }
             else
                 itView.ItemList = new List<IItem>();
             return itView;
         }
+
 
 
 
@@ -70,7 +70,7 @@ namespace WebExpenses.Controllers
         {
             _repository.CurrentIId = iid_;
         }
-       
+
         public ViewResult CreateItemCard(int gId_)
         {
             var itView = new MItemCard() { GId = gId_ };
@@ -114,17 +114,17 @@ namespace WebExpenses.Controllers
             }*/
             _repository.EditItem(id, name, groupId_);
 
-            return RedirectToAction("GroupsAndItems","Group", new { gId_ = groupId_ });
+            return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
         }
 
 
-       /* public ActionResult DeleteItemCard(int id_)
-        {
-            var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
-            _repository.DeleteItem(id_);
-            return RedirectToAction("GroupsAndItems");
-            //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
-        }*/
+        /* public ActionResult DeleteItemCard(int id_)
+         {
+             var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
+             _repository.DeleteItem(id_);
+             return RedirectToAction("GroupsAndItems");
+             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
+         }*/
         public ActionResult DeleteItemCard()
         {
             if (_repository.CurrentIId.HasValue)
@@ -141,6 +141,12 @@ namespace WebExpenses.Controllers
 
             return PartialView("ItemsTableBodyRows", getItemsViewByCurrentGId());
             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
+        }
+
+        public PartialViewResult ItemDropDownList(int itemId_)
+        {
+
+
         }
 
         private IExpensesRepository _repository = null;

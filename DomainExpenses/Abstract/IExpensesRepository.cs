@@ -175,7 +175,7 @@ namespace DomainExpenses.Abstract
         /// <param name="dateNew_">Новая дата</param>
         void EditPurchase(
             int id_,
-            int shopIdNew_,
+            int? shopIdNew_,
             int itemIdNew_,
             float priceNew_,
             float countNew_,

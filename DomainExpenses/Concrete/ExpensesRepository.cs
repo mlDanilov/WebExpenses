@@ -241,7 +241,7 @@ namespace DomainExpenses.Concrete
         /// <param name="dateNew_">новое время</param>
         public void EditPurchase(
             int id_,
-            int shopIdNew_,
+            int? shopIdNew_,
             int itemIdNew_,
             float priceNew_,
             float countNew_,
