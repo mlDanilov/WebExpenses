@@ -318,6 +318,15 @@ namespace WebExpenses.Controllers
             
         }
 
+        public PartialViewResult PurchaseItem(int itemId_)
+        {
+            var item = _repository.Item.Where(it => it.Id == itemId_).First();
+
+            var mItem = new MItemCard(item);
+
+            return PartialView("PurchaseItem", mItem);
+        }
+
         public PartialViewResult InnerPurchases()
         {
             var purchGId = _repository.CurrentPurchaseGId;
@@ -401,10 +410,7 @@ namespace WebExpenses.Controllers
 
         }
 
-        public void SetCurrentPurchaseId(int purchaseId_)
-        {
-            _repository.CurrentPurchaseId = purchaseId_;
-        }
+        public void SetCurrentPurchaseId(int purchaseId_) => _repository.CurrentPurchaseId = purchaseId_;
 
         public ViewResult CreatePurchase(int gId_)
         {

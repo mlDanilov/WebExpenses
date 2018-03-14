@@ -1,0 +1,24 @@
+﻿@using WebExpenses.Models.Item
+@model MItemCard
+<div>
+    <div class="purchItem">
+        Товар:
+            @{
+                Html.RenderAction("ItemDropDownList", "Item", new { item_ = Model });
+            }
+    </div>
+
+    <div>
+         из группы:
+        @{
+            Html.RenderAction("GroupDropDownList", "Group",
+                new { gId_ = Model.GId,
+                    selectGroupId_ = "purchItemGroup",
+                    selectGroupName_ ="purchItemGroup"
+                });
+        }
+    </div>
+</div>
+
+
+

@@ -143,10 +143,21 @@ namespace WebExpenses.Controllers
             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
 
-        public PartialViewResult ItemDropDownList(int itemId_)
+        public PartialViewResult ItemDropDownList(IItem item_)
         {
+            ViewData["SelectItemId"] = "itemId";
+            ViewData["SelectItemName"] = "itemId";
 
+            if (item_ == null)
+                return PartialView("ItemDropDownList", new MItemDDList());
 
+            var itemList = _repository.Item.Where(it => it.GId == item_.GId).ToList();
+            var mItemList = new MItemDDList()
+            {
+                ItemId = item_.Id,
+                ItemList = itemList
+            };
+            return PartialView("ItemDropDownList", mItemList);
         }
 
         private IExpensesRepository _repository = null;

@@ -1,9 +1,6 @@
 ﻿@using WebExpenses.Models.Item;
-
 @model MItemDDList
-
-
-<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]">
+<select id="@ViewData["SelectItemId"]" name="@ViewData["SelectItemName"]">
     @foreach (var item in Model.ItemList)
     {
         if (Model.ItemId == item.Id)

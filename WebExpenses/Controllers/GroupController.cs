@@ -29,8 +29,19 @@ namespace WebExpenses.Controllers
             return PartialView(gListView_);
         }
 
-        public PartialViewResult GroupDropDownList(int gId_, string optionName_)
+       /* public PartialViewResult GroupDropDownList(int gId_)
         {
+            return GroupDropDownList(gId_, "groupId");
+
+        }
+        */
+        public PartialViewResult GroupDropDownList(int gId_, 
+            string selectGroupId_, string selectGroupName_)
+        {
+            ViewData["SelectGroupId"] = selectGroupId_;
+            ViewData["SelectGroupName"] = selectGroupName_;
+            
+
             if (gId_ == -1)
                 gId_ = _repository.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
             var gList = new MGroupList()
@@ -38,9 +49,7 @@ namespace WebExpenses.Controllers
                 GroupId = gId_,
                 GroupList = _repository.GroupExt.ToList()
             };
-            ViewData["OptionName"] = optionName_;
             return PartialView(gList);
-
         }
 
         public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
@@ -56,8 +65,6 @@ namespace WebExpenses.Controllers
 
         public ViewResult GroupsAndItems()
         {
-            //var groups = _repository.Group.ToList();
-            //var groups = _repository.Group.ToList();
             ViewData["Title"] = "Группы и товары";
             var groupsQuery = _repository.GroupExt;
             var groups = groupsQuery.ToList();

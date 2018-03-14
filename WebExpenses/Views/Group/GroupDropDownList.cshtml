@@ -1,7 +1,7 @@
 ﻿@using WebExpenses.Models.Group;
 @model MGroupList
 
-<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]" >
+<select id="@ViewData["SelectGroupId"]" name="@ViewData["SelectGroupName"]" >
     @foreach (var group in Model.GroupList)
     {
         if (Model.GroupId == group.Id)
