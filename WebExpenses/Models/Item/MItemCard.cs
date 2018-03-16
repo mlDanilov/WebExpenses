@@ -24,12 +24,12 @@ namespace WebExpenses.Models.Item
             GId = item_.GId;
             Name = item_.Name;
         }
-        public int Id { get; } = -1;
+        public int Id { get; set; } = -1;
 
         [Required(ErrorMessage = "Выберите группу товара")]
         public int GId { get; set; }
 
-        [Required(ErrorMessage = "Введите название товара")]
+        [Required(ErrorMessage = "Выберите название товара")]
         public string Name { get; set; }
     }
 }

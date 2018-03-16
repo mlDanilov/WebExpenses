@@ -23,12 +23,14 @@ namespace WebExpenses.Models.Group
             IdParent = group_.IdParent;
             Name = group_.Name;
         }
-        public int Id { get; } = -1;
+        public int Id { get; set; } = -1;
 
         /// <summary>
         /// Код родительской группы
         /// </summary>
+        [Required(ErrorMessage = "Выберите родительску группу")]
         public int? IdParent { get; set; }
+
         /// <summary>
         /// Имя продительской группы
         /// </summary>
@@ -36,6 +38,7 @@ namespace WebExpenses.Models.Group
         /// <summary>
         /// Название 
         /// </summary>
+        [Required(ErrorMessage = "Введине название группы товаров")]
         public string Name { get; set; }
     }
 }

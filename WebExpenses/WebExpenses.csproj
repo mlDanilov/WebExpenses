@@ -117,8 +117,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\groupCard.css" />
     <Content Include="Content\groups.css" />
     <Content Include="Content\groupsTable.css" />
+    <Content Include="Content\itemCard.css" />
     <Content Include="Content\itemsTable.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\periodAndWeek.css" />
@@ -140,9 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
-    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -194,6 +196,7 @@
     <Content Include="Views\Shop\ShopDropDownList.cshtml" />
     <Content Include="Views\Item\ItemDropDownList.cshtml" />
     <Content Include="Views\Purchase\PurchaseItem.cshtml" />
+    <Content Include="Views\Item\ItemOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

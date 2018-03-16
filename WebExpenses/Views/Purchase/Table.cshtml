@@ -28,4 +28,10 @@
                         Html.RenderAction("PurchaseSumByGroupTotal");
                      }
         </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>@Html.ActionLink("Добавить", "CreatePurchase")</th>
+            </tr>
+        </tfoot>
     </table>

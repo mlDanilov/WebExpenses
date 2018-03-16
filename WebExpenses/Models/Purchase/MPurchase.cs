@@ -74,7 +74,6 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Время покупки
         /// </summary>
-        [DisplayFormat( DataFormatString = "{0:dd.MM.yyyy}" )]
         public DateTime Date { get; set; }
     }
 }

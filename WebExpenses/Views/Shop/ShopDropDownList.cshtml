@@ -1,7 +1,7 @@
 ﻿@using WebExpenses.Models.Shop
 @model MShopList
 
-<select name="shopList">
+<select name="shopId">
     @foreach (var shop in Model.ShopList)
     {
         if ((Model.ShopId.HasValue) && (Model.ShopId.Value == shop.Id))

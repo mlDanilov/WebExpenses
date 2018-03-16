@@ -412,26 +412,18 @@ namespace WebExpenses.Controllers
 
         public void SetCurrentPurchaseId(int purchaseId_) => _repository.CurrentPurchaseId = purchaseId_;
 
-        public ViewResult CreatePurchase(int gId_)
+        public ViewResult CreatePurchase()
         {
-            var itView = new MItemCard() { GId = gId_ };
-            ViewData["Title"] = "Добавить товар";
+            var mPurch = new MPurchase();
+            ViewData["Title"] = "Добавить покупку";
             ViewData["Head"] = "Добавить";
-            return View("ItemCard", itView);
+            return View("PurchaseCard", mPurch);
         }
         [HttpPost]
-        public ActionResult CreatePurchase(string name, int groupId_)
+        public ActionResult CreatePurchase(int shopId, int itemId, float count, float price, DateTime date)
         {
-            /*
-            if (string.IsNullOrEmpty(name))
-                ModelState.AddModelError("name", "Не задано название товара");
-
-            if (!ModelState.IsValid)
-                return CreateItemCard(groupId_);
-            */
-
-            var item = _repository.AddNewItem(name, groupId_);
-            return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
+            var purchase = _repository.AddNewPurchase(shopId, itemId, price, count, date);
+            return RedirectToAction("Table");
         }
 
         public ViewResult EditPurchase()
@@ -465,9 +457,9 @@ namespace WebExpenses.Controllers
 
 
         [HttpPost]
-        public ActionResult EditPurchase(int purchId_, int? shopId_, int itemId_, float count_, float price, DateTime date_)
+        public ActionResult EditPurchase(int id, int shopId, int itemId, float count, float price, DateTime date)
         {
-            _repository.EditPurchase(purchId_, shopId_, itemId_, price, count_, date_);
+            _repository.EditPurchase(id, shopId, itemId, price, count, date);
             return RedirectToAction("Table");
         }
 

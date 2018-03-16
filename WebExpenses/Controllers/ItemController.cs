@@ -76,21 +76,21 @@ namespace WebExpenses.Controllers
             var itView = new MItemCard() { GId = gId_ };
             ViewData["Title"] = "Добавить товар";
             ViewData["Head"] = "Добавить";
+            ViewData["SelectGroupName"] = "GId";
             return View("ItemCard", itView);
         }
+      
         [HttpPost]
-        public ActionResult CreateItemCard(string name, int groupId_)
-        {
-            /*
-            if (string.IsNullOrEmpty(name))
-                ModelState.AddModelError("name", "Не задано название товара");
+       public ActionResult CreateItemCard(MItemCard mItemCard_)
+       {
+            if (ModelState.IsValid)
+            {
+                var item = _repository.AddNewItem(mItemCard_.Name, mItemCard_.GId);
+                return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
+            }
+            else
+                return CreateItemCard(mItemCard_.GId);
 
-            if (!ModelState.IsValid)
-                return CreateItemCard(groupId_);
-            */
-
-            var item = _repository.AddNewItem(name, groupId_);
-            return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
         }
 
         public ViewResult EditItemCard()
@@ -99,24 +99,22 @@ namespace WebExpenses.Controllers
             var itView = new MItemCard(item);
             ViewData["Title"] = "Редактировать карточку товара";
             ViewData["Head"] = "Редактировать";
+            ViewData["SelectGroupName"] = "GId";
             return View("ItemCard", itView);
         }
 
-
         [HttpPost]
-        public ActionResult EditItemCard(string name, int groupId_, int id = -1)
+        public ActionResult EditItemCard(MItemCard mItemCard_)
         {
-            /*var item = _repository.Item.Where(it => it.Id == id).FirstOrDefault();
-            if (item != null)
+            if (ModelState.IsValid)
             {
-                item.Name = name;
-                item.GId = groupId_;
-            }*/
-            _repository.EditItem(id, name, groupId_);
-
-            return RedirectToAction("GroupsAndItems", "Group", new { gId_ = groupId_ });
+                _repository.EditItem(mItemCard_.Id, mItemCard_.Name, mItemCard_.GId);
+                return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
+            }
+            else
+                return EditItemCard();
         }
-
+       
 
         /* public ActionResult DeleteItemCard(int id_)
          {
@@ -158,6 +156,18 @@ namespace WebExpenses.Controllers
                 ItemList = itemList
             };
             return PartialView("ItemDropDownList", mItemList);
+        }
+
+        public PartialViewResult ItemOptions(int groupId_)
+        {
+
+            var itemList = _repository.Item.Where(it => it.GId == groupId_).ToList();
+            var mItemList = new MItemDDList()
+            {
+                ItemId = null,
+                ItemList = itemList
+            };
+            return PartialView("ItemOptions", mItemList);
         }
 
         private IExpensesRepository _repository = null;

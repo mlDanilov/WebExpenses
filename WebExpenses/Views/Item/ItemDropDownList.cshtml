@@ -1,17 +1,8 @@
 ﻿@using WebExpenses.Models.Item;
 @model MItemDDList
 <select id="@ViewData["SelectItemId"]" name="@ViewData["SelectItemName"]">
-    @foreach (var item in Model.ItemList)
-    {
-        if (Model.ItemId == item.Id)
-        {
-            <option value="@item.Id" selected>@item.Name</option>
-        }
-        else
-        {
-            <option value="@item.Id">@item.Name</option>
-        }
-
+    @{
+        Html.RenderPartial("ItemOptions", Model);
     }
 </select>
 
