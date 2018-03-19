@@ -23,15 +23,20 @@
             <p>Код  группы: @Html.TextBoxFor(g => g.Id, new { @readonly = true })</p>
         }
         <p>Наименование: @Html.EditorFor(g => g.Name)</p>
-        <p>Родительская группа:
-            @{ 
-                Html.RenderAction("GroupDropDownList", "Group",
-                    new { gId_ = Model.IdParent,
+        if (Model.IdParent != null)
+        {
+            <p>Родительская группа:
+                @{ 
+                    Html.RenderAction("GroupDropDownList", "Group",
+                    new
+                    {
+                        gId_ = Model.IdParent,
                         selectGroupId_ = @ViewData["SelectGroupId"],
                         selectGroupName_ = @ViewData["SelectGroupName"]
                     });
-            }
-        </p>
+                }
+            </p>
+        }
         <input type="submit" value="@ViewData["Head"]" />
     }
 </body>

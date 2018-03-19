@@ -148,7 +148,7 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">Код группы товаров</param>
         /// <param name="name_">Новое название</param>
         /// <param name="parentGroupId_">Новый код родительской группы</param>
-        public void EditGroup(int id_, string name_, int parentGroupId_)
+        public void EditGroup(int id_, string name_, int? parentGroupId_)
         {
             _context.EditGroup(id_, name_, parentGroupId_);
             var group = Group.Where(g => g.Id == id_).FirstOrDefault();

@@ -114,7 +114,7 @@ namespace DomainExpenses.Abstract
         /// <param name="id_">Код группы товаров</param>
         /// <param name="name_">Новое название</param>
         /// <param name="parentGroupId_">Новый код родительской группы</param>
-        void EditGroup(int id_, string name_, int parentGroupId_);
+        void EditGroup(int id_, string name_, int? parentGroupId_);
        
         /// <summary>
         /// Удалить группу товаров

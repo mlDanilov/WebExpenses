@@ -120,13 +120,21 @@ namespace WebExpenses.Controllers
             var gView = new MGroupCard(group);
             ViewData["Head"] = "Редактировать";
             ViewData["Title"] = "Редактировать товар";
+            ViewData["SelectGroupId"] = "IdParent";
+            ViewData["SelectGroupName"] = "IdParent";
             return View("GroupCard", gView);
         }
         [HttpPost]
-        public ActionResult EditGroup(string name, int parentGroupId_, int id = -1)
-        {           
-            _repository.EditGroup(id, name, parentGroupId_);
-            return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
+        public ActionResult EditGroup(MGroupCard mGroup_)
+        {
+            if ((ModelState.IsValid) && (mGroup_.IdParent != null))
+            {
+                _repository.EditGroup(mGroup_.Id, mGroup_.Name, mGroup_.IdParent.Value);
+                return RedirectToAction("GroupsAndItems", new { gId_ = mGroup_.IdParent });
+            }
+            else
+                return EditGroup();
+
         }
         [HttpPost]
         public PartialViewResult DeleteGroupAjax()

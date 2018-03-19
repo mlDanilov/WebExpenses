@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 using DomainExpenses.Abstract;
 
@@ -22,10 +23,11 @@ namespace WebExpenses.Models.Shop
             Name = shop_.Name;
             Address = shop_.Address;
         }
-        public int Id { get; } = -1;
+        public int Id { get; set; } = -1;
 
+        [Required(ErrorMessage = "Введите название магазина")]
         public string Name { get; set; }
-
+        [Required(ErrorMessage = "Введите адрес магазина")]
         public string Address { get; set; }
     }
 }

@@ -25,17 +25,23 @@ namespace WebExpenses.Controllers
 
         public ViewResult CreateShop()
         {
+
             var shView = new MShopCard();
             ViewData["Title"] = "Добавить магазин";
             ViewData["Head"] = "Добавить";
             return View("ShopCard", shView);
         }
         [HttpPost]
-        public ActionResult CreateShop(string name, string address)
+        public ActionResult CreateShop(MShopCard shCard_)
         {
-            var shop =  _repository.AddNewShop(name, address);
-            _repository.CurrentShopId = shop.Id;
-            return RedirectToAction("List");
+            if (ModelState.IsValid)
+            {
+                var shop = _repository.AddNewShop(shCard_.Name, shCard_.Address);
+                _repository.CurrentShopId = shop.Id;
+                return RedirectToAction("List");
+            }
+            else
+                return CreateShop();
         }
 
         public ViewResult EditShop()
@@ -49,12 +55,17 @@ namespace WebExpenses.Controllers
             return View("ShopCard", shView);
         }
         [HttpPost]
-        public ActionResult EditShop(string name, string address)
+        public ActionResult EditShop(MShopCard shCard_)
         {
             int? shopId = _repository.CurrentShopId;
-            if (shopId != null)
-                _repository.EditShop(shopId.Value, name, address);
-            return RedirectToAction("List");
+            if (ModelState.IsValid)
+            {
+                if (shopId != null)
+                    _repository.EditShop(shopId.Value, shCard_.Name, shCard_.Address);
+                return RedirectToAction("List");
+            }
+            else
+                return EditShop();
         }
 
         public ActionResult DeleteShop()

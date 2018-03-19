@@ -9,11 +9,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/shopCard.css" />
 </head>
 <body>
     <h4>Карточка магазина</h4>
     @using (Html.BeginForm())
     {
+        @Html.ValidationSummary();
         if (Model.Id != -1)
         {
             <p>Код магазина: @Html.TextBoxFor(sh => sh.Id, new { @readonly = true })</p>

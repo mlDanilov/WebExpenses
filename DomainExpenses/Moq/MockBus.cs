@@ -138,9 +138,9 @@ namespace DomainExpenses.Moq
                 return group;
             });
             //Редактировать существующую группу товаров
-            MockDbContext.Setup(m => m.EditGroup(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+            MockDbContext.Setup(m => m.EditGroup(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int?>()))
                 .Callback(
-                (int id_, string name_, int parentGId_) =>
+                (int id_, string name_, int? parentGId_) =>
                 {
                     var group = _groupsList.Where(g => g.Id == id_).FirstOrDefault();
                     var groupExt = _groupsExtList.Where(g => g.Id == id_).FirstOrDefault();
