@@ -13,6 +13,9 @@
     <script src="~/Scripts/jquery-1.8.0.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
     <script src="~/Scripts/purchaseCard.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <link href="~/Content/purchaseCard.css" rel="stylesheet" />
     
 </head>
@@ -20,6 +23,7 @@
     <h2>Карточка покупки</h2>
     @using (Html.BeginForm())
     {
+        //@Html.ValidationSummary();
         if (Model.Id != -1)
         {
             <p>Код  покупки: @Html.TextBoxFor(p => p.Id, new { @readonly = true })</p>
@@ -35,9 +39,14 @@
                 Html.RenderAction("PurchaseItem", "Purchase", new { itemId_ = Model.Item_Id });
             }
         </p>
+        <p>@Html.ValidationMessageFor(p => p.Item_Id)</p>
         <p>Цена: @Html.EditorFor(p => p.Price)</p>
+        <p>@Html.ValidationMessageFor(p => p.Price)</p>
+
         <p>Количество: @Html.EditorFor(p => p.Count)</p>
+        <p>@Html.ValidationMessageFor(p => p.Count)</p>
         <p>Дата: @Html.EditorFor(p => p.Date)</p>
+        <p>@Html.ValidationMessageFor(p => p.Date)</p>
         <input type="submit" value="@ViewData["Head"]"/>
     }
 </body>

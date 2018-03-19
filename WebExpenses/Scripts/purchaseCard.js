@@ -13,7 +13,7 @@ function purchaseCardGroupChanged() {
         data: { groupId_: value },
         async: false,
         success: function (result) {
-            let itemsSelect = $("#itemId")[0];
+            let itemsSelect = $("#Item_Id")[0];
             itemsSelect.innerHTML = result;
             console.log('func purchCardItemsRefresh успех');
         },

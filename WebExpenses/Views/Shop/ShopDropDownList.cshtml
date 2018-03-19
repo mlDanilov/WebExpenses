@@ -2,6 +2,7 @@
 @model MShopList
 
 <select name="shopId">
+    <option value="-1" selected> - </option>
     @foreach (var shop in Model.ShopList)
     {
         if ((Model.ShopId.HasValue) && (Model.ShopId.Value == shop.Id))

@@ -10,18 +10,23 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" type="text/css" href="~/Content/shopCard.css" />
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
     <h4>Карточка магазина</h4>
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary();
+        //@Html.ValidationSummary();
         if (Model.Id != -1)
         {
             <p>Код магазина: @Html.TextBoxFor(sh => sh.Id, new { @readonly = true })</p>
         }
         <p>Наименование: @Html.EditorFor(sh => sh.Name)</p>
+        <p>@Html.ValidationMessageFor(sh => sh.Name)</p>
         <p>Адрес: @Html.EditorFor(sh => sh.Address)</p>
+        <p>@Html.ValidationMessageFor(sh => sh.Address)</p>
         <input type="submit" value="@ViewData["Head"]" />
     }
 </body>

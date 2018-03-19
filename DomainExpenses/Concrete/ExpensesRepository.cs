@@ -223,7 +223,7 @@ namespace DomainExpenses.Concrete
         /// <param name="date_">время покупки</param>
         /// <returns></returns>
         public IPurchase AddNewPurchase(
-            int shopId_,
+            int? shopId_,
             int itemId_,
             float price_,
             float count_,

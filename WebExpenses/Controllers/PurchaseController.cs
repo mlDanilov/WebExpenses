@@ -320,9 +320,13 @@ namespace WebExpenses.Controllers
 
         public PartialViewResult PurchaseItem(int itemId_)
         {
-            var item = _repository.Item.Where(it => it.Id == itemId_).First();
+            var item = _repository.Item.Where(it => it.Id == itemId_).FirstOrDefault();
 
-            var mItem = new MItemCard(item);
+            MItemCard mItem = null;
+            if (item != null)
+                mItem = new MItemCard(item);
+            else
+                mItem = new MItemCard();
 
             return PartialView("PurchaseItem", mItem);
         }
@@ -412,7 +416,7 @@ namespace WebExpenses.Controllers
 
         public void SetCurrentPurchaseId(int purchaseId_) => _repository.CurrentPurchaseId = purchaseId_;
 
-        public ViewResult CreatePurchase()
+        public ViewResult CreatePurchase(int? gId_)
         {
             var mPurch = new MPurchase();
             ViewData["Title"] = "Добавить покупку";
@@ -420,10 +424,17 @@ namespace WebExpenses.Controllers
             return View("PurchaseCard", mPurch);
         }
         [HttpPost]
-        public ActionResult CreatePurchase(int shopId, int itemId, float count, float price, DateTime date)
+        public ActionResult CreatePurchase(MPurchase purchase_)
         {
-            var purchase = _repository.AddNewPurchase(shopId, itemId, price, count, date);
-            return RedirectToAction("Table");
+            if (ModelState.IsValid)
+            {
+                var purchase = _repository.AddNewPurchase(
+                purchase_.Shop_Id, purchase_.Item_Id,
+                purchase_.Price, purchase_.Count, purchase_.Date);
+                return RedirectToAction("Table");
+            }
+            else
+                return CreatePurchase(_repository.CurrentPurchaseGId);
         }
 
         public ViewResult EditPurchase()

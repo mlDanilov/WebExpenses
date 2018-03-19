@@ -236,13 +236,13 @@ namespace DomainExpenses.Moq
 
             //Добавить новый магазин
             MockDbContext.Setup<IPurchase>(m => m.AddNewPurchase(
-                It.IsAny<int>(),
+                It.IsAny<int?>(),
                 It.IsAny<int>(),
                 It.IsAny<float>(),
                 It.IsAny<float>(),
                 It.IsAny<DateTime>()))
                 .Returns(
-            (int shopId_, int itemId_, float price_, float count_, DateTime date_) =>
+            (int? shopId_, int itemId_, float price_, float count_, DateTime date_) =>
             {
                 var purchase = fBus.CreatePurchase(_purchaseList.Max(p => p.Id) + 1,
                     shopId_, itemId_, price_, count_, date_);

@@ -47,7 +47,9 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Код товара
         /// </summary>
-        public int Item_Id { get; set; }
+        //[Required(ErrorMessage = "Выберите товар")]
+        [Range(0, int.MaxValue, ErrorMessage = "Выберите товар")]
+        public int Item_Id { get; set; } = -1;
 
         /// <summary>
         /// Название товара
@@ -56,24 +58,30 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Код группы
         /// </summary>
+        [Required(ErrorMessage = "Выберите группу товара")]
         public int GroupId { get; set; }
 
         /// <summary>
         /// Название группы с родительскими группами кроме корневой
         /// </summary>
         public string GroupExtName { get; set; }
-       
+
         /// <summary>
         /// Цена
         /// </summary>
+        //[Required(ErrorMessage = "Введите цену товара")]
+        [Range(float.Epsilon, float.MaxValue, ErrorMessage = "Цена должна быть больше нуля")]
         public float Price { get; set; }
         /// <summary>
         /// Количество
         /// </summary>
+        [Range(float.Epsilon, float.MaxValue, ErrorMessage = "Количество должно быть больше нуля")]
         public float Count { get; set; }
         /// <summary>
         /// Время покупки
         /// </summary>
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Введите дату покупки")]
         public DateTime Date { get; set; }
     }
 }

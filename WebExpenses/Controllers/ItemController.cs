@@ -143,8 +143,8 @@ namespace WebExpenses.Controllers
 
         public PartialViewResult ItemDropDownList(IItem item_)
         {
-            ViewData["SelectItemId"] = "itemId";
-            ViewData["SelectItemName"] = "itemId";
+            ViewData["SelectItemId"] = "Item_Id";
+            ViewData["SelectItemName"] = "Item_Id";
 
             if (item_ == null)
                 return PartialView("ItemDropDownList", new MItemDDList());

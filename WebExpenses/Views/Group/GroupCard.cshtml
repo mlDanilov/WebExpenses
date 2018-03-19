@@ -12,17 +12,20 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" type="text/css" href="~/Content/groupCard.css" />
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
     <h4>Карточка группы</h4>
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary();
         if (Model.Id != -1)
         {
             <p>Код  группы: @Html.TextBoxFor(g => g.Id, new { @readonly = true })</p>
         }
         <p>Наименование: @Html.EditorFor(g => g.Name)</p>
+        <p>@Html.ValidationMessageFor(g => g.Name)</p>
         if (Model.IdParent != null)
         {
             <p>Родительская группа:

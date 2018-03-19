@@ -158,7 +158,7 @@ namespace DomainExpenses.Abstract
         /// <param name="date_">дата</param>
         /// <returns></returns>
         IPurchase AddNewPurchase(
-            int shopId_,
+            int? shopId_,
             int itemId_,
             float price_,
             float count_,

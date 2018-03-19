@@ -55,7 +55,7 @@ namespace DomainExpenses.Concrete
         /// <param name="count_">Количество купленного товара(штук/килограммов)</param>
         /// <param name="date_">дата покупки</param>
         /// <returns></returns>
-        public IPurchase CreatePurchase(int id_, int shopId_, int itemId_, float price_, float count_, DateTime date_)
+        public IPurchase CreatePurchase(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
             => new Purchase(id_) {
                 Item_Id = itemId_,
                 Shop_Id = shopId_,
