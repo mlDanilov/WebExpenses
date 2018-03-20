@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -388,12 +389,7 @@ namespace WebExpenses.Controllers
             var res = purchases.ToList();
 
 
-            var shList = (from p in purchases
-                          join sh in _repository.Shop on p.Shop_Id equals sh.Id into p_sh
-                          from pSh in p_sh.DefaultIfEmpty()
-                          select new { p.Id, ShopName = (pSh == null) ? string.Empty : pSh.Name}
-                          );
-            var pShList = shList.ToList();
+         
 
             //Суммы затрат с группой
             var purchasesDetail = (from p in purchases
@@ -453,19 +449,21 @@ namespace WebExpenses.Controllers
                 (from p in _repository.Purchase
                  join it in _repository.Item on p.Item_Id equals it.Id
                  join g in _repository.GroupExt on it.GId equals g.Id
-                 join sh in _repository.Shop on p.Shop_Id equals sh.Id
+                 join sh in _repository.Shop on p.Shop_Id equals sh.Id into p_sh
+                 from pSh in p_sh.DefaultIfEmpty()
                  where p.Id == _repository.CurrentPurchaseId
-                 select new MPurchase(p.Id) {
+                 select new MPurchase(p.Id)
+                 {
                      Item_Id = p.Item_Id,
                      ItemName = it.Name,
                      GroupId = it.GId,
                      GroupExtName = g.Name,
                      Shop_Id = p.Shop_Id,
-                     ShopName = sh.Name,
-                      ShopAddress = sh.Address,
-                       Price = p.Price,
-                       Count = p.Count,
-                        Date = p.Date,
+                     ShopName = (pSh == null) ? string.Empty : pSh.Name,
+                     ShopAddress = (pSh == null) ? string.Empty : pSh.Address,
+                     Price = p.Price,
+                     Count = p.Count,
+                     Date = p.Date,
                  }).FirstOrDefault();
                 //.Where(p => p.Id == _repository.CurrentPurchaseId).FirstOrDefault();
             
@@ -481,7 +479,7 @@ namespace WebExpenses.Controllers
             DateTime parsedDate;
             if (!DateTime.TryParse(Date, out parsedDate))
             {
-                return Json("Введите допустимое значение даты (дд.мм.гггг)", JsonRequestBehavior.AllowGet);
+                return Json($"Введите допустимое значение даты", JsonRequestBehavior.AllowGet);
             }
             else if (DateTime.Now <= parsedDate)
             {

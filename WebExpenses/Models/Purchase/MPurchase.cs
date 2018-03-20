@@ -81,8 +81,9 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Время покупки
         /// </summary>
-        //[DataType(DataType.Date, ErrorMessage ="Некорректный формат. Введите в формате: дд.мм.гг")]
+        [DataType(DataType.Date, ErrorMessage ="Некорректный формат. Введите в формате: дд.мм.гг")]
         [Remote("ValidateDate", "Purchase")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Введите дату покупки")]
         public DateTime Date { get; set; }
     }
