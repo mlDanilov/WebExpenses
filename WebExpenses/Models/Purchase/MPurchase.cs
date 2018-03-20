@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 using DomainExpenses.Abstract;
@@ -80,7 +81,8 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Время покупки
         /// </summary>
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date, ErrorMessage ="Некорректный формат. Введите в формате: дд.мм.гг")]
+        [Remote("ValidateDate", "Purchase")]
         [Required(ErrorMessage = "Введите дату покупки")]
         public DateTime Date { get; set; }
     }

@@ -16,11 +16,6 @@ function ajaxItems() {
             //Привязываем к кнопкам "редактировать", "удалить"
             //скрипты, чтобы устанавливались текущие товары перед кликом по линку
             setEditDeleteItemClickEventHandler();
-            /*
-            $('div#items tbody tr th.itemEdit a').click(setCurrentIId);
-            $('div#items tbody tr th.itemDelete a').click(setCurrentIId);
-            console.log('items events');
-            */
         },
         error: function () {
             alert("Ошибка!");
