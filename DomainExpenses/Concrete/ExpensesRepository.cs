@@ -196,7 +196,10 @@ namespace DomainExpenses.Concrete
         /// <param name="parentGroupId_">Новый код родительской группы</param>
         public void EditShop(int id_, string name_, string address_)
         {
-            _context.EditShop(id_, name_, address_);
+            //_context.EditShop(id_, name_, address_);
+            var shop = _context.Shop.Where(sh => sh.Id == id_).First();
+            shop.Name = name_;
+            shop.Address = address_;
             _context.SaveChanges();
         }
         /// <summary>
@@ -271,7 +274,7 @@ namespace DomainExpenses.Concrete
         /// <param name="period_"></param>
         /// <returns></returns>
         public IQueryable<IPurchase> SelectPurchasesByPeriod(IPeriod period_)
-           => _context.SelectPurchasesByPeriod(period_).AsQueryable();
+           => _context.SelectPurchasesByPeriod(period_);//.AsQueryable();
         /// <summary>
         /// Получить все расходы за неделю
         /// </summary>

@@ -31,7 +31,7 @@ namespace WebExpenses.Models.Purchase
             Count = purch_.Count;
             Date = purch_.Date;
         }
-        public int Id { get; private set; }
+        public int Id { get; set; }
         /// <summary>
         /// Код магазина
         /// </summary>

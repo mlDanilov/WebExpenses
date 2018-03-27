@@ -241,6 +241,7 @@ namespace DomainExpenses.Concrete
             purchase.Price = priceNew_;
             purchase.Count = countNew_;
             purchase.Date = dateNew_;
+            this.SaveChanges();
 
         }
        /// <summary>
@@ -308,13 +309,23 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="period_"></param>
         /// <returns></returns>
-        public DbRawSqlQuery<Purchase> SelectPurchasesByPeriod(IPeriod period_)
+       /* public DbRawSqlQuery<Purchase> SelectPurchasesByPeriod(IPeriod period_)
         {
             var pPeriod = new SqlParameter("@Period", SqlDbType.Date)
             { Value = period_.MonthYear };
 
             var rQuery = Database.SqlQuery<Purchase>("exec SelectPurchasesByPeriod @Period", pPeriod);
             return rQuery;
+        }
+        */
+        public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
+        {
+            var res = (from p in Purchase
+                       where
+                       (p.Date.Month == period_.MonthYear.Month) &&
+                       (p.Date.Year == period_.MonthYear.Year)
+                       select p);
+            return res;
         }
 
         #endregion

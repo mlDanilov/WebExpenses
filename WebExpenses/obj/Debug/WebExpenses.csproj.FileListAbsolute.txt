@@ -152,3 +152,10 @@ C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.csprojResolveAssemblyReference.cache
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.dll
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.pdb
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\Antlr3.Runtime.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\Newtonsoft.Json.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Optimization.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\WebGrease.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\Antlr3.Runtime.pdb
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\Newtonsoft.Json.xml
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Optimization.xml

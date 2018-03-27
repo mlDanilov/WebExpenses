@@ -14,17 +14,7 @@ namespace WebExpenses.Models.Purchase
         {
 
         }
-       /* public MPeriodPurchaseSumByGroup(IPeriod timeSpan_, IGroup group_)
-        {
-            TimeSpan = new Period(timeSpan_);
-            Group = group_;
-        }*/
-        /*public MPeriodPurchaseSumByGroup(Period timeSpan_, IGroup group_)
-        {
-            TimeSpan = timeSpan_;
-            Group = new DomainExpenses.Concrete.Group(group_);
-        }
-        */
+
         /// <summary>
         /// Промежуток времени
         /// </summary>

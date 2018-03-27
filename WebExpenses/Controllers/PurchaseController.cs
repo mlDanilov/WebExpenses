@@ -224,11 +224,14 @@ namespace WebExpenses.Controllers
                    MPeriodPurchaseSumByGroup()
                  {
                      Group = g,
-                     TimeSpan = pp,
+                     //TimeSpan = pp,
                      Sum = gSum.Sum
                  }
                  );
-            
+            var list = res.ToList();
+            list.ForEach(mp => mp.TimeSpan = pp);
+
+
             return res;
         }
         /// <summary>
@@ -388,9 +391,6 @@ namespace WebExpenses.Controllers
 
             var res = purchases.ToList();
 
-
-         
-
             //Суммы затрат с группой
             var purchasesDetail = (from p in purchases
                                    join it in _repository.Item on p.Item_Id equals it.Id
@@ -399,8 +399,9 @@ namespace WebExpenses.Controllers
                                    join g in _repository.GroupExt on it.GId equals g.Id
                                    where it.GId == purchGId
                                    select
-                                   new MPurchase(p.Id)
+                                   new MPurchase()
                                    {
+                                       Id = p.Id,
                                        Item_Id = p.Item_Id,
                                        ItemName = it.Name,
                                        Date = p.Date,
@@ -410,6 +411,53 @@ namespace WebExpenses.Controllers
                                        Shop_Id = p.Shop_Id,
                                        ShopName = (pSh == null) ? string.Empty : pSh.Name,
                                        ShopAddress = (pSh == null) ? string.Empty : pSh.Address,
+                                       Count = p.Count
+                                   }
+                       );
+
+            var purchDetailList = purchasesDetail.ToList();
+
+            return PartialView("PurchaseDetail", purchDetailList);
+
+        }
+
+        public PartialViewResult InnerPurchasesByGId_сrutchVersion(int gId_)
+        {
+            var purchGId = gId_;
+            ViewData["PurchGId"] = gId_;
+            IQueryable<IPurchase> purchasesTemp = null;
+            if (_repository.CurrentDay != null)
+                purchasesTemp = _repository.SelectPurchaseByDate(_repository.CurrentDay.Value);
+            else if (_repository.CurrentWeek != null)
+                purchasesTemp = _repository.SelectPurchasesByWeek(_repository.CurrentWeek);
+            else
+                purchasesTemp = _repository.SelectPurchasesByPeriod(_repository.CurrentPeriod);
+
+           // var res = purchasesTemp.ToList();
+
+            //Суммы затрат с группой
+            var purchasesDetail = (from p in purchasesTemp
+                                   join it in _repository.Item on p.Item_Id equals it.Id
+                                   join sh in _repository.Shop on p.Shop_Id equals sh.Id //into p_sh
+                                   //from pSh in p_sh.DefaultIfEmpty()
+                                   join g in _repository.Group on it.GId equals g.Id
+                                   where it.GId == purchGId
+                                   orderby p.Date descending
+                                   select
+                                   new MPurchase()
+                                   {
+                                       Id = p.Id,
+                                       Item_Id = p.Item_Id,
+                                       ItemName = it.Name,
+                                       Date = p.Date,
+                                       Price = p.Price,
+                                       GroupId = it.GId,
+                                       GroupExtName = g.Name,
+                                       Shop_Id = p.Shop_Id,
+                                       ShopName = sh.Name,
+                                       ShopAddress = sh.Address,
+                                       //ShopName = (p_sh == null) ? string.Empty : pSh.Name,
+                                       //ShopAddress = (p_sh == null) ? string.Empty : pSh.Address,
                                        Count = p.Count
                                    }
                        );
@@ -496,6 +544,7 @@ namespace WebExpenses.Controllers
             _repository.EditPurchase(
                 purchase_.Id, purchase_.Shop_Id, purchase_.Item_Id, purchase_.Price, purchase_.Count, purchase_.Date);
             return RedirectToAction("Table");
+
         }
 
         public ActionResult DeletePurchase()
