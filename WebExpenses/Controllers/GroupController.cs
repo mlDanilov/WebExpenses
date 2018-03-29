@@ -99,18 +99,8 @@ namespace WebExpenses.Controllers
                 return CreateGroupCard(mGroup_.IdParent.Value);
            // return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
-        /*
-        [HttpPost]
-        public ActionResult CreateGroupCard(string name, int parentGroupId_)
-        {
-            var group = _repository.AddNewGroup(name, parentGroupId_);
-            return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
-        }
-        */
-        public void SetCurrentGId(int gId_)
-        {
-            _repository.CurrentGId = gId_;
-        }
+       
+        public void SetCurrentGId(int gId_) =>  _repository.CurrentGId = gId_;
 
         public ViewResult EditGroup()
         {

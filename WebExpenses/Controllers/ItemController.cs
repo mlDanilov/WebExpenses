@@ -25,7 +25,10 @@ namespace WebExpenses.Controllers
         }
 
 
-
+        /// <summary>
+        /// Получить список товаров по текущей группе
+        /// </summary>
+        /// <returns></returns>
         public PartialViewResult ItemsTable()
         {
             var itView = getItemsViewByCurrentGId();

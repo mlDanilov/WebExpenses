@@ -28,6 +28,8 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public IItem CreateItem(int id_, int gId_, string name_) 
             => new Item(id_, gId_) { Name = name_ };
+        public Item CreateItemC(int id_, int gId_, string name_)
+          => new Item(id_, gId_) { Name = name_ };
         /// <summary>
         /// Создать группу товаров
         /// </summary>
@@ -37,6 +39,8 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public IGroup CreateGroup(int id_, int? idParent_, string name_) 
             => new Group(id_) { IdParent = idParent_, Name = name_ };
+        public Group CreateGroupC(int id_, int? idParent_, string name_)
+          => new Group(id_) { IdParent = idParent_, Name = name_ };
         /// <summary>
         /// Создать магазин
         /// </summary>
@@ -44,6 +48,8 @@ namespace DomainExpenses.Concrete
         /// <param name="name_">Название</param>
         /// <returns></returns>
         public IShop CreateShop(int id_, string name_, string address_) 
+            => new Shop(id_) { Name = name_, Address = address_ };
+        public Shop CreateShopC(int id_, string name_, string address_)
             => new Shop(id_) { Name = name_, Address = address_ };
         /// <summary>
         /// Создать покупку
@@ -57,6 +63,16 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public IPurchase CreatePurchase(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
             => new Purchase(id_) {
+                Item_Id = itemId_,
+                Shop_Id = shopId_,
+                Count = count_,
+                Price = price_,
+                Date = date_
+            };
+
+        public Purchase CreatePurchaseC(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
+            => new Purchase(id_)
+            {
                 Item_Id = itemId_,
                 Shop_Id = shopId_,
                 Count = count_,

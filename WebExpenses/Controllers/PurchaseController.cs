@@ -352,7 +352,7 @@ namespace WebExpenses.Controllers
             //Суммы затрат с группой
             var purchasesDetail = (from p in purchases
                             join it in _repository.Item on p.Item_Id equals it.Id
-                            join sh in _repository.Shop on p.Shop_Id equals sh.Id into p_sh
+                            join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
                             from pSh in p_sh.DefaultIfEmpty()
                             join g in _repository.GroupExt on it.GId equals g.Id
                             where it.GId == purchGId
@@ -394,10 +394,11 @@ namespace WebExpenses.Controllers
             //Суммы затрат с группой
             var purchasesDetail = (from p in purchases
                                    join it in _repository.Item on p.Item_Id equals it.Id
-                                   join sh in _repository.Shop on p.Shop_Id equals sh.Id into p_sh
+                                   join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
                                    from pSh in p_sh.DefaultIfEmpty()
                                    join g in _repository.GroupExt on it.GId equals g.Id
                                    where it.GId == purchGId
+                                   orderby p.Date descending
                                    select
                                    new MPurchase()
                                    {
@@ -433,14 +434,15 @@ namespace WebExpenses.Controllers
             else
                 purchasesTemp = _repository.SelectPurchasesByPeriod(_repository.CurrentPeriod);
 
-           // var res = purchasesTemp.ToList();
+            var res = purchasesTemp.ToList();
 
             //Суммы затрат с группой
             var purchasesDetail = (from p in purchasesTemp
                                    join it in _repository.Item on p.Item_Id equals it.Id
-                                   join sh in _repository.Shop on p.Shop_Id equals sh.Id //into p_sh
-                                   //from pSh in p_sh.DefaultIfEmpty()
-                                   join g in _repository.Group on it.GId equals g.Id
+                                   join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
+                                   from pSh in p_sh.DefaultIfEmpty()
+                                   //join g in _repository.Group on it.GId equals g.Id
+                                   join g in _repository.GroupExt on it.GId equals g.Id
                                    where it.GId == purchGId
                                    orderby p.Date descending
                                    select
@@ -454,10 +456,10 @@ namespace WebExpenses.Controllers
                                        GroupId = it.GId,
                                        GroupExtName = g.Name,
                                        Shop_Id = p.Shop_Id,
-                                       ShopName = sh.Name,
-                                       ShopAddress = sh.Address,
-                                       //ShopName = (p_sh == null) ? string.Empty : pSh.Name,
-                                       //ShopAddress = (p_sh == null) ? string.Empty : pSh.Address,
+                                      // ShopName = sh.Name,
+                                      // ShopAddress = sh.Address,
+                                       ShopName = (p_sh == null) ? string.Empty : pSh.Name,
+                                       ShopAddress = (p_sh == null) ? string.Empty : pSh.Address,
                                        Count = p.Count
                                    }
                        );
@@ -497,7 +499,7 @@ namespace WebExpenses.Controllers
                 (from p in _repository.Purchase
                  join it in _repository.Item on p.Item_Id equals it.Id
                  join g in _repository.GroupExt on it.GId equals g.Id
-                 join sh in _repository.Shop on p.Shop_Id equals sh.Id into p_sh
+                 join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
                  from pSh in p_sh.DefaultIfEmpty()
                  where p.Id == _repository.CurrentPurchaseId
                  select new MPurchase(p.Id)

@@ -68,12 +68,24 @@
   <ItemGroup>
     <Compile Include="Abstract\IExpensesRepository.cs" />
     <Compile Include="Abstract\Entities.cs" />
+    <Compile Include="Abstract\Repositories\IEntityRepositiory.cs" />
+    <Compile Include="Abstract\Repositories\IGroupRepository.cs" />
+    <Compile Include="Abstract\Repositories\IItemRepository.cs" />
+    <Compile Include="Abstract\Repositories\IPurchaseRepository.cs" />
+    <Compile Include="Abstract\Repositories\IShopRepository.cs" />
     <Compile Include="Concrete\Entities.cs" />
     <Compile Include="Concrete\EntitiesFactory.cs" />
+    <Compile Include="Concrete\Repositories\GroupRepository.cs" />
+    <Compile Include="Concrete\Repositories\ItemRepository.cs" />
     <Compile Include="Concrete\ExpensesDBContext.cs" />
     <Compile Include="Concrete\ExpensesRepository.cs" />
-    <Compile Include="Concrete\PurchaseModule.cs" />
+    <Compile Include="Concrete\Repositories\PurchaseRepository.cs" />
+    <Compile Include="Concrete\Repositories\ShopRepository.cs" />
+    <Compile Include="Moq\GroupRepMock.cs" />
+    <Compile Include="Moq\ItemRepMock.cs" />
     <Compile Include="Moq\MockBus.cs" />
+    <Compile Include="Moq\PurchRepMock.cs" />
+    <Compile Include="Moq\ShopRepMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

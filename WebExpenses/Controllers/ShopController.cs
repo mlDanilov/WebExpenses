@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using DomainExpenses.Abstract;
+using DomainExpenses.Concrete;
 using WebExpenses.Models.Shop;
 
 namespace WebExpenses.Controllers
@@ -36,8 +37,9 @@ namespace WebExpenses.Controllers
         {
             if (ModelState.IsValid)
             {
-                var shop = _repository.AddNewShop(shCard_.Name, shCard_.Address);
-                _repository.CurrentShopId = shop.Id;
+                var sh = EntitiesFactory.Get().CreateShop(shCard_.Id, shCard_.Name, shCard_.Address);
+                var shop = _repository.ShopRep.Create(sh);
+                _repository.ShopRep.CurrentShopId = shop.Id;
                 return RedirectToAction("List");
             }
             else
@@ -46,8 +48,8 @@ namespace WebExpenses.Controllers
 
         public ViewResult EditShop()
         {
-            int? shId = _repository.CurrentShopId;
-            var shop = _repository.Shop.Where(sh => sh.Id == shId).FirstOrDefault();
+            int? shId = _repository.ShopRep.CurrentShopId;
+            var shop = _repository.ShopRep.Entities.Where(sh => sh.Id == shId).FirstOrDefault();
 
             var shView = new MShopCard(shop);
             ViewData["Title"] = "Редактировать магазин";
@@ -57,11 +59,14 @@ namespace WebExpenses.Controllers
         [HttpPost]
         public ActionResult EditShop(MShopCard shCard_)
         {
-            int? shopId = _repository.CurrentShopId;
+            int? shopId = _repository.ShopRep.CurrentShopId;
             if (ModelState.IsValid)
             {
                 if (shopId != null)
-                    _repository.EditShop(shopId.Value, shCard_.Name, shCard_.Address);
+                {
+                    var shop = EntitiesFactory.Get().CreateShop(shopId.Value, shCard_.Name, shCard_.Address);
+                    _repository.ShopRep.Update(shop);
+                }
                 return RedirectToAction("List");
             }
             else
@@ -70,10 +75,10 @@ namespace WebExpenses.Controllers
 
         public ActionResult DeleteShop()
         {
-            int? shId = _repository.CurrentShopId;
-            var shop = _repository.Shop.Where(sh => sh.Id == shId).FirstOrDefault();
+            int? shId = _repository.ShopRep.CurrentShopId;
+            var shop = _repository.ShopRep.Entities.Where(sh => sh.Id == shId).FirstOrDefault();
             if ((shop != null) && (shId != null))
-                _repository.DeleteShop(shop.Id);
+                _repository.ShopRep.Delete(shop);
 
             return RedirectToAction("List");
         }
@@ -92,7 +97,7 @@ namespace WebExpenses.Controllers
             return PartialView(shops);
         }
 
-        public void SetCurrentShopId(int shId_) => _repository.CurrentShopId = shId_;
+        public void SetCurrentShopId(int shId_) => _repository.ShopRep.CurrentShopId = shId_;
 
         /// <summary>
         /// Получить список магазинов
@@ -100,11 +105,15 @@ namespace WebExpenses.Controllers
         /// <returns></returns>
         private MShopList getShopsView()
         {
-            int? shId = _repository.CurrentShopId;
+            int? shId = _repository.ShopRep.CurrentShopId;
+            List<IShop> shopList = new List<IShop>();
+            _repository.ShopRep.Entities.ToList().ForEach(sh=> shopList.Add(sh));
+
+            var shList =  shopList.OrderBy(sh => sh.Name);
             var shView = new MShopList()
             {
                 ShopId = shId,
-                ShopList = _repository.Shop.OrderBy(sh => sh.Name).ToList()
+                ShopList = shList.ToList()
             };
             return shView;
         }
