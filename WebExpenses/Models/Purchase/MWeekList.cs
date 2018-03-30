@@ -11,6 +11,6 @@ namespace WebExpenses.Models.Purchase
     {
         public IWeek Current { get; set; }
 
-        public List<IWeek> WeekList { get; set; }
+        public List<IWeek> WeekList { get; set; } = new List<IWeek>();
     }
 }

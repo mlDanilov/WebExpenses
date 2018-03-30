@@ -45,17 +45,16 @@ namespace WebExpenses.Controllers
         /// Получить список товаров по текущей группе
         /// </summary>
         /// <returns></returns>
-        private MItemList getItemsViewByCurrentGId() => getItemsViewByGId(_repository.CurrentGId);
+        private MItemList getItemsViewByCurrentGId() => getItemsViewByGId(_repository.GroupRep.CurrentGId);
         private MItemList getItemsViewByGId(int? gId_)
         {
             var itView = new MItemList();
             itView.GroupId = gId_;
             if (gId_ != null)
             {
-                //var iList = _repository.Item.ToList();
-                itView.ItemList = _repository.Item
+                 _repository.ItemRep.Entities
                     .Where(it => (it.GId == gId_))
-                    .OrderBy(it => it.Name).ToList();
+                    .OrderBy(it => it.Name).ToList().ForEach(it => itView.ItemList.Add(it));
             }
             else
                 itView.ItemList = new List<IItem>();
@@ -69,10 +68,7 @@ namespace WebExpenses.Controllers
         /// Установить текущую группу в DBContext
         /// </summary>
         /// <param name="iid_"></param>
-        public void SetCurrentIId(int iid_)
-        {
-            _repository.CurrentIId = iid_;
-        }
+        public void SetCurrentIId(int iid_) => _repository.ItemRep.CurrentIId = iid_;
 
         public ViewResult CreateItemCard(int gId_)
         {
@@ -88,7 +84,7 @@ namespace WebExpenses.Controllers
        {
             if (ModelState.IsValid)
             {
-                var item = _repository.AddNewItem(mItemCard_.Name, mItemCard_.GId);
+                var item = _repository.ItemRep.Create(mItemCard_);
                 return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
             }
             else
@@ -98,7 +94,7 @@ namespace WebExpenses.Controllers
 
         public ViewResult EditItemCard()
         {
-            var item = _repository.Item.Where(it => it.Id == _repository.CurrentIId).FirstOrDefault();
+            var item = getItemById(_repository.ItemRep.CurrentIId);
             var itView = new MItemCard(item);
             ViewData["Title"] = "Редактировать карточку товара";
             ViewData["Head"] = "Редактировать";
@@ -111,7 +107,7 @@ namespace WebExpenses.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.EditItem(mItemCard_.Id, mItemCard_.Name, mItemCard_.GId);
+                _repository.ItemRep.Update(mItemCard_);
                 return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
             }
             else
@@ -128,20 +124,18 @@ namespace WebExpenses.Controllers
          }*/
         public ActionResult DeleteItemCard()
         {
-            if (_repository.CurrentIId.HasValue)
-                _repository.DeleteItem(_repository.CurrentIId.Value);
+            int? iid = _repository.ItemRep.CurrentIId;
+            if (iid.HasValue)
+                _repository.ItemRep.Delete(getItemById(iid));
             return RedirectToAction("GroupsAndItems", "Group");
-            //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
         [HttpPost]
         public PartialViewResult DeleteItemCardAjax()
         {
-            int? iid = _repository.CurrentIId;
+            int? iid = _repository.ItemRep.CurrentIId;
             if (iid != null)
-                _repository.DeleteItem(iid.Value);
-
+                _repository.ItemRep.Delete(getItemById(iid));
             return PartialView("ItemsTableBodyRows", getItemsViewByCurrentGId());
-            //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
         }
 
         public PartialViewResult ItemDropDownList(IItem item_)
@@ -152,26 +146,28 @@ namespace WebExpenses.Controllers
             if (item_ == null)
                 return PartialView("ItemDropDownList", new MItemDDList());
 
-            var itemList = _repository.Item.Where(it => it.GId == item_.GId).ToList();
+            //var itemList = 
+
             var mItemList = new MItemDDList()
             {
-                ItemId = item_.Id,
-                ItemList = itemList
+                ItemId = item_.Id
             };
+            _repository.ItemRep.Entities.Where(it => it.GId == item_.GId).ToList().
+                ForEach(it => mItemList.ItemList.Add(it));
+
             return PartialView("ItemDropDownList", mItemList);
         }
 
         public PartialViewResult ItemOptions(int groupId_)
         {
-
-            var itemList = _repository.Item.Where(it => it.GId == groupId_).ToList();
-            var mItemList = new MItemDDList()
-            {
-                ItemId = null,
-                ItemList = itemList
-            };
+            var mItemList = new MItemDDList() { ItemId = null };
+            _repository.ItemRep.Entities.Where(it => it.GId == groupId_).ToList()
+                .ForEach( it => mItemList.ItemList.Add(it));
             return PartialView("ItemOptions", mItemList);
         }
+
+        private IItem getItemById(int? iid_)
+            => _repository.ItemRep.Entities.Where(it => it.Id == iid_).FirstOrDefault();
 
         private IExpensesRepository _repository = null;
     }

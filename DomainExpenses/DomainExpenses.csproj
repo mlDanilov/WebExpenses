@@ -84,7 +84,7 @@
     <Compile Include="Moq\GroupRepMock.cs" />
     <Compile Include="Moq\ItemRepMock.cs" />
     <Compile Include="Moq\MockBus.cs" />
-    <Compile Include="Moq\PurchRepMock.cs" />
+    <Compile Include="Moq\PurchaseRepMock.cs" />
     <Compile Include="Moq\ShopRepMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

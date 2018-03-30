@@ -74,7 +74,7 @@ namespace DomainExpenses.Moq
 
        
 
-        public Mock<IItemRepository> ItRepMock
+        public Mock<IItemRepository> Mock
         {
             get
             {

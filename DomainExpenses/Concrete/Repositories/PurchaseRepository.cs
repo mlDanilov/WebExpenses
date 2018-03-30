@@ -100,7 +100,10 @@ namespace DomainExpenses.Concrete.Repositories
         /// <returns></returns>
         public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
                    => _dbContext.SelectPurchasesByDay(date_).AsQueryable();
-
+        /// <summary>
+        /// Текущая покупка
+        /// </summary>
+        public int? CurrentPurchaseId { get; set; }
         /// <summary>
         /// Текущая выбранная группа покупок
         /// </summary>

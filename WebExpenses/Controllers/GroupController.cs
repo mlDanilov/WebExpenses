@@ -29,12 +29,9 @@ namespace WebExpenses.Controllers
             return PartialView(gListView_);
         }
 
-       /* public PartialViewResult GroupDropDownList(int gId_)
-        {
-            return GroupDropDownList(gId_, "groupId");
 
-        }
-        */
+     
+      
         public PartialViewResult GroupDropDownList(int gId_, 
             string selectGroupId_, string selectGroupName_)
         {
@@ -43,37 +40,27 @@ namespace WebExpenses.Controllers
             
 
             if (gId_ == -1)
-                gId_ = _repository.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
-            var gList = new MGroupList()
-            {
-                GroupId = gId_,
-                GroupList = _repository.GroupExt.ToList()
-            };
+                gId_ = _repository.GroupRep.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
+
+            var gList = getMGroupExtList(gId_);
+
             return PartialView(gList);
         }
 
         public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
         {
             if ((gListView_ == null) || (gListView_.GroupList == null))
-                gListView_ = new MGroupList()
-                {
-                    GroupId = null,
-                    GroupList = _repository.GroupExt.Where(g => g.Id == 1).ToList()
-                };
+                gListView_ = getMGroupExtList(null);
+
             return PartialView(gListView_);
         }
 
         public ViewResult GroupsAndItems()
         {
             ViewData["Title"] = "Группы и товары";
-            var groupsQuery = _repository.GroupExt;
-            var groups = groupsQuery.ToList();
+            var groupsQuery = _repository.GroupRep.GroupExt;
 
-            var gListView = new MGroupList()
-            {
-                GroupId = _repository.CurrentGId,
-                GroupList = groups
-            };
+            var gListView = getMGroupExtList(_repository.GroupRep.CurrentGId);
             return View(gListView);
         }
 
@@ -92,7 +79,8 @@ namespace WebExpenses.Controllers
         {
             if ((ModelState.IsValid) && (mGroup_.IdParent != null))
             {
-                var group = _repository.AddNewGroup(mGroup_.Name, mGroup_.IdParent.Value);
+
+                var group = _repository.GroupRep.Create(mGroup_);
                 return RedirectToAction("GroupsAndItems", new { gId_ = mGroup_.IdParent.Value });
             }
             else
@@ -100,12 +88,12 @@ namespace WebExpenses.Controllers
            // return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
        
-        public void SetCurrentGId(int gId_) =>  _repository.CurrentGId = gId_;
+        public void SetCurrentGId(int gId_) =>  _repository.GroupRep.CurrentGId = gId_;
 
         public ViewResult EditGroup()
         {
-            int? id = _repository.CurrentGId;
-            var group = _repository.Group.Where(it => it.Id == id).FirstOrDefault();
+            int? id = _repository.GroupRep.CurrentGId;
+            var group = _repository.GroupRep.Entities.Where(it => it.Id == id).FirstOrDefault();
 
             var gView = new MGroupCard(group);
             ViewData["Head"] = "Редактировать";
@@ -119,7 +107,7 @@ namespace WebExpenses.Controllers
         {
             if ((ModelState.IsValid) && (mGroup_.IdParent != null))
             {
-                _repository.EditGroup(mGroup_.Id, mGroup_.Name, mGroup_.IdParent.Value);
+                _repository.GroupRep.Update(mGroup_);
                 return RedirectToAction("GroupsAndItems", new { gId_ = mGroup_.IdParent });
             }
             else
@@ -129,14 +117,17 @@ namespace WebExpenses.Controllers
         [HttpPost]
         public PartialViewResult DeleteGroupAjax()
         {
-            int? gId = _repository.CurrentGId;
+            int? gId = _repository.GroupRep.CurrentGId;
             if (gId != null)
-                _repository.DeleteGroup(gId.Value);
+                _repository.GroupRep.Delete(_repository.GroupRep.Entities.Where(g=>g.Id == gId).First());
+
+            var gExtList = new List<IGroup>();
+            _repository.GroupRep.GroupExt.ToList().ForEach(g => gExtList.Add(g));
 
             var gList = new MGroupList()
             {
                 GroupId = null,
-                GroupList = _repository.GroupExt.ToList()
+                GroupList = gExtList
             };
             //return GroupsTableBodyRows(gList);
             return PartialView("GroupsTableBodyRows", gList);
@@ -144,25 +135,31 @@ namespace WebExpenses.Controllers
         }
         public ActionResult DeleteGroup()
         {
-            int? gId = _repository.CurrentGId;
-            var group = _repository.Group.Where(g => g.Id == gId).FirstOrDefault();
+            int? gId = _repository.GroupRep.CurrentGId;
+            var group = getGroupById(gId);
             if (group == null)
                 return RedirectToAction("GroupsAndItems");
 
-            if (gId != null)
+            if (group != null)
             {
-                _repository.DeleteGroup(gId.Value);
-                _repository.CurrentGId = group.IdParent;
+                _repository.GroupRep.Delete(group);
+                _repository.GroupRep.CurrentGId = group.IdParent;
             }
+            return RedirectToAction("GroupsAndItems");
+        }
 
+        private IGroup getGroupById(int? gId_) => _repository.GroupRep.Entities.Where(g => g.Id == gId_).FirstOrDefault();
+
+        private MGroupList getMGroupExtList(int? gId_)
+        {
+            List<IGroup> gExtList = new List<IGroup>();
+            _repository.GroupRep.GroupExt.ToList().ForEach(g => gExtList.Add(g));
             var gList = new MGroupList()
             {
-                GroupId = null,
-                GroupList = _repository.GroupExt.ToList()
+                GroupId = gId_,
+                GroupList = gExtList
             };
-            //return GroupsTableBodyRows(gList);
-            //return PartialView("GroupsTableBodyRows", gList);
-            return RedirectToAction("GroupsAndItems");
+            return gList;
         }
 
         private IExpensesRepository _repository = null;

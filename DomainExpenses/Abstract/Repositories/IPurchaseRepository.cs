@@ -42,6 +42,11 @@ namespace DomainExpenses.Abstract.Repositories
         /// <param name="date_"></param>
         /// <returns></returns>
         IQueryable<Purchase> SelectPurchaseByDate(DateTime date_);
+
+        /// <summary>
+        /// Текущая выбранная покупка
+        /// </summary>
+        int? CurrentPurchaseId { get; set; }
         /// <summary>
         /// Текущая выбранная группа покупок
         /// </summary>

@@ -91,7 +91,7 @@ namespace DomainExpenses.Moq
         private static ShopRepMock _instance = new ShopRepMock();
 
 
-        public Mock<IShopRepository> ShRepMock
+        public Mock<IShopRepository> Mock
         {
             get
             {

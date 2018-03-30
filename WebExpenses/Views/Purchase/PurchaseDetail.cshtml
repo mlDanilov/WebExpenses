@@ -19,7 +19,6 @@
             <th class="purchOrder">@(i + 1)</th>
             <th class="purchId">@Model[i].Id</th>
             <th class="purchItemId">@Model[i].Item_Id - @Model[i].ItemName</th>
-            <!--th class="purchItemName">@Model[i].ItemName</!th-->
             <th class="purchSum">@((Model[i].Price * Model[i].Count).ToString("### ##0.00").TrimStart(' '))</th>
             <th class="purchPrice">@Model[i].Price.ToString("### ##0.00").TrimStart(' ')</th>
             <th class="purchCount">@Model[i].Count</th>

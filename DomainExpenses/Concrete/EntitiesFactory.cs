@@ -88,6 +88,10 @@ namespace DomainExpenses.Concrete
             => new Period()
             { MonthYear = new DateTime(period_.Year, period_.Month, 1) };
 
+        public Period CreatePeriodC(DateTime period_)
+           => new Period()
+           { MonthYear = new DateTime(period_.Year, period_.Month, 1) };
+
         /// <summary>
         /// Создать период
         /// </summary>
@@ -96,6 +100,10 @@ namespace DomainExpenses.Concrete
         public IWeek CreateWeek(DateTime bDate_, DateTime eDate_)
             => new Week()
             { BDate = bDate_, EDate = eDate_ };
+
+        public Week CreateWeekC(DateTime bDate_, DateTime eDate_)
+          => new Week()
+          { BDate = bDate_, EDate = eDate_ };
 
 
         public static EntitiesFactory Get()

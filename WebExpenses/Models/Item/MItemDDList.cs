@@ -16,6 +16,6 @@ namespace WebExpenses.Models.Item
         /// <summary>
         /// Список товаров
         /// </summary>
-        public List<IItem> ItemList { get; set; }
+        public List<IItem> ItemList { get; set; } = new List<IItem>();
     }
 }
