@@ -14,7 +14,6 @@ namespace DomainExpenses.Abstract.Repositories
     public interface IShopRepository : IEntityRepositiory<IShop, Shop>
     {
 
-        [Obsolete("Удалим нафиг потом, ибо стремимся к REST")]
         /// <summary>
         /// Текущая группа товаров
         /// </summary>

@@ -65,7 +65,6 @@ namespace DomainExpenses.Concrete.Repositories
             _dbContext.SaveChanges();
         }
 
-        [Obsolete("Удалим нафиг потом, ибо стремимся к REST")]
         /// <summary>
         /// Текущий магазин
         /// </summary>

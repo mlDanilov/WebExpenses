@@ -13,7 +13,6 @@ namespace DomainExpenses.Abstract.Repositories
     /// </summary>
     public interface IGroupRepository : IEntityRepositiory<IGroup, Group>
     {
-        [Obsolete("Удалим нафиг потом, ибо стремимся к REST")]
         /// <summary>
         /// Текущая группа товаров
         /// </summary>

@@ -10,6 +10,9 @@ using DomainExpenses.Abstract.Repositories;
 
 namespace DomainExpenses.Abstract
 {
+    /// <summary>
+    /// Репозиторий для работы с данными
+    /// </summary>
     public interface IExpensesRepository
     {
        
