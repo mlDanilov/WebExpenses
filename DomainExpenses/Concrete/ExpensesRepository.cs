@@ -13,13 +13,15 @@ using DomainExpenses.Concrete.Repositories;
 
 namespace DomainExpenses.Concrete
 {
+    /// <summary>
+    /// Репозиторий для работы с данными
+    /// </summary>
     public class ExpensesRepository : IExpensesRepository
     {
 
         public ExpensesRepository()
         {
             //_purchaseModule = new PurchaseModule(_context.SelectWeeksOfCurrentPeriod);
-
             _itemRep = new ItemRepository(_context);
             _groupRep = new GroupRepository(_context);
             _shopRep = new ShopRepository(_context);

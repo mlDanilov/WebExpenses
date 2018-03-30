@@ -15,7 +15,7 @@ namespace DomainExpenses.Moq
     /// <summary>
     /// Мок-синглтон IShopRepository
     /// </summary>
-    internal class ShopRepMock 
+    public class ShopRepMock 
     {
         private ShopRepMock()
         {

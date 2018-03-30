@@ -10,6 +10,7 @@ namespace DomainExpenses.Abstract.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с магазинами
+    /// (Single Responsibility Principle)
     /// </summary>
     public interface IShopRepository : IEntityRepositiory<IShop, Shop>
     {

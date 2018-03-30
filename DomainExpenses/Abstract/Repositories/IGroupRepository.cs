@@ -10,6 +10,7 @@ namespace DomainExpenses.Abstract.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с группами товаров
+    /// (Single Responsibility Principle)
     /// </summary>
     public interface IGroupRepository : IEntityRepositiory<IGroup, Group>
     {

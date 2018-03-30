@@ -15,7 +15,7 @@ namespace DomainExpenses.Moq
     /// <summary>
     /// Мок-синглтон IGroupRepository
     /// </summary>
-    internal class GroupRepMock
+    public class GroupRepMock
     {
 
         private GroupRepMock()

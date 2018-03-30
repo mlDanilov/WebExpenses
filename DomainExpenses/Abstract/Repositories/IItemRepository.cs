@@ -11,6 +11,7 @@ namespace DomainExpenses.Abstract.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с товарами
+    /// (Single Responsibility Principle)
     /// </summary>
     public interface IItemRepository : IEntityRepositiory<IItem, Item>
     {

@@ -36,7 +36,6 @@ namespace DomainExpenses.Moq
             //репозиторий покупок
             MockExpensesRep.Setup(m => m.PurchaseRep).Returns(PurchaseRepMock.Get().Mock.Object);
         }
-        
 
         public static MockBus Get()
         {
@@ -45,20 +44,6 @@ namespace DomainExpenses.Moq
             return _mBus;
 
         }
-
-        
-
-        #region eintity lists
-        
-
-        
-
-
-        #endregion
-
-
-       
-
         public Mock<IExpensesRepository> MockExpensesRep { get; private set; }
 
         private static MockBus _mBus;

@@ -15,7 +15,7 @@ namespace DomainExpenses.Moq
     /// <summary>
     /// Мок-синглтон IPurchaseRepository
     /// </summary>
-    internal class PurchaseRepMock
+    public class PurchaseRepMock
     {
         private PurchaseRepMock()
         {

@@ -14,7 +14,7 @@ namespace DomainExpenses.Moq
     /// <summary>
     /// Мок-синглтон IItemRepository
     /// </summary>
-    internal class ItemRepMock
+    public class ItemRepMock
     {
 
         private ItemRepMock()

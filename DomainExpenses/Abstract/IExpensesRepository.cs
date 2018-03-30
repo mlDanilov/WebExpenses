@@ -12,6 +12,7 @@ namespace DomainExpenses.Abstract
 {
     /// <summary>
     /// Репозиторий для работы с данными
+    /// (Single Responsibility Principle)
     /// </summary>
     public interface IExpensesRepository
     {
@@ -35,5 +36,10 @@ namespace DomainExpenses.Abstract
         /// Репозиторий для работы с покупками
         /// </summary>
         IPurchaseRepository PurchaseRep { get; }
+
     }
+
+
+
+
 }

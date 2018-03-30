@@ -8,6 +8,7 @@ namespace DomainExpenses.Abstract.Repositories
 {
     /// <summary>
     /// Базовый интерфейс для репозиториев
+    /// (Single Responsibility Principle)
     /// </summary>
     public interface IEntityRepositiory<TInput, TResult>  
         where TInput: class
