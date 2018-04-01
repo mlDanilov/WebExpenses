@@ -19,9 +19,17 @@
                 <th></th>
                 <th>Код</th>
                 <th>Группа</th>
-                <th>Сумма, руб</th>
+                <th >Сумма, руб</th>
                 <th></th>
             </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Итого:</th>
+                <th id="total"></th>
+                <th></th>
+            </tr>
+            
         </thead>
         <tbody id="purchTBody">
                     @{
@@ -35,3 +43,6 @@
             </tr>
         </tfoot>
     </table>
+<script>
+    updateTotalSumIntoPurchaseHeader();
+</script>

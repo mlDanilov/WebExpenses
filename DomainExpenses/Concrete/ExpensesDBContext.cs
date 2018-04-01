@@ -66,27 +66,31 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="week_"></param>
         /// <returns></returns>
-        public DbRawSqlQuery<Purchase> SelectPurchasesByWeek(IWeek week_)
+        public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
         {
+            /*
             var pBDate = new SqlParameter("@BDate", SqlDbType.Date)
             { Value = week_.BDate };
             var pEDate = new SqlParameter("@EDate", SqlDbType.Date)
             { Value = week_.EDate };
             var rQuery = Database.SqlQuery<Purchase>("SelectPurchasesByWeek", pBDate, pEDate);
             return rQuery;
+            */
+            var res = (from p in Purchase
+                       where ((p.Date >= week_.BDate) && (p.Date <= week_.EDate))
+                       select p);
+            return res;
         }
         /// <summary>
         /// Получить все расходы за день
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
-        public DbRawSqlQuery<Purchase> SelectPurchasesByDay(DateTime date_)
+        public IQueryable<Purchase> SelectPurchasesByDay(DateTime date_)
         {
-            var pDay = new SqlParameter("@Day", SqlDbType.Date)
-            { Value = date_ };
-
-            var rQuery = Database.SqlQuery<Purchase>("exec SelectPurchasesByDay @Day", pDay);
-            return rQuery;
+            var res = (from p in Purchase
+                       where (p.Date == date_) select p);
+            return res;
         }
 
         public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)

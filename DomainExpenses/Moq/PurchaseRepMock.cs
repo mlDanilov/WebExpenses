@@ -202,8 +202,6 @@ namespace DomainExpenses.Moq
             return purchases;
         }
 
-        private int? _currentGroup = null;
-        private int? _currentItem = null;
 
         private int? _currentPurchaseId = null;
         private int? _currentPurchaseGId = null;

@@ -85,21 +85,21 @@ namespace DomainExpenses.Concrete.Repositories
         /// <param name="period_"></param>
         /// <returns></returns>
         public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
-           => _dbContext.SelectPurchasesByPeriod(period_).AsQueryable();
+           => _dbContext.SelectPurchasesByPeriod(period_);
         /// <summary>
         /// Получить все расходы за неделю
         /// </summary>
         /// <param name="week_"></param>
         /// <returns></returns>
         public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
-                    => _dbContext.SelectPurchasesByWeek(week_).AsQueryable();
+                    => _dbContext.SelectPurchasesByWeek(week_);
         /// <summary>
         /// Получить все расходы за день
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
         public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
-                   => _dbContext.SelectPurchasesByDay(date_).AsQueryable();
+                   => _dbContext.SelectPurchasesByDay(date_);
         /// <summary>
         /// Текущая покупка
         /// </summary>

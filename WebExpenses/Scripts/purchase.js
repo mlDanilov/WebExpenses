@@ -3,13 +3,7 @@
 function setCurrentPurchaseGId() {
 
     let groupPurchTr = $(this)[0].parentElement.getElementsByClassName('wPurchGroupId')[0];
-    /*
-    let thDetail = $(this)[0].parentElement.getElementsByClassName('wPurchGroupDetail')[0];
-    if (thDetail.textContent == "Подробнее")
-        thDetail.textContent = "Свернуть";
-    else
-        thDetail.textContent = "Подробнее";
-    */
+
     let gId = groupPurchTr.textContent;
 
     $.ajax({
@@ -74,6 +68,24 @@ function setPurchaseEditDeleteClickHandler() {
         $('tbody#purchTBody tr th.purchDelete').click(setCurrentPurchaseId);
         console.log('PurchGroupEditDelete.e');
     });
+}
+//Обновить "Итоги" в заголовке таблицы "Расходы"
+function updateTotalSumIntoPurchaseHeader()
+{
+    $.ajax({
+        url: "/Purchase/PurchaseTotalSum",
+        async: true,
+        success: function (data)
+        {
+            //alert(data);
+            var th = $('table#purchTable thead tr th#total')[0];
+            th.textContent = data;
+            console.log(th);
+            console.log('func /Purchase/PurchaseTotalSum успех');
+        },
+        error: function () { console.log('func /Purchase/PurchaseTotalSum ошибка'); }
+    })
+
 }
 
     //weekSelect.innerHTML = result;

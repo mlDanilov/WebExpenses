@@ -12,7 +12,11 @@ function setCurrentPeriod() {
         url: "/Purchase/SetCurrentPeriod",
         data: { period_: period.toLocaleDateString() },
         //data: { bDate_: bDate },
-        success: replaceWeekSelect,
+        success: function ()
+        {
+            replaceWeekSelect();
+            updateTotalSumIntoPurchaseHeader();
+        },
         error: function () { console.log('/Purchase/SetCurrentPeriod ошибка'); }
     });
 }
@@ -31,7 +35,10 @@ function setCurrentWeek() {
         url: "/Purchase/SetCurrentWeekByBDate",
         data: { bDate_: bDate },
         //data: { bDate_: bDate },
-        success: replaceDaysOfWeekSelect,
+        success: function () {
+            replaceDaysOfWeekSelect();
+            updateTotalSumIntoPurchaseHeader();
+        },
         error: function () { console.log('/Purchase/SetCurrentWeekByBDate ошибка'); }
     });
 }
@@ -51,6 +58,7 @@ function setCurrentDayOfWeek() {
         data: { dayOfWeek_: dayofweekInt },
         success: function () {
             replacePurchaseTable();
+            updateTotalSumIntoPurchaseHeader();
             console.log("/Purchase/SetCurrentDay успех");
         },
         error: function () {

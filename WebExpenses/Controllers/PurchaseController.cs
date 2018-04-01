@@ -257,6 +257,7 @@ namespace WebExpenses.Controllers
             var weekPurchSumList = new List<MWeekPurchaseSumByGroup>();
 
             IWeek week = _repository.PurchaseRep.CurrentWeek;
+            var ww = new Week() { BDate = week.BDate, EDate = week.EDate };
             var purchases = _repository.PurchaseRep.SelectPurchasesByWeek(week);
             //Суммы затрат по группам за неделю
             var groupSum = (from p in purchases
@@ -265,18 +266,26 @@ namespace WebExpenses.Controllers
                             group p by it.GId into pG
                             select new { GroupId = pG.Key, Sum = pG.Sum(p => p.Price * p.Count) }
                        );
+
+            //var t = purchases.ToList();
             //результат
             var res =
-                (from g in _repository.GroupRep.GroupExt
+                (
+                 //from g in _repository.GroupRep.GroupExt
+                 from g in _repository.GroupRep.Entities
                  join gSum in groupSum
                  on g.Id equals gSum.GroupId
                  select
                  new MWeekPurchaseSumByGroup()
                  {
                      Group = g,
-                     Week = week,
+                     //Week = week,
                      Sum = gSum.Sum
                  });
+            var list = res.ToList();
+            list.ForEach(mp => mp.Week = ww);
+
+
             return res;
         }
         private IQueryable<MDayPurchaseSumByGroup> dayPurchSumByGroupTotal()
@@ -295,8 +304,10 @@ namespace WebExpenses.Controllers
                        );
             //результат
             var res =
-                (from g in _repository.GroupRep.GroupExt
-                 join gSum in groupSum
+                (
+                //from g in _repository.GroupRep.GroupExt
+                from g in _repository.GroupRep.Entities
+                join gSum in groupSum
                  on g.Id equals gSum.GroupId
                  select
                  new
@@ -313,7 +324,7 @@ namespace WebExpenses.Controllers
         /// </summary>
         /// <returns></returns>
         public PartialViewResult PurchaseSumByGroupTotal()
-        {
+         {
             if (_repository.PurchaseRep.CurrentDay != null)
             {
                 IQueryable<MDayPurchaseSumByGroup> purchTotal = dayPurchSumByGroupTotal();
@@ -334,6 +345,30 @@ namespace WebExpenses.Controllers
             }
 
             
+        }
+
+        public JsonResult PurchaseTotalSum()
+        {
+            IQueryable<Purchase> purchases = null;
+            if (_repository.PurchaseRep.CurrentDay != null)
+            {
+                var day = _repository.PurchaseRep.CurrentDay;
+                purchases = _repository.PurchaseRep.SelectPurchaseByDate(day.Value);
+            }
+            else if (_repository.PurchaseRep.CurrentWeek != null)
+            {
+                var week = _repository.PurchaseRep.CurrentWeek;
+                purchases = _repository.PurchaseRep.SelectPurchasesByWeek(week);
+            }
+            else
+            {
+                var period = _repository.PurchaseRep.CurrentPeriod;
+                purchases = _repository.PurchaseRep.SelectPurchasesByPeriod(period);
+            }
+            var sum = purchases.Sum(p => p.Count * p.Price).ToString("### ##0.00");
+
+
+            return Json(sum, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult PurchaseItem(int itemId_)
@@ -410,7 +445,8 @@ namespace WebExpenses.Controllers
                                    join it in _repository.ItemRep.Entities on p.Item_Id equals it.Id
                                    join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
                                    from pSh in p_sh.DefaultIfEmpty()
-                                   join g in _repository.GroupRep.GroupExt on it.GId equals g.Id
+                                       //join g in _repository.GroupRep.GroupExt on it.GId equals g.Id
+                                   join g in _repository.GroupRep.Entities on it.GId equals g.Id
                                    where it.GId == purchGId
                                    orderby p.Date descending
                                    select
@@ -498,6 +534,7 @@ namespace WebExpenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (purchase_.Shop_Id == -1) purchase_.Shop_Id = null;
                 var purchase = _repository.PurchaseRep.Create(purchase_);
                 return RedirectToAction("Table");
             }
@@ -514,8 +551,9 @@ namespace WebExpenses.Controllers
                  join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
                  from pSh in p_sh.DefaultIfEmpty()
                  where p.Id == _repository.PurchaseRep.CurrentPurchaseId
-                 select new MPurchase(p.Id)
+                 select new MPurchase()
                  {
+                     Id = p.Id,
                      Item_Id = p.Item_Id,
                      ItemName = it.Name,
                      GroupId = it.GId,
@@ -555,8 +593,13 @@ namespace WebExpenses.Controllers
         [HttpPost]
         public ActionResult EditPurchase(MPurchase purchase_)
         {
-            _repository.PurchaseRep.Update(purchase_);
-            return RedirectToAction("Table");
+            if (ModelState.IsValid)
+            {
+                _repository.PurchaseRep.Update(purchase_);
+                return RedirectToAction("Table");
+            }
+            else
+                return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
 
         }
 

@@ -12,6 +12,10 @@ tbody#purchTBody  {
     background: #93d9a8;
 }
 
+table#purchTable thead tr th#total  {
+    text-align: right
+}
+
 tbody#purchTBody .wPurchGroupSum{
     text-align: right
 }
