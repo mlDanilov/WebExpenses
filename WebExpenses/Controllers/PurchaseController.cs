@@ -26,7 +26,7 @@ namespace WebExpenses.Controllers
             _repository = rep_;
         }
 
-        public ActionResult Table()
+        public ActionResult List()
         {
             ViewData["Title"] = "Покупки";
             return View();
@@ -536,7 +536,7 @@ namespace WebExpenses.Controllers
             {
                 if (purchase_.Shop_Id == -1) purchase_.Shop_Id = null;
                 var purchase = _repository.PurchaseRep.Create(purchase_);
-                return RedirectToAction("Table");
+                return RedirectToAction("List");
             }
             else
                 return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
@@ -596,7 +596,7 @@ namespace WebExpenses.Controllers
             if (ModelState.IsValid)
             {
                 _repository.PurchaseRep.Update(purchase_);
-                return RedirectToAction("Table");
+                return RedirectToAction("List");
             }
             else
                 return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
@@ -608,7 +608,7 @@ namespace WebExpenses.Controllers
             int? purchId = _repository.PurchaseRep.CurrentPurchaseId;
             if (purchId.HasValue)
                 _repository.PurchaseRep.Delete(getPurchaseById(purchId));
-            return RedirectToAction("Table");
+            return RedirectToAction("List");
         }
         [HttpPost]
         public ActionResult DeletePurchaseAjax()

@@ -26,13 +26,13 @@
     <div id="root">
         <div id="menu">
             <div id="groupsAndItems">
-                @Html.ActionLink("Группы и товары", "GroupsAndItems", "Group")
+                @Html.ActionLink("Группы и товары", "List", "Group")
             </div>
             <div id="shops">
                 @Html.ActionLink("Магазины","List", "Shop")
             </div>
             <div id="purchase">
-                @Html.ActionLink("Покупки", "Table", "Purchase")
+                @Html.ActionLink("Покупки", "List", "Purchase")
             </div>
         </div>
         @RenderBody()

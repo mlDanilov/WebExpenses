@@ -14,9 +14,27 @@ namespace WebExpenses
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "GroupsAndItems",
+                url: "Groups",
+                defaults: new { controller = "Group", action = "List" }
+            );
+
+            routes.MapRoute(
+                name: "ShopList",
+                url: "Shops",
+                defaults: new { controller = "Shop", action = "List" }
+            );
+
+            routes.MapRoute(
+                name: "PurchasesList",
+                url: "Purchases",
+                defaults: new { controller = "Purchase", action = "List" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Expenses", action = "GroupsAndItems"}
+                url: "{controller}/{action}"
+                //, defaults: new { controller = "Group", action = "GroupsAndItems"}
             );
         }
     }

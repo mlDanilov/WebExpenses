@@ -55,7 +55,7 @@ namespace WebExpenses.Controllers
             return PartialView(gListView_);
         }
 
-        public ViewResult GroupsAndItems()
+        public ViewResult List()
         {
             ViewData["Title"] = "Группы и товары";
             var groupsQuery = _repository.GroupRep.GroupExt;
@@ -81,7 +81,7 @@ namespace WebExpenses.Controllers
             {
 
                 var group = _repository.GroupRep.Create(mGroup_);
-                return RedirectToAction("GroupsAndItems", new { gId_ = mGroup_.IdParent.Value });
+                return RedirectToAction("List", new { gId_ = mGroup_.IdParent.Value });
             }
             else
                 return CreateGroupCard(mGroup_.IdParent.Value);
@@ -108,7 +108,7 @@ namespace WebExpenses.Controllers
             if ((ModelState.IsValid) && (mGroup_.IdParent != null))
             {
                 _repository.GroupRep.Update(mGroup_);
-                return RedirectToAction("GroupsAndItems", new { gId_ = mGroup_.IdParent });
+                return RedirectToAction("List", new { gId_ = mGroup_.IdParent });
             }
             else
                 return EditGroup();
@@ -137,15 +137,12 @@ namespace WebExpenses.Controllers
         {
             int? gId = _repository.GroupRep.CurrentGId;
             var group = getGroupById(gId);
-            if (group == null)
-                return RedirectToAction("GroupsAndItems");
-
             if (group != null)
             {
                 _repository.GroupRep.Delete(group);
                 _repository.GroupRep.CurrentGId = group.IdParent;
             }
-            return RedirectToAction("GroupsAndItems");
+            return RedirectToAction("List");
         }
 
         private IGroup getGroupById(int? gId_) => _repository.GroupRep.Entities.Where(g => g.Id == gId_).FirstOrDefault();

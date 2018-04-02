@@ -68,14 +68,6 @@ namespace DomainExpenses.Concrete
         /// <returns></returns>
         public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
         {
-            /*
-            var pBDate = new SqlParameter("@BDate", SqlDbType.Date)
-            { Value = week_.BDate };
-            var pEDate = new SqlParameter("@EDate", SqlDbType.Date)
-            { Value = week_.EDate };
-            var rQuery = Database.SqlQuery<Purchase>("SelectPurchasesByWeek", pBDate, pEDate);
-            return rQuery;
-            */
             var res = (from p in Purchase
                        where ((p.Date >= week_.BDate) && (p.Date <= week_.EDate))
                        select p);
