@@ -21,8 +21,9 @@ namespace ExpensesTest.Routes
         public void TestInComingRoutes()
         {
             
-            testRouteMatch("~/Groups", "Group", "GroupsAndItems");
+            testRouteMatch("~/Groups", "Group", "List");
             testRouteMatch("~/Shops", "Shop", "List");
+            testRouteMatch("~/Purchases", "Purchase", "List");
             testRouteMatch("~/One/Two", "One", "Two");
 
             testRouteFail("~/Groups/1/2");
