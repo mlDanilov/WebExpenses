@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 using System.Reflection;
 using Moq;
@@ -22,10 +23,18 @@ namespace ExpensesTest.Routes
         {
             
             testRouteMatch("~/Groups", "Group", "List");
+            //testRouteMatch("~/Groups/Create/Name=Алкоголь/IdParent=0", "Group", "CreateGroupCard", new { gId_ = 1 });
+            testRouteMatch("~/Groups/Create/IdParent=1", "Group", "CreateGroupCard", new { gId_ = 1 });
+            //testRouteMatch("~/Groups/Create", "Group", "CreateGroupCard", "POST");
+            testRouteMatch("~/Groups/Edit/2", "Group", "EditGroup", new { gId_ = 2 });
+            
             testRouteMatch("~/Shops", "Shop", "List");
             testRouteMatch("~/Purchases", "Purchase", "List");
             testRouteMatch("~/One/Two", "One", "Two");
 
+            testRouteMatch("~/Groups/Delete/4", "Group", "DeleteGroup", new { gId_ = 4 }, "GET");
+
+           // testRouteFail("~/Groups/Delete");
             testRouteFail("~/Groups/1/2");
             testRouteFail("~/");
         }

@@ -85,7 +85,7 @@ namespace WebExpenses.Controllers
             if (ModelState.IsValid)
             {
                 var item = _repository.ItemRep.Create(mItemCard_);
-                return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
+                return RedirectToAction("List", "Group", new { gId_ = mItemCard_.GId });
             }
             else
                 return CreateItemCard(mItemCard_.GId);
@@ -108,7 +108,7 @@ namespace WebExpenses.Controllers
             if (ModelState.IsValid)
             {
                 _repository.ItemRep.Update(mItemCard_);
-                return RedirectToAction("GroupsAndItems", "Group", new { gId_ = mItemCard_.GId });
+                return RedirectToAction("List", "Group", new { gId_ = mItemCard_.GId });
             }
             else
                 return EditItemCard();
@@ -127,7 +127,7 @@ namespace WebExpenses.Controllers
             int? iid = _repository.ItemRep.CurrentIId;
             if (iid.HasValue)
                 _repository.ItemRep.Delete(getItemById(iid));
-            return RedirectToAction("GroupsAndItems", "Group");
+            return RedirectToAction("List", "Group");
         }
         [HttpPost]
         public PartialViewResult DeleteItemCardAjax()

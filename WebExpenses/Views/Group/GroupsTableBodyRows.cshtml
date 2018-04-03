@@ -4,10 +4,8 @@
 @{
     var deleteGroupAjaxOption = new AjaxOptions
     {
-        HttpMethod="Post",
-        Url = "DeleteGroupAjax",
         UpdateTargetId = "groupsTableBody",
-
+        HttpMethod = "POST"
 
     };
 }
@@ -21,11 +19,13 @@
             <th class="groupId">@Model.GroupList[i].Id</th>
             <th class="groupName">@Model.GroupList[i].Name</th>
             <th class="groupEdit">
-                @Html.ActionLink("Редактировать", "EditGroup")
+                @Html.ActionLink("Редактировать", "EditGroup", new { gId_ = @Model.GroupList[i].Id})
             </th>
             <th class="groupDelete">
-                @Html.ActionLink("Удалить", "DeleteGroup")
-                <!--Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)-->
+                <!--Html.ActionLink("Удалить", "DeleteGroup", new { gId_ = @Model.GroupList[i].Id }, new { method = "DELETE" })-->
+                <!--Ajax.ActionLink("Удалить", "DeleteGroup", new { gId_ = Model.GroupList[i].Id }, deleteGroupAjaxOption)-->
+                @Ajax.ActionLink("Удалить", "DeleteGroupAjax", new { gId_ = Model.GroupList[i].Id }, deleteGroupAjaxOption)
+                <!--Ajax.ActionLink("Удалить", "DeleteGroup",  deleteGroupAjaxOption)-->
             </th>
         </tr>
     }
@@ -36,13 +36,12 @@
             <th class="groupId">@Model.GroupList[i].Id</th>
             <th class="groupName">@Model.GroupList[i].Name</th>
             <th class="groupEdit">
-                @Html.ActionLink("Редактировать", "EditGroup")
+                @Html.ActionLink("Редактировать", "EditGroup", new { gId_ = @Model.GroupList[i].Id })
             </th>
             <th class="groupDelete">
-                
-                @Html.ActionLink("Удалить", "DeleteGroup");
-                <!--Ajax.ActionLink("Удалить", "", deleteGroupAjaxOption)-->
-                <!--Html.ActionLink("Удалить", "DeleteGroup")-->
+                <!--Ajax.ActionLink("Удалить", "DeleteGroup", new { gId_ = Model.GroupList[i].Id }, deleteGroupAjaxOption)-->
+                @Ajax.ActionLink("Удалить", "DeleteGroupAjax", new { gId_ = Model.GroupList[i].Id }, deleteGroupAjaxOption)
+                <!--Ajax.ActionLink("Удалить", "DeleteGroup",  deleteGroupAjaxOption)-->
             </th>
         </tr>
     }

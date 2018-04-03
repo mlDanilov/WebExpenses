@@ -10,6 +10,7 @@ using DomainExpenses.Concrete;
 
 using WebExpenses.Models.Item;
 using WebExpenses.Models.Group;
+using System.Web.Routing;
 
 namespace WebExpenses.Controllers
 {
@@ -18,6 +19,7 @@ namespace WebExpenses.Controllers
     /// </summary>
     public class GroupController : Controller
     {
+
         public GroupController(IExpensesRepository rep_)
         {
             _repository = rep_;
@@ -64,9 +66,11 @@ namespace WebExpenses.Controllers
             return View(gListView);
         }
 
-        public ActionResult CreateGroupCard(int gId_ = -1)
+        public ActionResult CreateGroupCard(int? idParent_)
         {
-            var mGroup = new MGroupCard() { IdParent = gId_ };
+            int? idParent =  idParent_ ?? getGIdIfIdParentIsNull();
+
+            var mGroup = new MGroupCard() { IdParent = idParent };
             ViewData["Title"] = "Добавить группу товаров";
             ViewData["Head"] = "Добавить";
             ViewData["SelectGroupId"] = "IdParent";
@@ -74,30 +78,36 @@ namespace WebExpenses.Controllers
             return View("GroupCard", mGroup);
         }
 
+
         [HttpPost]
         public ActionResult CreateGroupCard(MGroupCard mGroup_)
         {
-            if ((ModelState.IsValid) && (mGroup_.IdParent != null))
+            if (ModelState.IsValid)
             {
-
+                
                 var group = _repository.GroupRep.Create(mGroup_);
-                return RedirectToAction("List", new { gId_ = mGroup_.IdParent.Value });
+                return RedirectToAction("List", new { gId_ = mGroup_.IdParent });
             }
             else
-                return CreateGroupCard(mGroup_.IdParent.Value);
+                return CreateGroupCard(mGroup_.IdParent);
            // return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
-       
+        
+
         public void SetCurrentGId(int gId_) =>  _repository.GroupRep.CurrentGId = gId_;
 
-        public ViewResult EditGroup()
+       
+        public ViewResult EditGroup(int? gId_ = null)
         {
-            int? id = _repository.GroupRep.CurrentGId;
+            if (gId_ != null)
+            _repository.GroupRep.CurrentGId = gId_;
+
+            int id = _repository.GroupRep.CurrentGId.Value;
             var group = _repository.GroupRep.Entities.Where(it => it.Id == id).FirstOrDefault();
 
             var gView = new MGroupCard(group);
             ViewData["Head"] = "Редактировать";
-            ViewData["Title"] = "Редактировать товар";
+            ViewData["Title"] = "Редактировать группу";
             ViewData["SelectGroupId"] = "IdParent";
             ViewData["SelectGroupName"] = "IdParent";
             return View("GroupCard", gView);
@@ -114,26 +124,34 @@ namespace WebExpenses.Controllers
                 return EditGroup();
 
         }
+
         [HttpPost]
-        public PartialViewResult DeleteGroupAjax()
+        public PartialViewResult DeleteGroupAjax(int gId_)
         {
-            int? gId = _repository.GroupRep.CurrentGId;
-            if (gId != null)
-                _repository.GroupRep.Delete(_repository.GroupRep.Entities.Where(g=>g.Id == gId).First());
-
-            var gExtList = new List<IGroup>();
-            _repository.GroupRep.GroupExt.ToList().ForEach(g => gExtList.Add(g));
-
-            var gList = new MGroupList()
+            var group = _repository.GroupRep.Entities.Where(g => g.Id == gId_).First();
+            var idParent = group.IdParent;
+            if (group != null)
             {
-                GroupId = null,
-                GroupList = gExtList
-            };
-            //return GroupsTableBodyRows(gList);
+                _repository.GroupRep.Delete(group);
+                _repository.GroupRep.CurrentGId = idParent;
+            }
+
+            var gList = getMGroupExtList(idParent);
             return PartialView("GroupsTableBodyRows", gList);
-            //return RedirectToAction("GroupsAndItems");
         }
-        public ActionResult DeleteGroup()
+
+      
+        [ActionName("DeleteGroup"), HttpGet]
+        public ActionResult DeleteGroupById(int gId_)
+        {
+            _repository.GroupRep.CurrentGId = gId_;
+            return DeleteGroupByCurrentGId();
+        }
+
+        [HttpPost]
+        [HttpDelete]
+        [ActionName("DeleteGroup")]
+        public ActionResult DeleteGroupByCurrentGId()
         {
             int? gId = _repository.GroupRep.CurrentGId;
             var group = getGroupById(gId);
@@ -143,6 +161,20 @@ namespace WebExpenses.Controllers
                 _repository.GroupRep.CurrentGId = group.IdParent;
             }
             return RedirectToAction("List");
+        }
+
+        private int? getGIdIfIdParentIsNull()
+        {
+            if (_repository.GroupRep.CurrentGId != null)
+                return _repository.GroupRep.CurrentGId;
+            else
+            {
+                var group = _repository.GroupRep.Entities.Where(g => g.IdParent == null).FirstOrDefault();
+                if (group != null)
+                    return group.Id;
+                else
+                    return null;
+            }
         }
 
         private IGroup getGroupById(int? gId_) => _repository.GroupRep.Entities.Where(g => g.Id == gId_).FirstOrDefault();
