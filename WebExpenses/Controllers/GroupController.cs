@@ -78,6 +78,13 @@ namespace WebExpenses.Controllers
             return View("GroupCard", mGroup);
         }
 
+        public ActionResult CreateNewGroup(string name_, int? idParent_)
+        {
+            int? idParent = idParent_ ?? getGIdIfIdParentIsNull();
+
+            var mGroup = new MGroupCard() { Name= name_, IdParent = idParent };
+            return CreateGroupCard(mGroup);
+        }
 
         [HttpPost]
         public ActionResult CreateGroupCard(MGroupCard mGroup_)
@@ -92,10 +99,8 @@ namespace WebExpenses.Controllers
                 return CreateGroupCard(mGroup_.IdParent);
            // return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
-        
 
         public void SetCurrentGId(int gId_) =>  _repository.GroupRep.CurrentGId = gId_;
-
        
         public ViewResult EditGroup(int? gId_ = null)
         {
@@ -112,6 +117,22 @@ namespace WebExpenses.Controllers
             ViewData["SelectGroupName"] = "IdParent";
             return View("GroupCard", gView);
         }
+
+        public ActionResult EditGroupCard(int id_, string name_, int? idParent_)
+        {
+            int? idParent = idParent_ ?? getGIdIfIdParentIsNull();
+            var mGroup = new MGroupCard() { Id = id_, Name = name_, IdParent = idParent };
+            return EditGroup(mGroup);  
+        }
+
+        public ActionResult ChangeGroupName(int id_, string name_)
+        {
+            var group = _repository.GroupRep.Entities.Where(g => g.Id == id_).First();
+
+            var mGroup = new MGroupCard() { Id = id_, Name = name_, IdParent = group.IdParent };
+            return EditGroup(mGroup);
+        }
+
         [HttpPost]
         public ActionResult EditGroup(MGroupCard mGroup_)
         {

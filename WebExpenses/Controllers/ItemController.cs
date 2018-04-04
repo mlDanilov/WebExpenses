@@ -61,9 +61,6 @@ namespace WebExpenses.Controllers
             return itView;
         }
 
-
-
-
         /// <summary>
         /// Установить текущую группу в DBContext
         /// </summary>
@@ -78,7 +75,20 @@ namespace WebExpenses.Controllers
             ViewData["SelectGroupName"] = "GId";
             return View("ItemCard", itView);
         }
-      
+
+        public ActionResult CreateItem(string name_, int gId_)
+        {
+            var item = new MItemCard() { Name = name_, GId = gId_ };
+            return CreateItemCard(item);
+        }
+        public ActionResult CreateItem2(string name_)
+        {
+            if (_repository.GroupRep.CurrentGId == null)
+                _repository.GroupRep.CurrentGId = _repository.GroupRep.Entities.Where(g => g.IdParent == null).First().Id;
+            int? gId = _repository.GroupRep.CurrentGId;
+            return CreateItem(name_, gId.Value);
+        }
+
         [HttpPost]
        public ActionResult CreateItemCard(MItemCard mItemCard_)
        {
@@ -102,6 +112,26 @@ namespace WebExpenses.Controllers
             return View("ItemCard", itView);
         }
 
+        public ActionResult EditItem(int id_, string name_, int gId_)
+        {
+            var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
+            var mItem = new MItemCard(item) { Name = name_, GId = gId_ };
+            return EditItemCard(mItem);
+        }
+        public ActionResult EditItem2(int id_, string name_)
+        {
+            var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
+            var mItem = new MItemCard(item) { Name = name_ };
+            return EditItemCard(mItem);
+        }
+
+
+        public ActionResult DeleteItem(int id_)
+        {
+            int? iid = _repository.ItemRep.CurrentIId = id_;
+            return DeleteItemCard();
+        }
+
         [HttpPost]
         public ActionResult EditItemCard(MItemCard mItemCard_)
         {
@@ -113,15 +143,7 @@ namespace WebExpenses.Controllers
             else
                 return EditItemCard();
         }
-       
 
-        /* public ActionResult DeleteItemCard(int id_)
-         {
-             var item = _repository.Item.Where(it => it.Id == id_).FirstOrDefault();
-             _repository.DeleteItem(id_);
-             return RedirectToAction("GroupsAndItems");
-             //return RedirectToAction("GroupsAndItems", new { gId_ = item.GId });
-         }*/
         public ActionResult DeleteItemCard()
         {
             int? iid = _repository.ItemRep.CurrentIId;

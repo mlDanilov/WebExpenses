@@ -19,24 +19,128 @@ namespace ExpensesTest.Routes
     public class RouteTest
     {
         [TestMethod]
-        public void TestInComingRoutes()
+        public void TestGroupRoutes()
         {
             
             testRouteMatch("~/Groups", "Group", "List");
-            //testRouteMatch("~/Groups/Create/Name=Алкоголь/IdParent=0", "Group", "CreateGroupCard", new { gId_ = 1 });
-            testRouteMatch("~/Groups/Create/IdParent=1", "Group", "CreateGroupCard", new { gId_ = 1 });
-            //testRouteMatch("~/Groups/Create", "Group", "CreateGroupCard", "POST");
-            testRouteMatch("~/Groups/Edit/2", "Group", "EditGroup", new { gId_ = 2 });
             
-            testRouteMatch("~/Shops", "Shop", "List");
-            testRouteMatch("~/Purchases", "Purchase", "List");
-            testRouteMatch("~/One/Two", "One", "Two");
+            testRouteMatch("~/Groups/Create/IdParent=1", "Group", "CreateGroupCard", new { gId_ = 1 });
+
+            testRouteMatch("~/Groups/Create/Name=Алкоголь/IdParent=1", 
+                "Group", "CreateNewGroup", new { name_= "Алкоголь", gId_ = 1 });
+
+            testRouteMatch("~/Groups/Create/Name=Алкоголь",
+                "Group", "CreateNewGroup", new { name_ = "Алкоголь" });
+
+            testRouteMatch("~/Groups/Edit/2", "Group", "EditGroup", new { gId_ = 2 });
+            testRouteMatch("~/Groups/Edit/1/Name=Мясное", "Group", "ChangeGroupName", new { name_ = "Мясное" });
+            testRouteMatch("~/Groups/Edit/1/Name=Мясное/IdParent=null", "Group", "EditGroupCard", new { name_ = "Мясное" });
+            testRouteMatch("~/Groups/Edit/1/Name=Мясное/IdParent=2", "Group", "EditGroupCard", new { name_ = "Мясное", idParent_=2 });
+           
 
             testRouteMatch("~/Groups/Delete/4", "Group", "DeleteGroup", new { gId_ = 4 }, "GET");
 
-           // testRouteFail("~/Groups/Delete");
+            // testRouteFail("~/Groups/Delete");
+            //testRouteFail("~/One/Two");
             testRouteFail("~/Groups/1/2");
             testRouteFail("~/");
+        }
+
+        [TestMethod]
+        public void TestShopRoutes()
+        {
+
+            testRouteMatch("~/Shops", "Shop", "List");
+            testRouteMatch("~/Shops/Create/Name=Елисеевский/Address=Ленина, 9", 
+                "Shop", "CreateNewShop", new { name_ = "Елисеевский", address_ = "Ленина, 9" });
+
+            testRouteMatch("~/Shops/Create/Name=Елисеевский/Address=Ленина, 9",
+               "Shop", "CreateNewShop", new { name_ = "Елисеевский", address_ = "Ленина, 9" });
+
+            testRouteMatch("~/Shops/Edit/1/Name=Елисеевский/Address=Ленина, 9",
+              "Shop", "EditShopCard", new { id_ = 1, name_ = "Елисеевский", address_ = "Ленина, 9" });
+
+            testRouteMatch("~/Shops/Edit/1/Name=Елисеевский",
+             "Shop", "EditShopName", new { id_ = 1, name_ = "Елисеевский" });
+
+            testRouteMatch("~/Shops/Edit/1/Address=Ленина, 9",
+             "Shop", "EditShopAddress", new { id_ = 1, address_= "Ленина, 9" });
+
+            testRouteMatch("~/Shops/Delete/1",
+            "Shop", "DeleteShopById", new { id_ = 1 });
+
+            testRouteFail("~/Shops/Create/Name=Елисеевский");
+            testRouteFail("~/Shops/Create/Address=Ленина, 9");
+            testRouteFail("~/Shops/Create/Delete");
+        }
+
+        [TestMethod]
+        public void TestItemRoutes()
+        {
+            testRouteMatch("~/Items/Create/Name=Мясной стейк/GroupId=4",
+                "Item", "CreateItem", new { name_ = "Мясной стейк", gId_ = 4 });
+
+            testRouteMatch("~/Items/Create/Name=Мясной стейк",
+                "Item", "CreateItem2", new { name_ = "Мясной стейк" });
+
+            testRouteMatch("~/Items/Edit/1/Name=Мясной стейк/GroupId=4",
+              "Item", "EditItem", new { id_ = 1, name_ = "Мясной стейк", gId_ = 4 });
+
+            testRouteMatch("~/Items/Edit/1/Name=Мясной стейк",
+              "Item", "EditItem2", new { id_ = 1, name_ = "Мясной стейк" });
+
+            testRouteMatch("~/Items/Delete/1",
+             "Item", "DeleteItem", new { id_ = 1 });
+
+            /*
+            testRouteFail("~/Items/Create");
+            testRouteFail("~/Items/Edit");
+            testRouteFail("~/Items/Delete");
+            */
+            
+
+        }
+
+        [TestMethod]
+        public void TestPurchaseRoutes()
+        {
+            testRouteMatch("~/Purchases/Create/ItemId=4/Price=15.25/Count=2.5/Date=2018-01-03",
+                "Purchase", "CreatePurchaseCard", 
+                new {
+                    itemId_ =4,
+                    price_ = 15.25f,
+                    count_ = 2.5f,
+                    date_ = new DateTime(2018, 1, 3)
+                });
+
+            testRouteMatch("~/Purchases/Create/ShopId=2/ItemId=4/Price=15.25/Count=2.5/Date=2018-01-03",
+                "Purchase", "CreatePurchaseCardWithShop",
+                new
+                {
+                    shopId_ = 2,
+                    itemId_ = 4,
+                    price_ = 15.25f,
+                    count_ = 2.5f,
+                    date_ = new DateTime(2018, 1, 3)
+                });
+
+
+            testRouteMatch("~/Purchases/Edit/9/ShopId=2/ItemId=4/Price=15.25/Count=2.5/Date=2018-01-03",
+            "Purchase", "EditPurchaseCard",
+            new
+            {
+                id_ = 9,
+                shopId_ = 2,
+                itemId_ = 4,
+                price_ = 15.25f,
+                count_ = 2.5f,
+                date_ = new DateTime(2018, 1, 3)
+            });
+
+            testRouteMatch("~/Purchases/Delete/9", "Purchase", "DeletePurchaseById",
+                new { id_ = 9 });
+
+
         }
 
 

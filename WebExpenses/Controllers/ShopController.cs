@@ -26,12 +26,19 @@ namespace WebExpenses.Controllers
 
         public ViewResult CreateShop()
         {
-
             var shView = new MShopCard();
             ViewData["Title"] = "Добавить магазин";
             ViewData["Head"] = "Добавить";
             return View("ShopCard", shView);
         }
+
+
+        public ActionResult CreateNewShop(string name_, string address_)
+        {
+            var mShop = new MShopCard() { Name = name_, Address = address_ };
+            return CreateShop(mShop);
+        }
+
         [HttpPost]
         public ActionResult CreateShop(MShopCard shCard_)
         {
@@ -44,6 +51,29 @@ namespace WebExpenses.Controllers
             }
             else
                 return CreateShop();
+        }
+
+        public ActionResult EditShopCard(int id_, string name_, string address_)
+        {
+            var mShop = new MShopCard() { Id = id_, Name = name_, Address = address_ };
+            _repository.ShopRep.CurrentShopId = id_;
+            return EditShop(mShop);
+        }
+
+        public ActionResult EditShopName(int id_, string name_)
+        {
+            var shop = _repository.ShopRep.Entities.Where(sh => sh.Id == id_).First();
+            var mShop = new MShopCard(shop) { Name = name_ };
+            _repository.ShopRep.CurrentShopId = shop.Id;
+            return EditShop(mShop);
+        }
+
+        public ActionResult EditShopAddress(int id_, string address_)
+        {
+            var shop = _repository.ShopRep.Entities.Where(sh => sh.Id == id_).First();
+            var mShop = new MShopCard(shop) { Address = address_ };
+            _repository.ShopRep.CurrentShopId = shop.Id;
+            return EditShop(mShop);
         }
 
         public ViewResult EditShop()
@@ -71,6 +101,12 @@ namespace WebExpenses.Controllers
             }
             else
                 return EditShop();
+        }
+
+        public ActionResult DeleteShopById(int id_)
+        {
+            _repository.ShopRep.CurrentShopId = id_;
+            return DeleteShop();
         }
 
         public ActionResult DeleteShop()

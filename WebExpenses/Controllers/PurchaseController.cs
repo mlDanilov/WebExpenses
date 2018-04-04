@@ -529,6 +529,62 @@ namespace WebExpenses.Controllers
             ViewData["Head"] = "Добавить";
             return View("PurchaseCard", mPurch);
         }
+
+        public ActionResult CreatePurchaseCardWithShop(
+            int? shopId_,
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            )
+        {
+            var mPurch = new MPurchase()
+            {
+                Shop_Id = shopId_,
+                Item_Id = itemId_,
+                Price = price_,
+                Count = count_,
+                Date = date_
+            };
+            return CreatePurchase(mPurch);
+        }
+        public ActionResult CreatePurchaseCard(
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            )
+        {
+            return CreatePurchaseCardWithShop(null, itemId_, price_, count_, date_);
+        }
+        public ActionResult EditPurchaseCard(
+            int id_,
+            int? shopId_,
+            int itemId_,
+            float price_,
+            float count_,
+            DateTime date_
+            )
+        {
+            var purch = _repository.PurchaseRep.Entities.Where(p => p.Id == id_).First();
+            MPurchase mPurch = new MPurchase(purch)
+            {
+                 Shop_Id = shopId_,
+                Item_Id = itemId_,
+                Price = price_,
+                Count = count_,
+                Date = date_
+            };
+            return EditPurchase(mPurch);
+        }
+
+        public ActionResult DeletePurchaseById(int id_)
+        {
+            _repository.PurchaseRep.CurrentPurchaseId = id_;
+            return DeletePurchase();
+        }
+
+
         [HttpPost]
         public ActionResult CreatePurchase(MPurchase purchase_)
         {
