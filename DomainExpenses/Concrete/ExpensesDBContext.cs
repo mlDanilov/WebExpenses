@@ -10,8 +10,6 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
 
 
-
-
 namespace DomainExpenses.Concrete
 {
     internal class ExpensesDBContext : DbContext

@@ -1,4 +1,29 @@
-﻿//Перебирает в таблице div c id= groups в теле(tbody) все tr, 
+﻿//Временно размещено здесь
+function ajaxItems() {
+    $.ajax({
+        url: "/Item/ItemsTable",
+        success: function (result) {
+            console.log('into ajaxItems success');
+            //асинхронно меняем список товаров
+            var table = $('#itemsTable')[0];
+            console.log('table=' + table);
+            table.innerHTML = result;
+
+            
+            //console.log('result=' + result);
+            //alert(result);
+
+            //Привязываем к кнопкам "редактировать", "удалить"
+            //скрипты, чтобы устанавливались текущие товары перед кликом по линку
+            setEditDeleteItemClickEventHandler();
+        },
+        error: function () {
+            alert("Ошибка ajaxItems!");
+        }
+    });
+}
+
+//Перебирает в таблице div c id= groups в теле(tbody) все tr, 
 //и устанавливает атрибут current тому, на который кликнул, 
 //а с остальных tr убирает
 //затем, асинхронный запрос к контроллеру, SetCurrentId
@@ -22,7 +47,7 @@ function setCurrentGroupByClick() {
 
         }
     }
-    
+    console.log('before /Group/SetCurrentGId');
     $.ajax({
         url: "/Group/SetCurrentGId",                      
         data: { gId_: gId },
@@ -30,7 +55,9 @@ function setCurrentGroupByClick() {
         //success: ajaxItemsJSON,
         error: function () {
             alert('/Group/SetCurrentGId ошибка');
-        }});
+        }
+    });
+    console.log('after /Group/SetCurrentGId');
 }
 
 function setCurrentGId()
@@ -42,3 +69,6 @@ function setCurrentGId()
         async: false
     })
 }
+
+
+

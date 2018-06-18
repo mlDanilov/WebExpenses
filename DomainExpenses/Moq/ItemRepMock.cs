@@ -43,7 +43,7 @@ namespace DomainExpenses.Moq
             _itRepMock.Setup<Item>(m => m.Create(It.IsAny<IItem>()))
                 .Returns((IItem item_) =>
                 {
-                    var item = fBus.CreateItemC(_itemList.Max(it => it.Id) + 1,
+                    var item = fBus.CreateItem(_itemList.Max(it => it.Id) + 1,
                         item_.GId, item_.Name);
 
                     _itemList.Add(item);
@@ -94,20 +94,20 @@ namespace DomainExpenses.Moq
         private List<Item> _itemList = new List<Item>
             {
                 //Главная группа\Мясо\Птица
-                 EntitiesFactory.Get().CreateItemC(0, 2,  "Куриные бёдрышки"),
-                 EntitiesFactory.Get().CreateItemC(1, 2,  "Куриные крылышки"),
-                EntitiesFactory.Get().CreateItemC(3, 2,  "Куриные шейки"),
+                 EntitiesFactory.Get().CreateItem(0, 2,  "Куриные бёдрышки"),
+                 EntitiesFactory.Get().CreateItem(1, 2,  "Куриные крылышки"),
+                EntitiesFactory.Get().CreateItem(3, 2,  "Куриные шейки"),
                 //Главная группа\Мясо\Говядина
-                EntitiesFactory.Get().CreateItemC(4, 3,  "Говяжья вырезка"),
-                EntitiesFactory.Get().CreateItemC(5, 3,  "Рёбрышки"),
-                EntitiesFactory.Get().CreateItemC(6, 3,  "Смесь для шашлыка"),
-                EntitiesFactory.Get().CreateItemC(7, 3,  "Рога и копыта"),
+                EntitiesFactory.Get().CreateItem(4, 3,  "Говяжья вырезка"),
+                EntitiesFactory.Get().CreateItem(5, 3,  "Рёбрышки"),
+                EntitiesFactory.Get().CreateItem(6, 3,  "Смесь для шашлыка"),
+                EntitiesFactory.Get().CreateItem(7, 3,  "Рога и копыта"),
                 //Главная группа\Остальное
-                EntitiesFactory.Get().CreateItemC(8, 4,  "Мыло"),
-                EntitiesFactory.Get().CreateItemC(9, 4,  "Шампунь"),
-                EntitiesFactory.Get().CreateItemC(10, 4,  "Туалетная бумага"),
-                EntitiesFactory.Get().CreateItemC(11, 4,  "Зубная паста"),
-                EntitiesFactory.Get().CreateItemC(12, 4,  "Чистящее средство")
+                EntitiesFactory.Get().CreateItem(8, 4,  "Мыло"),
+                EntitiesFactory.Get().CreateItem(9, 4,  "Шампунь"),
+                EntitiesFactory.Get().CreateItem(10, 4,  "Туалетная бумага"),
+                EntitiesFactory.Get().CreateItem(11, 4,  "Зубная паста"),
+                EntitiesFactory.Get().CreateItem(12, 4,  "Чистящее средство")
         };
 
         public static ItemRepMock Get()

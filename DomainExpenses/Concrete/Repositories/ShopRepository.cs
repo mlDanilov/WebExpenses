@@ -36,7 +36,7 @@ namespace DomainExpenses.Concrete.Repositories
         /// <param name="shop_"></param>
         public Shop Create(IShop shop_)
         {
-            var shop = EntitiesFactory.Get().CreateShopC(shop_.Id, shop_.Name, shop_.Address);
+            var shop = EntitiesFactory.Get().CreateShop(shop_.Id, shop_.Name, shop_.Address);
             var sh = _dbContext.Shop.Add(shop);
             _dbContext.SaveChanges();
             return sh;

@@ -34,7 +34,7 @@ namespace DomainExpenses.Concrete.Repositories
         /// <param name="item_"></param>
         public Item Create(IItem item_)
         {
-            var item = EntitiesFactory.Get().CreateItemC(item_.Id, item_.GId, item_.Name);
+            var item = EntitiesFactory.Get().CreateItem(item_.Id, item_.GId, item_.Name);
             var it = _dbContext.Item.Add(item);
             _dbContext.SaveChanges();
 

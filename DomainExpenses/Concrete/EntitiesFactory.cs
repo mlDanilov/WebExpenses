@@ -19,6 +19,7 @@ namespace DomainExpenses.Concrete
 
         }
 
+
         /// <summary>
         /// Создать товар
         /// </summary>
@@ -26,10 +27,9 @@ namespace DomainExpenses.Concrete
         /// <param name="gId_">код родительской группы</param>
         /// <param name="name_">Название товара</param>
         /// <returns></returns>
-        public IItem CreateItem(int id_, int gId_, string name_) 
-            => new Item(id_, gId_) { Name = name_ };
-        public Item CreateItemC(int id_, int gId_, string name_)
+        public Item CreateItem(int id_, int gId_, string name_)
           => new Item(id_, gId_) { Name = name_ };
+
         /// <summary>
         /// Создать группу товаров
         /// </summary>
@@ -37,9 +37,7 @@ namespace DomainExpenses.Concrete
         /// <param name="idParent_">код родительской группы</param>
         /// <param name="name_">название</param>
         /// <returns></returns>
-        public IGroup CreateGroup(int id_, int? idParent_, string name_) 
-            => new Group(id_) { IdParent = idParent_, Name = name_ };
-        public Group CreateGroupC(int id_, int? idParent_, string name_)
+        public Group CreateGroup(int id_, int? idParent_, string name_)
           => new Group(id_) { IdParent = idParent_, Name = name_ };
         /// <summary>
         /// Создать магазин
@@ -47,10 +45,9 @@ namespace DomainExpenses.Concrete
         /// <param name="id_">уникальный код</param>
         /// <param name="name_">Название</param>
         /// <returns></returns>
-        public IShop CreateShop(int id_, string name_, string address_) 
+        public Shop CreateShop(int id_, string name_, string address_)
             => new Shop(id_) { Name = name_, Address = address_ };
-        public Shop CreateShopC(int id_, string name_, string address_)
-            => new Shop(id_) { Name = name_, Address = address_ };
+
         /// <summary>
         /// Создать покупку
         /// </summary>
@@ -61,16 +58,7 @@ namespace DomainExpenses.Concrete
         /// <param name="count_">Количество купленного товара(штук/килограммов)</param>
         /// <param name="date_">дата покупки</param>
         /// <returns></returns>
-        public IPurchase CreatePurchase(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
-            => new Purchase(id_) {
-                Item_Id = itemId_,
-                Shop_Id = shopId_,
-                Count = count_,
-                Price = price_,
-                Date = date_
-            };
-
-        public Purchase CreatePurchaseC(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
+        public Purchase CreatePurchase(int id_, int? shopId_, int itemId_, float price_, float count_, DateTime date_)
             => new Purchase(id_)
             {
                 Item_Id = itemId_,
@@ -79,29 +67,24 @@ namespace DomainExpenses.Concrete
                 Price = price_,
                 Date = date_
             };
+
         /// <summary>
         /// Создать период
         /// </summary>
         /// <param name="period_">yyyy-MM-01</param>
         /// <returns></returns>
-        public IPeriod CreatePeriod(DateTime period_)
-            => new Period()
-            { MonthYear = new DateTime(period_.Year, period_.Month, 1) };
-
-        public Period CreatePeriodC(DateTime period_)
+        public Period CreatePeriod(DateTime period_)
            => new Period()
            { MonthYear = new DateTime(period_.Year, period_.Month, 1) };
 
-        /// <summary>
-        /// Создать период
-        /// </summary>
-        /// <param name="period_">yyyy-MM-01</param>
-        /// <returns></returns>
-        public IWeek CreateWeek(DateTime bDate_, DateTime eDate_)
-            => new Week()
-            { BDate = bDate_, EDate = eDate_ };
 
-        public Week CreateWeekC(DateTime bDate_, DateTime eDate_)
+        /// <summary>
+        /// Создать неделю
+        /// </summary>
+        /// <param name="bDate_">Начало недели</param>
+        /// <param name="eDate_">Конец недели</param>
+        /// <returns></returns>
+        public Week CreateWeek(DateTime bDate_, DateTime eDate_)
           => new Week()
           { BDate = bDate_, EDate = eDate_ };
 

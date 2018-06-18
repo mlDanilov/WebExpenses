@@ -47,7 +47,7 @@ namespace DomainExpenses.Moq
             _shRepMock.Setup<Shop>(m => m.Create(It.IsAny<IShop>()))
                 .Returns((IShop shop_) =>
                 {
-                    var shop = fBus.CreateShopC(_shopsList.Max(sh => sh.Id) + 1,
+                    var shop = fBus.CreateShop(_shopsList.Max(sh => sh.Id) + 1,
                         shop_.Name, shop_.Address);
 
                     _shopsList.Add(shop);
@@ -107,11 +107,11 @@ namespace DomainExpenses.Moq
         /// </summary>
         private List<Shop> _shopsList = new List<Shop>
             {
-                EntitiesFactory.Get().CreateShopC(0, "Кировский", "На июльской"),
-                EntitiesFactory.Get().CreateShopC(1, "Райт","На сулимова"),
-                EntitiesFactory.Get().CreateShopC(2, "Пятёрочка", "Baky plaza"),
-                EntitiesFactory.Get().CreateShopC(3, "Аптека", "На июльской"),
-                EntitiesFactory.Get().CreateShopC(4, "Аптека", "На сулимова")
+                EntitiesFactory.Get().CreateShop(0, "Кировский", "На июльской"),
+                EntitiesFactory.Get().CreateShop(1, "Райт","На сулимова"),
+                EntitiesFactory.Get().CreateShop(2, "Пятёрочка", "Baky plaza"),
+                EntitiesFactory.Get().CreateShop(3, "Аптека", "На июльской"),
+                EntitiesFactory.Get().CreateShop(4, "Аптека", "На сулимова")
             };
     }
 }

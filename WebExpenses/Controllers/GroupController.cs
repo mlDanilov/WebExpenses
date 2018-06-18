@@ -31,8 +31,6 @@ namespace WebExpenses.Controllers
             return PartialView(gListView_);
         }
 
-
-     
       
         public PartialViewResult GroupDropDownList(int gId_, 
             string selectGroupId_, string selectGroupName_)

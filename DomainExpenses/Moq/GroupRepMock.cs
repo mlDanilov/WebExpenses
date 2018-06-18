@@ -51,7 +51,7 @@ namespace DomainExpenses.Moq
             _gpRepMock.Setup<Group>(m => m.Create(It.IsAny<IGroup>()))
                   .Returns((IGroup group_) =>
                   {
-                      var group = fBus.CreateGroupC(_groupsList.Max(it => it.Id) + 1,
+                      var group = fBus.CreateGroup(_groupsList.Max(it => it.Id) + 1,
                           group_.IdParent, group_.Name);
 
                       _groupsList.Add(group);
@@ -116,22 +116,22 @@ namespace DomainExpenses.Moq
         /// </summary>
         private List<Group> _groupsList = new List<Group>
             {
-                EntitiesFactory.Get().CreateGroupC(0, null,"Главная группа"),
-                EntitiesFactory.Get().CreateGroupC(1, 0, "Мясо"),
-                EntitiesFactory.Get().CreateGroupC(2, 1, @"Птица"),
-                EntitiesFactory.Get().CreateGroupC(3, 1, @"Говядина"),
-                EntitiesFactory.Get().CreateGroupC(4, 0, @"Остальное")
+                EntitiesFactory.Get().CreateGroup(0, null,"Главная группа"),
+                EntitiesFactory.Get().CreateGroup(1, 0, "Мясо"),
+                EntitiesFactory.Get().CreateGroup(2, 1, @"Птица"),
+                EntitiesFactory.Get().CreateGroup(3, 1, @"Говядина"),
+                EntitiesFactory.Get().CreateGroup(4, 0, @"Остальное")
             };
         /// <summary>
         /// Список групп, название указывается с родительскими группами, кроме корневой
         /// </summary>
         private List<Group> _groupsExtList = new List<Group>
             {
-                EntitiesFactory.Get().CreateGroupC(0, null,"Главная группа"),
-                EntitiesFactory.Get().CreateGroupC(1, 0,"Мясо"),
-                EntitiesFactory.Get().CreateGroupC(2, 1, @"Мясо\Птица"),
-                EntitiesFactory.Get().CreateGroupC(3, 1, @"Мясо\Говядина"),
-                EntitiesFactory.Get().CreateGroupC(4, 0, @"Остальное")
+                EntitiesFactory.Get().CreateGroup(0, null,"Главная группа"),
+                EntitiesFactory.Get().CreateGroup(1, 0,"Мясо"),
+                EntitiesFactory.Get().CreateGroup(2, 1, @"Мясо\Птица"),
+                EntitiesFactory.Get().CreateGroup(3, 1, @"Мясо\Говядина"),
+                EntitiesFactory.Get().CreateGroup(4, 0, @"Остальное")
             };
 
 

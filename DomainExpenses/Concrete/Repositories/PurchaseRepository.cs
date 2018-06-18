@@ -35,7 +35,7 @@ namespace DomainExpenses.Concrete.Repositories
         /// <param name="purchase_"></param>
         public Purchase Create(IPurchase purchase_)
         {
-            var purchase = EntitiesFactory.Get().CreatePurchaseC(
+            var purchase = EntitiesFactory.Get().CreatePurchase(
                 purchase_.Id, purchase_.Shop_Id, purchase_.Item_Id, purchase_.Price, purchase_.Count, purchase_.Date
                 );
             var purch = _dbContext.Purchase.Add(purchase);

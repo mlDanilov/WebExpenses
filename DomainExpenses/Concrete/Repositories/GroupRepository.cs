@@ -35,7 +35,7 @@ namespace DomainExpenses.Concrete.Repositories
         /// <param name="group_"></param>
         public Group Create(IGroup group_)
         {
-            var group = EntitiesFactory.Get().CreateGroupC(group_.Id, group_.IdParent, group_.Name);
+            var group = EntitiesFactory.Get().CreateGroup(group_.Id, group_.IdParent, group_.Name);
             var g = _dbContext.Group.Add(group);
 
             _dbContext.SaveChanges();

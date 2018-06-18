@@ -33,3 +33,14 @@
         </tfoot>
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        console.log('groupClick.b');
+        $('div#groups tbody tr th.groupOrder').click(setCurrentGroupByClick);
+        $('div#groups tbody tr th.groupId').click(setCurrentGroupByClick);
+        $('div#groups tbody tr th.groupName').click(setCurrentGroupByClick);
+        $('div#groups tbody tr th.groupEdit a').click(setCurrentGId);
+        $('div#groups tbody tr th.groupDelete a').click(setCurrentGId);
+        console.log('groupClick.e');
+    });
+</script>

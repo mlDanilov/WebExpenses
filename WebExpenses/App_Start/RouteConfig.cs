@@ -32,7 +32,8 @@ namespace WebExpenses
         private static void registerGroupRoutes(RouteCollection routes_)
         {
             routes_.MapRoute(
-               "GroupsAndItems",
+               //"GroupsAndItems",
+               "Groups",
                "Groups",
                new { controller = "Group", action = "List" }
            );
