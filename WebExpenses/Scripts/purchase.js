@@ -1,5 +1,5 @@
 ﻿//Установить текущую группу покупок
-//и скрыть/развернуть детали
+//и скрыть/развернуть "Подробнее"
 function setCurrentPurchaseGId() {
 
     let groupPurchTr = $(this)[0].parentElement.getElementsByClassName('wPurchGroupId')[0];
@@ -37,7 +37,7 @@ function setCurrentPurchaseGId() {
     //weekSelect.innerHTML = result;
 }
 
-//Установить обработчик Click на кнопку "Подробнее/Скрыть"
+//Установить обработчик Click на кнопку "Подробнее"
 function setPurchaseDetailClickHandler() {
     $(document).ready(function () {
         console.log('PurchGroupDetail.b');
