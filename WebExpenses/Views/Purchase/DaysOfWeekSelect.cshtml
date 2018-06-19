@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+
+@model IEnumerable<DateTime>
+@{
+    CultureInfo cInfo = new CultureInfo("ru-RU");
+}
+<select id="daysOfWeek" name="daysOfWeek" onchange="setCurrentDayOfWeek()">
+    <option value="-1">-</option>
+   
+    @foreach (DateTime date in @Model)
+    {
+        <option value=@date.ToString("yyyy-MM-dd")>@cInfo.DateTimeFormat.GetAbbreviatedDayName(date.DayOfWeek) - @date.ToShortDateString().TrimEnd(' ')</option>
+    } 
+    <!--option value="2">ПН</!--option>
+    <option value="3">ВТ</option>
+    <option value="4">СР</option>
+    <option value="5">ЧТ</option>
+    <option value="6">ПТ</option>
+    <option value="7">CБ</option>
+    <option value="1">ВС</option-->
+</select>

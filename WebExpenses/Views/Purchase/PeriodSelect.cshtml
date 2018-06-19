@@ -1,0 +1,20 @@
+﻿@using WebExpenses.Models.Purchase;
+@using System.Globalization;
+@model MPeriodList
+@{ 
+    CultureInfo cInfo = new CultureInfo(this.Culture);
+}
+<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]" onchange="setCurrentPeriod()">
+    
+    @foreach (var period in Model.PeriodList)
+    {
+        if (Model.Current == period)
+        {
+            <option value="@period.MonthYear.ToString("yyyy-MM-dd")" selected>@period.MonthYear.ToString("MMMM yyyy", cInfo)</option>
+        }
+        else
+        {
+            <option value="@period.MonthYear.ToString("yyyy-MM-dd")">@period.MonthYear.ToString("MMMM yyyy", cInfo)</option>
+        }
+    }
+</select>

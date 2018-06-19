@@ -1,38 +1,42 @@
-﻿function ajaxItems() {
-    $.ajax({
-        url: "/Expenses/ItemsTable",
-        success: function (result) {
-            var table = $('#itemsTable')[0];
-            table.innerHTML = result;
-        },
-        error: function () {
-            alert("Ошибка!");
-        }
-    });
+﻿function setEditDeleteItemClickEventHandler() {
+    console.log("Items click установлен:b");
+    $('div#items tbody tr th.itemEdit a').click(setCurrentIId);
+    $('div#items tbody tr th.itemDelete a').click(setCurrentIId);
+    console.log("Items click установлен:e");
 }
 /*
-function ajaxItemsJSON() {
+function ajaxItems() {
     $.ajax({
-        url: "/Expenses/ItemsTableJSON",
-        success: function (data) {
-            //alert(JSON.stringify(data));
-            //alert(data.GroupId);
+        url: "/Item/ItemsTable",
+        success: function (result) {
+            console.log('into ajaxItems success');
+            //асинхронно меняем список товаров
+            var table = $('#itemsTable')[0];
+            //table.innerHTML = result;
+
+            console.log('table' = table);
+            console.log('result' = result);
+            //alert(result);
             
-            alert(JSON.stringify(data.ItemList));
-            var tBody = $('#itemsTable tbody');
-            tBody.empty();
-            alert(JSON.stringify(data.ItemList.length));
-            for (let i = 0; i < data.ItemList.length; i++)
-            {
-                let item = data.ItemList[i];
-                tBody.append(
-                    "<tr><th>" + i + "</th><th>" + item.Id + "</th><th>" + item.Name + "</th><th>" + "</th><th></tr>"
-                    );
-            }
+            
+            
+            //Привязываем к кнопкам "редактировать", "удалить"
+            //скрипты, чтобы устанавливались текущие товары перед кликом по линку
+            setEditDeleteItemClickEventHandler();
         },
         error: function () {
-            alert("Ошибка!");
+            alert("Ошибка ajaxItems!");
         }
     });
 }
 */
+//синхронно устанавливаем текущий товар
+function setCurrentIId() {
+    let iid = $(this)[0].parentElement.parentElement.getElementsByClassName('itemId')[0].textContent;
+    console.log('currentItemId='+iid);
+    $.ajax({
+        url: "/Item/SetCurrentIId",
+        data: { iid_: iid },
+        async: false
+    })
+}

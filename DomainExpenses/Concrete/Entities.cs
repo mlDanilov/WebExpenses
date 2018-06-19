@@ -8,6 +8,9 @@ using DomainExpenses.Abstract;
 
 namespace DomainExpenses.Concrete
 {
+    /// <summary>
+    /// Товар
+    /// </summary>
     public class Item : IItem
     {
         public Item() { }
@@ -39,6 +42,8 @@ namespace DomainExpenses.Concrete
         {
             Id = id_;
         }
+        
+        
         /// <summary>
         /// Уникальный код
         /// </summary>
@@ -53,7 +58,9 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public string Name { get; set; }
     }
-
+    /// <summary>
+    /// Магазин
+    /// </summary>
     public class Shop : IShop
     {
         public Shop() { }
@@ -74,7 +81,9 @@ namespace DomainExpenses.Concrete
         /// </summary>
         public string Address { get; set; }
     }
-
+    /// <summary>
+    /// Покупка
+    /// </summary>
     public class Purchase : IPurchase
     {
         public Purchase() { }
@@ -82,17 +91,63 @@ namespace DomainExpenses.Concrete
         {
             Id = id_;
         }
-
+        /// <summary>
+        /// Уникальный код
+        /// </summary>
         public int Id { get; private set; }
-        public int Shop_Id { get; set; }
-
+        /// <summary>
+        /// Код магазина
+        /// </summary>
+        public int? Shop_Id { get; set; }
+        /// <summary>
+        /// Код товара
+        /// </summary>
         public int Item_Id { get; set; }
+        /// <summary>
+        /// Цена
+        /// </summary>
+        public float Price { get; set; }
+        /// <summary>
+        /// Количество
+        /// </summary>
+        public float Count { get; set; }
+        /// <summary>
+        /// Дата
+        /// </summary>
+        public DateTime Date { get; set; }
+    }
+    /// <summary>
+    /// Период "Месяц-Год"
+    /// </summary>
+    public class Period :  IPeriod
+    {
+        public Period()
+        {
 
-        public float price { get; set; }
+        }
+        public Period(IPeriod period_)
+        {
+            MonthYear = period_.MonthYear;
+        }
 
-        public float count { get; set; }
-
-        public DateTime Time { get; set; }
+        /// <summary>
+        ///  yyyy-MM-01
+        /// </summary>
+        public DateTime MonthYear { get; set; }
+    }
+    /// <summary>
+    /// Неделя
+    /// </summary>
+    public class Week : IWeek
+    {
+        /// <summary>
+        /// Начальная дата
+        /// </summary>
+        public DateTime BDate { get; set; }
+        /// <summary>
+        /// Конечная дата
+        /// </summary>
+        public DateTime EDate { get; set; }
     }
 }
 

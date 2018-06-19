@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="header">
+        @{
+            Html.RenderAction("PeriodSelect");
+        }
+        @{
+            Html.RenderAction("WeekSelect");
+        }
+        @{
+            Html.RenderAction("DaysOfWeekSelect");
+        }
+</div>
+    <table id="purchTable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Код</th>
+                <th>Группа</th>
+                <th >Сумма, руб</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Итого:</th>
+                <th id="total"></th>
+                <th></th>
+            </tr>
+            
+        </thead>
+        <tbody id="purchTBody">
+                    @{
+                        Html.RenderAction("PurchaseSumByGroupTotal");
+                     }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>@Html.ActionLink("Добавить", "CreatePurchase")</th>
+            </tr>
+        </tfoot>
+    </table>
+<script>
+    updateTotalSumIntoPurchaseHeader();
+</script>

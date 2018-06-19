@@ -1,0 +1,11 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Shop
+@model MShopList
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="shops" class="dTable">
+    @{
+        Html.RenderPartial("ShopTable", @Model);
+    }
+</div>

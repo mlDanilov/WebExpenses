@@ -1,0 +1,93 @@
+﻿div#header {
+  padding: 3px;    
+    margin: 3px;    
+    background: #feae6a;
+}
+
+div#header select{
+    margin-left: 3px;                
+}
+
+tbody#purchTBody  {
+    background: #93d9a8;
+}
+
+tbody#purchTBody tr{
+    background: #ead090;
+}
+
+
+table#purchTable thead tr th#total  {
+    text-align: right
+}
+
+tbody#purchTBody .wPurchGroupSum{
+    text-align: right
+}
+
+tbody#purchTBody .wPurchGroupDetail{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+tbody#purchTBody tr.detail_none {
+    display:none;
+}
+
+tbody#purchTBody tr.detailHeader_visible {
+    background: #126356;
+    font: bold italic 0.9em "Times New Roman";
+}
+tbody#purchTBody tr.detailHeader_visible  th{
+    padding: 0.1em;
+}
+
+
+tbody#purchTBody tr.detail_visible1 {
+    background: #439d40
+}
+tbody#purchTBody tr.detail_visible1 th {
+    padding: 0.1em;
+}
+
+tbody#purchTBody tr.detail_visible2 {
+    background: #47569a
+}
+tbody#purchTBody tr.detail_visible2 th {
+    padding: 0.1em;
+}
+
+tbody#purchTBody th.purchOrder {
+    font: italic 0.9em "Times New Roman";
+}
+tbody#purchTBody th.purchId {
+    font: italic 0.9em "Times New Roman";
+}
+tbody#purchTBody th.purchItemId {
+    font: italic 0.9em "Times New Roman";
+}
+tbody#purchTBody th.purchItemName {
+    font: italic 0.9em "Times New Roman";
+}
+tbody#purchTBody th.purchShopName {
+    font: italic 0.9em "Times New Roman";
+    padding: 0.1em;
+}
+
+tbody#purchTBody th.purchSum {
+    font: italic 0.9em "Times New Roman";
+    text-align: right
+}
+tbody#purchTBody th.purchPrice {
+    font: italic 0.9em "Times New Roman";
+    text-align: right
+}
+tbody#purchTBody th.purchCount {
+    font: italic 0.9em "Times New Roman";
+    text-align: right
+}
+
+tbody#purchTBody th.purchDate {
+    font: italic 0.9em "Times New Roman";
+}

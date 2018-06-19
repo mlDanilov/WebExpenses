@@ -1,9 +1,14 @@
 ﻿using DomainExpenses.Abstract;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
+
 
 namespace DomainExpenses.Concrete
 {
@@ -14,12 +19,9 @@ namespace DomainExpenses.Concrete
         {
             
         }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder_)
         {
-            //base.OnModelCreating(modelBuilder);
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            
+            modelBuilder_.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
         public DbSet<Item> Item { get; set; }
@@ -34,53 +36,61 @@ namespace DomainExpenses.Concrete
 
         public DbSet<Shop> Shop { get; set; }
 
-        public Task<Item> AddNewItem(string name_, int gId_)
-        {
-            var rQuery = Database.SqlQuery<Item>("AddItem", name_, gId_);
-            return rQuery.FirstOrDefaultAsync();
-        }
-
-        public Task<Group> AddNewGroup(string name_, int gId_)
-        {
-            var rQuery = Database.SqlQuery<Group>("AddGroup", name_, gId_);
-            return rQuery.FirstOrDefaultAsync();
-        }
+        public DbSet<Purchase> Purchase { get; set; }
 
         /// <summary>
-        /// Редактрировать товар 
+        /// Получить все периоды
         /// </summary>
-        /// <param name="id_">Код товара</param>
-        /// <param name="name_">Новое название товара</param>
-        /// <param name="gId_">Новый код группы товаров</param>
-        public int EditItem(int id_, string name_, int gId_)
+        public DbRawSqlQuery<Period> SelectAllPeriods() 
+            => Database.SqlQuery<Period>("SelectAllPeriods");
+        /// <summary>
+        /// Получить все недели текущего периода
+        /// </summary>
+        /// <param name="period_"></param>
+        /// <returns></returns>
+        public DbRawSqlQuery<Week> SelectWeeksOfCurrentPeriod(IPeriod period_)
         {
-            return -1;
+            //Database.SqlQuery<Week>("SelectWeeksByMonth", period_.Period);
+            var pMonth = new SqlParameter("@Month", System.Data.SqlDbType.Date)
+            { Value = period_.MonthYear };
+
+            var rQuery = Database.SqlQuery<Week>("exec SelectWeeksByMonth @Month", pMonth);
+            return rQuery;
+           
+        }
+
+        /// <summary>
+        /// Получить все расходы за неделю
+        /// </summary>
+        /// <param name="week_"></param>
+        /// <returns></returns>
+        public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
+        {
+            var res = (from p in Purchase
+                       where ((p.Date >= week_.BDate) && (p.Date <= week_.EDate))
+                       select p);
+            return res;
         }
         /// <summary>
-        /// Редактировать группу товаров
+        /// Получить все расходы за день
         /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        /// <param name="name_">Новое название</param>
-        /// <param name="parentGroupId_">Новый код родительской группы</param>
-        public int EditGroup(int id_, string name_, int parentGroupId_)
+        /// <param name="date_"></param>
+        /// <returns></returns>
+        public IQueryable<Purchase> SelectPurchasesByDay(DateTime date_)
         {
-            return -1;
+            var res = (from p in Purchase
+                       where (p.Date == date_) select p);
+            return res;
         }
-        /// <summary>
-        /// Удалить товар
-        /// </summary>
-        /// <param name="id_">Код товара</param>
-        public int DeleteItem(int id_)
+
+        public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
         {
-            return -1;
-        }
-        /// <summary>
-        /// Удалить группу товаров
-        /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        public int DeleteGroup(int id_)
-        {
-            return -1;
+            var res = (from p in Purchase
+                       where
+                       (p.Date.Month == period_.MonthYear.Month) &&
+                       (p.Date.Year == period_.MonthYear.Year)
+                       select p);
+            return res;
         }
     }
 }

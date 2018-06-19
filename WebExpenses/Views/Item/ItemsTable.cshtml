@@ -1,0 +1,35 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item
+
+@model MItemList
+
+<table id="itemsTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Код</th>
+            <th>Товар</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="itemsTableBody">
+        @{
+            Html.RenderPartial("ItemsTableBodyRows", @Model);
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>@Html.ActionLink("Добавить", "CreateItemCard", new { gId_ = Model.GroupId })</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+    
+   
+</table>
+
+
+

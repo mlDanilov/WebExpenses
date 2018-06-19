@@ -1,0 +1,9 @@
+﻿/*
+div#shops tbody#shopTableBody div.shopAddressInner {
+   font: italic 0.8em "Times New Roman";
+}
+*/
+
+tr div.shopAddressInner {
+   font: italic 0.8em "Times New Roman";
+}

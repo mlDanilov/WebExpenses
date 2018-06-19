@@ -1,0 +1,43 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item
+@model MItemList
+@{
+        var deleteItemAjaxOptions = new AjaxOptions
+        {
+            HttpMethod = "Post",
+            Url = "DeleteItemCardAjax",
+            UpdateTargetId = "itemsTableBody",
+            OnSuccess = "OnSuccess"
+    };
+}
+@for (int i = 0; i < Model.ItemList.Count; i++)
+{
+    <tr>
+        <th class="itemOrder">@(i + 1).</th>
+        <th class="itemId">@Model.ItemList[i].Id</th>
+        <th class="itemName">@Model.ItemList[i].Name</th>
+        <th class="itemEdit">
+            @Html.ActionLink("Редактировать", "EditItemCard", "Item", new { id_ = Model.ItemList[i].Id })
+            
+        </th>
+        <th class="itemDelete">
+            @Html.ActionLink("Удалить", "DeleteItemCard", "Item", new { id_ = Model.ItemList[i].Id })
+            <!--Ajax.ActionLink("Удалить", "", deleteItemAjaxOptions)-->
+            <!--Html.ActionLink("Удалить", "DeleteItemCard", new { id_ = Model.ItemList[i].Id })-->
+        </th>
+      
+    </tr>
+}
+<script>
+    setEditDeleteItemClickEventHandler();
+</script>
+
+<script type="text/javascript">
+    function OnSuccess(data) {
+        setEditDeleteItemClickEventHandler();
+    }
+    function OnFailure(request, error) {
+        alert("Items Ошибка:\n" + error.toString() + ' '+ request.toString() + ' ');
+    }
+
+</script>

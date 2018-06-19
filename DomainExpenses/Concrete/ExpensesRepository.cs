@@ -5,81 +5,79 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DomainExpenses.Abstract;
+using DomainExpenses.Abstract.Repositories;
+using DomainExpenses.Concrete;
+using DomainExpenses.Concrete.Repositories;
+
+
 
 namespace DomainExpenses.Concrete
 {
+    /// <summary>
+    /// Репозиторий для работы с данными
+    /// </summary>
     public class ExpensesRepository : IExpensesRepository
     {
 
         public ExpensesRepository()
         {
-           
+            //_purchaseModule = new PurchaseModule(_context.SelectWeeksOfCurrentPeriod);
+            _itemRep = new ItemRepository(_context);
+            _groupRep = new GroupRepository(_context);
+            _shopRep = new ShopRepository(_context);
+            _purchRep = new PurchaseRepository(_context);
+
         }
 
-        public IQueryable<IItem> Item
+        /// <summary>
+        /// Репозиторий для работы с товарами
+        /// </summary>
+        public IItemRepository ItemRep
         {
-            get {
-                return _context.Item;
-            }
+            get { return _itemRep; }
         }
-        public IQueryable<IShop> Shop
+
+        /// <summary>
+        /// Репозиторий для работы с группами товаров
+        /// </summary>
+        public IGroupRepository GroupRep
         {
-            get
-            {
-                return _context.Shop;
-            }
+            get { return _groupRep; }
         }
 
-        public IQueryable<IGroup> Group
+        /// <summary>
+        /// Репозиторий для работы с магазинами
+        /// </summary>
+        public IShopRepository ShopRep
         {
-            get
-            {
-                return _context.Group;
-            }
-        }
-
-        public IQueryable<IGroup> GroupExt {
-            get {
-                return _context.GroupExt.AsQueryable<IGroup>();
-            }
+            get { return _shopRep; }
         }
 
         /// <summary>
-        /// Текущая группа товаров
+        /// Репозиторий для работы с покупками
         /// </summary>
-        public int?  CurrentGId { get; set; }
-
-        public IItem AddNewItem(string name_, int gId_) 
-            => _context.AddNewItem(name_, gId_).Result;
-
-        public IGroup AddNewGroup(string name_, int gId_)
-            => _context.AddNewGroup(name_, gId_).Result;
-
-        public int EditItem(int id_, string name_, int gId_) 
-            => _context.EditItem(id_, name_, gId_);
-        /// <summary>
-        /// Редактировать группу товаров
-        /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        /// <param name="name_">Новое название</param>
-        /// <param name="parentGroupId_">Новый код родительской группы</param>
-        public int EditGroup(int id_, string name_, int parentGroupId_) 
-            => _context.EditGroup(id_, name_, parentGroupId_);
-        /// <summary>
-        /// Удалить товар
-        /// </summary>
-        /// <param name="id_">Код товара</param>
-        public int DeleteItem(int id_) 
-            => _context.DeleteItem(id_);
-        /// <summary>
-        /// Удалить группу товаров
-        /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        public int DeleteGroup(int id_)
-            => _context.DeleteGroup(id_);
-
-        private int? _currentGId = null;
+        public IPurchaseRepository PurchaseRep
+        {
+            get { return _purchRep; }
+        }
 
         private ExpensesDBContext _context = new ExpensesDBContext();
+
+        /// <summary>
+        /// Репозиторий для работы с товарами
+        /// </summary>
+        private ItemRepository _itemRep = null;
+        /// <summary>
+        /// Репозиторий для работы с группами товаров
+        /// </summary>
+        private GroupRepository _groupRep = null;
+        /// <summary>
+        /// Репозиторий для работы с магазинами
+        /// </summary>
+        private ShopRepository _shopRep = null;
+        /// <summary>
+        /// Репозиторий для работы с магазинами
+        /// </summary>
+        private PurchaseRepository _purchRep = null;
     }
 }

@@ -7,15 +7,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Groups</title>
+    <title>@ViewData["Title"]</title>
+    <link href="~/Content/menu.css" rel="stylesheet" />
     <link href="~/Content/groupsTable.css" rel="stylesheet" />
     <link href="~/Content/itemsTable.css" rel="stylesheet" />
+    <link href="~/Content/shops.css" rel="stylesheet" />
+    <link href="~/Content/periodAndWeek.css" rel="stylesheet"/>
     <script src="~/Scripts/jquery-1.8.0.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
     <script src="~/Scripts/items.js" type="text/javascript"></script>
     <script src="~/Scripts/groups.js" type="text/javascript"></script>
+    <script src="~/Scripts/shops.js" type="text/javascript"></script>
+    <script src="~/Scripts/periodsAndWeeks.js" type="text/javascript"></script>
+    <script src="~/Scripts/purchase.js" type="text/javascript"></script>
+    
 </head>
 <body>
-    @RenderBody()
+    <div id="root">
+        <div id="menu">
+            <div id="groupsAndItems">
+                @Html.ActionLink("Группы и товары", "List", "Group")
+            </div>
+            <div id="shops">
+                @Html.ActionLink("Магазины","List", "Shop")
+            </div>
+            <div id="purchase">
+                @Html.ActionLink("Покупки", "List", "Purchase")
+            </div>
+        </div>
+        @RenderBody()
+    </div>
 </body>
 </html>

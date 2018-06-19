@@ -4,69 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DomainExpenses.Concrete;
+using DomainExpenses.Abstract.Repositories;
+     
+
 namespace DomainExpenses.Abstract
 {
+    /// <summary>
+    /// Репозиторий для работы с данными
+    /// (Single Responsibility Principle)
+    /// </summary>
     public interface IExpensesRepository
     {
-        /// <summary>
-        /// Товары
-        /// </summary>
-        IQueryable<IItem> Item { get; }
-        /// <summary>
-        /// Группы товаров
-        /// </summary>
-        IQueryable<IGroup> Group { get; }
-        /// <summary>
-        /// Группы товаров, название содержит все родителские группы, кроме корневой
-        /// </summary>
-        IQueryable<IGroup> GroupExt { get; }
-        /// <summary>
-        /// Магазины
-        /// </summary>
-        IQueryable<IShop> Shop { get; }
-        /// <summary>
-        /// Текущая группа товаров
-        /// </summary>
-        /// <param name="gId_"></param>
-        int? CurrentGId { get; set; }
+       
 
         /// <summary>
-        /// Добавить новый товар
+        /// Репозиторий для работы с товарами
         /// </summary>
-        /// <param name="name_">Название</param>
-        /// <param name="gId_">Код группы товаров</param>
-        /// <returns></returns>
-        IItem AddNewItem(string name_, int gId_);
+        IItemRepository ItemRep { get; }
+
         /// <summary>
-        /// Добавить новую группу
+        /// Репозиторий для работы с группами товаров
         /// </summary>
-        /// <param name="name_">Название</param>
-        /// <param name="parentGroupId_">Код родительской группы</param>
-        /// <returns></returns>
-        IGroup AddNewGroup(string name_, int parentGroupId_);
+        IGroupRepository GroupRep { get; }
+
         /// <summary>
-        /// Редактрировать товар 
+        /// Репозиторий для работы с магазинами
         /// </summary>
-        /// <param name="id_">Код товара</param>
-        /// <param name="name_">Новое название товара</param>
-        /// <param name="gId_">Новый код группы товаров</param>
-        int EditItem(int id_, string name_, int gId_);
+        IShopRepository ShopRep { get; }
         /// <summary>
-        /// Редактировать группу товаров
+        /// Репозиторий для работы с покупками
         /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        /// <param name="name_">Новое название</param>
-        /// <param name="parentGroupId_">Новый код родительской группы</param>
-        int EditGroup(int id_, string name_, int parentGroupId_);
-        /// <summary>
-        /// Удалить товар
-        /// </summary>
-        /// <param name="id_">Код товара</param>
-        int DeleteItem(int id_);
-        /// <summary>
-        /// Удалить группу товаров
-        /// </summary>
-        /// <param name="id_">Код группы товаров</param>
-        int DeleteGroup(int id_);
+        IPurchaseRepository PurchaseRep { get; }
+
     }
+
+
+
+
 }

@@ -1,0 +1,55 @@
+﻿@model WebExpenses.Models.Purchase.MPurchase
+
+@{
+    ViewBag.Title = "PurchaseCard";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    @Styles.Render("~/Content/purchaseCard")
+    @Scripts.Render("~/bundles/jQuery")
+    @Scripts.Render("~/bundles/validate")
+    @Scripts.Render("~/bundles/unobtrusiveAjax")
+    @Scripts.Render("~/bundles/purchCard")
+    
+    
+</head>
+<body>
+    <h2>Карточка покупки</h2>
+    @using (Html.BeginForm())
+    {
+        //@Html.ValidationSummary();
+        if (Model.Id != -1)
+        {
+            <p>Код  покупки: @Html.TextBoxFor(p => p.Id, new { @readonly = true })</p>
+        }
+        <p>
+            @{
+                Html.RenderAction("ShopDropDownList", "Shop", new { shopId_ = Model.Shop_Id });
+            }
+        </p>
+        <p>
+            
+            @{
+                Html.RenderAction("PurchaseItem", "Purchase", new { itemId_ = Model.Item_Id });
+            }
+        </p>
+        <p>@Html.ValidationMessageFor(p => p.Item_Id)</p>
+        <p>Цена: @Html.EditorFor(p => p.Price)</p>
+        <p>@Html.ValidationMessageFor(p => p.Price)</p>
+
+        <p>Количество: @Html.EditorFor(p => p.Count)</p>
+        <p>@Html.ValidationMessageFor(p => p.Count)</p>
+        <p>Дата: @Html.EditorFor(p => p.Date)</p>
+        <p>@Html.ValidationMessageFor(p => p.Date)</p>
+        <input type="submit" value="@ViewData["Head"]"/>
+    }
+</body>
+</html>
+<script>
+    setPurchaseCardGroupSelectChange();
+</script>

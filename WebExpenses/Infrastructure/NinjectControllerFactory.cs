@@ -32,11 +32,12 @@ namespace WebExpenses.Infrastructure
         private void addBindings()
         {
             //_ninjectKernel.Bind<IExpensesRepository>().To<ExpensesRepository>();
-            _ninjectKernel.Bind<IExpensesRepository>().ToConstant(MockBus.Get().MockDbContext.Object);
+            //_ninjectKernel.Bind<IExpensesRepository>().To<ExpensesRepository>().InSingletonScope();
+            _ninjectKernel.Bind<IExpensesRepository>().ToConstant(MockBus.Get().MockExpensesRep.Object);
         }
 
 
-       
+
 
         private IKernel _ninjectKernel;
     }

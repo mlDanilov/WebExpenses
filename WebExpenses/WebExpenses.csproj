@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +67,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq, Version=4.8.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.8.1\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -85,6 +94,34 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -92,35 +129,29 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Web.Razor">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages.Deployment">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Webpages.Razor">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Helpers">
-      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\groupCard.css" />
     <Content Include="Content\groups.css" />
     <Content Include="Content\groupsTable.css" />
+    <Content Include="Content\itemCard.css" />
     <Content Include="Content\itemsTable.css" />
+    <Content Include="Content\menu.css" />
+    <Content Include="Content\periodAndWeek.css" />
+    <Content Include="Content\purchaseCard.css" />
+    <Content Include="Content\shopCard.css" />
+    <Content Include="Content\shops.css" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\WebExpensesProfile.pubxml" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\groups.js" />
     <Content Include="Scripts\items.js" />
@@ -128,34 +159,82 @@
     <Content Include="Scripts\jquery-1.8.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Web.config" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\purchase.js" />
+    <Content Include="Scripts\purchaseCard.js" />
+    <Content Include="Scripts\shops.js" />
+    <Content Include="Scripts\periodsAndWeeks.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ExpensesController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\GroupRouteConstraint.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
-    <Compile Include="Models\MGroupCard.cs" />
-    <Compile Include="Models\MGroupList.cs" />
-    <Compile Include="Models\MItemCard.cs" />
-    <Compile Include="Models\MItemList.cs" />
+    <Compile Include="Models\Group\MGroupCard.cs" />
+    <Compile Include="Models\Group\MGroupList.cs" />
+    <Compile Include="Models\Item\MItemCard.cs" />
+    <Compile Include="Models\Item\MItemDDList.cs" />
+    <Compile Include="Models\Item\MItemList.cs" />
+    <Compile Include="Models\Purchase\MDayOfWeek.cs" />
+    <Compile Include="Models\Purchase\MDayPurchaseSumByGroup.cs" />
+    <Compile Include="Models\Purchase\MPeriodList.cs" />
+    <Compile Include="Models\Purchase\MPurchaseSumByGroup.cs" />
+    <Compile Include="Models\Purchase\MPurchase.cs" />
+    <Compile Include="Models\Purchase\MWeekPurchaseSumByGroup.cs" />
+    <Compile Include="Models\Purchase\MWeekList.cs" />
+    <Compile Include="Models\Shop\MShopCard.cs" />
+    <Compile Include="Models\Shop\MShopList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
-    <Content Include="packages.config" />
-    <Content Include="Views\Expenses\GroupsAndItems.cshtml" />
-    <Content Include="Views\Expenses\GroupsTable.cshtml" />
-    <Content Include="Views\Expenses\Groups.cshtml" />
-    <Content Include="Views\Expenses\ItemsTable.cshtml" />
-    <Content Include="Views\Expenses\ItemCard.cshtml" />
-    <Content Include="Views\Expenses\GroupDropDownList.cshtml" />
-    <Content Include="Views\Expenses\GroupCard.cshtml" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Views\Group\GroupsTable.cshtml" />
+    <Content Include="Views\Group\Groups.cshtml" />
+    <Content Include="Views\Item\ItemsTable.cshtml" />
+    <Content Include="Views\Item\ItemCard.cshtml" />
+    <Content Include="Views\Group\GroupDropDownList.cshtml" />
+    <Content Include="Views\Group\GroupCard.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Expenses\GroupsTableBodyRows.cshtml" />
-    <Content Include="Views\Expenses\ItemsTableBodyRows.cshtml" />
+    <Content Include="Views\Group\GroupsTableBodyRows.cshtml" />
+    <Content Include="Views\Item\ItemsTableBodyRows.cshtml" />
+    <Content Include="Views\Shop\List.cshtml" />
+    <Content Include="Views\Shop\ShopTable.cshtml" />
+    <Content Include="Views\Shop\ShopTableBody.cshtml" />
+    <Content Include="Views\Shop\ShopCard.cshtml" />
+    <Content Include="Views\Purchase\List.cshtml" />
+    <Content Include="Views\Purchase\PeriodSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekOptions.cshtml" />
+    <Content Include="Views\Purchase\DaysOfWeekSelect.cshtml" />
+    <Content Include="Views\Purchase\WeekPurchaseSumByGroupTotal.cshtml" />
+    <Content Include="Views\Purchase\DayPurchaseSumByGroupTotal.cshtml" />
+    <Content Include="Views\Purchase\PurchaseDetail.cshtml" />
+    <Content Include="Views\Purchase\PeriodPurchaseSumByGroupTotal.cshtml" />
+    <Content Include="Views\Purchase\PurchaseCard.cshtml" />
+    <Content Include="Views\Shop\ShopDropDownList.cshtml" />
+    <Content Include="Views\Item\ItemDropDownList.cshtml" />
+    <Content Include="Views\Purchase\PurchaseItem.cshtml" />
+    <Content Include="Views\Item\ItemOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

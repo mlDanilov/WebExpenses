@@ -1,0 +1,19 @@
+﻿@using WebExpenses.Models.Shop
+@model MShopList
+
+<select name="Shop_Id">
+    <option value="-1" selected> - </option>
+    @foreach (var shop in Model.ShopList)
+    {
+        if ((Model.ShopId.HasValue) && (Model.ShopId.Value == shop.Id))
+        {
+            <option value="@shop.Id" selected>@shop.Name - @shop.Address</option>
+        }
+        else
+        {
+            <option value="@shop.Id">@shop.Name - @shop.Address</option>
+        }
+
+    }
+</select>
+
