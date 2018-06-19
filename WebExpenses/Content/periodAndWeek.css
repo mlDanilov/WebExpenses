@@ -12,6 +12,11 @@ tbody#purchTBody  {
     background: #93d9a8;
 }
 
+tbody#purchTBody tr{
+    background: #ead090;
+}
+
+
 table#purchTable thead tr th#total  {
     text-align: right
 }
