@@ -186,6 +186,7 @@
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\Group\MGroupCard.cs" />
     <Compile Include="Models\Group\MGroupList.cs" />
+    <Compile Include="Models\Item\Interfaces\IMItemCard.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
     <Compile Include="Models\Item\MItemDDList.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
@@ -196,6 +197,8 @@
     <Compile Include="Models\Purchase\MPurchase.cs" />
     <Compile Include="Models\Purchase\MWeekPurchaseSumByGroup.cs" />
     <Compile Include="Models\Purchase\MWeekList.cs" />
+    <Compile Include="Models\Shop\Interfaces\IMShopCard.cs" />
+    <Compile Include="Models\Shop\Interfaces\IMShopList.cs" />
     <Compile Include="Models\Shop\MShopCard.cs" />
     <Compile Include="Models\Shop\MShopList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -235,6 +238,7 @@
     <Content Include="Views\Item\ItemDropDownList.cshtml" />
     <Content Include="Views\Purchase\PurchaseItem.cshtml" />
     <Content Include="Views\Item\ItemOptions.cshtml" />
+    <Content Include="Views\Purchase\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

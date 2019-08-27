@@ -10,6 +10,7 @@ using DomainExpenses.Abstract.Repositories;
 using DomainExpenses.Moq;
 using WebExpenses.Controllers;
 using WebExpenses.Models.Item;
+using WebExpenses.Models.Item.Interfaces;
 
 
 namespace ExpensesTest.Repositories
@@ -72,11 +73,20 @@ namespace ExpensesTest.Repositories
             var countBefore = expRep.ItemRep.Entities.Count();
             validation(itCard, itController);
             //Act
-            itController.CreateItemCard(itCard);
+            var result = itController.CreateItemCard(itCard);
             var countAfter = expRep.ItemRep.Entities.Count();
 
             //Assert
             Assert.AreEqual(countBefore, countAfter, "Количество товаров в репозитории изменилось");
+            Assert.IsTrue(result is ViewResult, "Метод, не прошедший валидацию возвращает не возвращает объект типа 'ViewResult'");
+            var vResult = result as ViewResult;
+            Assert.IsTrue(vResult.Model is IMItemCard, "Модель, передаваемая в вид не является объектом типа 'MItemCard'");
+
+            var mItCrdModel = vResult.Model as IMItemCard;
+            Assert.IsTrue(mItCrdModel.Id == -1, "Значение свойства Id в модели имеет неверное значение");
+            Assert.IsTrue(mItCrdModel.GId == gId, "Значение свойства GId в модели имеет неверное значение");
+            Assert.IsTrue(mItCrdModel.Name == null, "Значение свойства Name в модели имеет неверное значение");
+
 
             var itNew = expRep.ItemRep.Entities.Where(it => (it.Name == name) && (it.GId == gId)).FirstOrDefault();
 

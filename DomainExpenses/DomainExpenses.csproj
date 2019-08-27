@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IExpensesRepository.cs" />
     <Compile Include="Abstract\Entities.cs" />
+    <Compile Include="Abstract\IRepositoryFactory.cs" />
     <Compile Include="Abstract\Repositories\IEntityRepositiory.cs" />
     <Compile Include="Abstract\Repositories\IGroupRepository.cs" />
     <Compile Include="Abstract\Repositories\IItemRepository.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Abstract\Repositories\IShopRepository.cs" />
     <Compile Include="Concrete\Entities.cs" />
     <Compile Include="Concrete\EntitiesFactory.cs" />
+    <Compile Include="Concrete\Repositories\Facotries\RepositoryFactory.cs" />
     <Compile Include="Concrete\Repositories\GroupRepository.cs" />
     <Compile Include="Concrete\Repositories\ItemRepository.cs" />
     <Compile Include="Concrete\ExpensesDBContext.cs" />
