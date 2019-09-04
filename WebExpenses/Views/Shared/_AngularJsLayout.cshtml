@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="purchApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/item/controller/itemController.js"></script>
+    <script src="~/Scripts/angularJS/group/directive/groupList.js"></script>
+    <script src="~/Scripts/angularJS/group/service/Groups.js"></script>
+    
+    @Styles.Render("~/Content/itemCard")
+    @Scripts.Render("~/bundles/jQuery")
+    @Scripts.Render("~/bundles/validate")
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>

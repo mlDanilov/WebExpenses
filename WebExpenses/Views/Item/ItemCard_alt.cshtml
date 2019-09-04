@@ -1,0 +1,25 @@
+﻿@using DomainExpenses.Abstract
+@using Newtonsoft.Json;
+@using WebExpenses.Models.Item.Interfaces
+
+
+@model IMItemCard
+@{
+    Layout = "~/Views/Shared/_AngularJsLayout.cshtml";
+}
+<div ng-controller="itemController">
+    <h4>{{Header}}</h4>
+    @using (Html.BeginForm())
+    {
+        //@Html.ValidationSummary();
+        if (Model.Id != -1)
+        {
+            <p>Код товара: @Html.TextBoxFor(it => it.Id, new { @readonly = true })</p>
+        }
+        <p>Наименование: @Html.EditorFor(it => it.Name)</p>
+        <p>@Html.ValidationMessageFor(it => it.Name)</p>
+        Html.RenderAction("GroupDropDownList", "Group",
+            new { gId_ = Model.GId, selectGroupName_ = @ViewData["SelectGroupName"] });
+        <input type="submit" value="@ViewData["Head"]" />
+    }
+</div>

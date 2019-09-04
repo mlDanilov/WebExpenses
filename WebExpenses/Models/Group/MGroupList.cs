@@ -4,13 +4,20 @@ using System.Linq;
 using System.Web;
 
 using DomainExpenses.Abstract;
+using WebExpenses.Models.Group.Interface;
 
 namespace WebExpenses.Models.Group
 {
-    public class MGroupList
+    /// <summary>
+    /// Класс со списком групп для отображения на форме
+    /// </summary>
+    public class MGroupList : IMGroupList
     {
-        public int? GroupId { get; set; } = null;
 
-        public List<IGroup> GroupList { get; set; }
+        public int? GroupId { get; set; }
+        /// <summary>
+        ///Список групп для отображения на форме
+        /// </summary>
+        public List<IMGroupCard> GroupList { get; set; }
     }
 }

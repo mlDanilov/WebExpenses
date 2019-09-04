@@ -1,0 +1,19 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item.Interfaces
+@using Newtonsoft.Json;
+@model IMItemCard
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_AngularJsLayout.cshtml";
+}
+<div ng-controller="itemController" data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+    <h4>Добавить</h4>
+    <p>Наименование: <input ng-model="Name" value="@Model.Name"/></p>
+    <group-list source="Groups"></group-list>
+    <input type="button" value="Добавить" ng-click="CreateItem()" />
+    <!--
+    <input type="button" value="Удалить группу" ng-click="deleteGroup()" />
+        -->
+</div >
+
+

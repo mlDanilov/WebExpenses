@@ -10,6 +10,7 @@ using DomainExpenses.Concrete;
 
 using WebExpenses.Models.Item;
 using WebExpenses.Models.Group;
+using WebExpenses.Models.Group.Interface;
 using System.Web.Routing;
 
 namespace WebExpenses.Controllers
@@ -42,7 +43,7 @@ namespace WebExpenses.Controllers
             if (gId_ == -1)
                 gId_ = _repository.GroupRep.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
 
-            var gList = getMGroupExtList(gId_);
+            var gList = getMGroupExtList();
 
             return PartialView(gList);
         }
@@ -50,8 +51,9 @@ namespace WebExpenses.Controllers
         public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
         {
             if ((gListView_ == null) || (gListView_.GroupList == null))
-                gListView_ = getMGroupExtList(null);
-
+            {
+                PartialView(getMGroupExtList());
+            }
             return PartialView(gListView_);
         }
 
@@ -60,7 +62,7 @@ namespace WebExpenses.Controllers
             ViewData["Title"] = "Группы и товары";
             var groupsQuery = _repository.GroupRep.GroupExt;
 
-            var gListView = getMGroupExtList(_repository.GroupRep.CurrentGId);
+            var gListView = getMGroupExtList();
             return View(gListView);
         }
 
@@ -155,7 +157,7 @@ namespace WebExpenses.Controllers
                 _repository.GroupRep.CurrentGId = idParent;
             }
 
-            var gList = getMGroupExtList(idParent);
+            var gList = getMGroupExtList();
             return PartialView("GroupsTableBodyRows", gList);
         }
 
@@ -198,16 +200,33 @@ namespace WebExpenses.Controllers
 
         private IGroup getGroupById(int? gId_) => _repository.GroupRep.Entities.Where(g => g.Id == gId_).FirstOrDefault();
 
-        private MGroupList getMGroupExtList(int? gId_)
+        private IMGroupList getMGroupExtList()
         {
-            List<IGroup> gExtList = new List<IGroup>();
-            _repository.GroupRep.GroupExt.ToList().ForEach(g => gExtList.Add(g));
+            var gExtList = new List<IMGroupCard>();
+
+            _repository.GroupRep.GroupExt.ToList().ForEach(g => gExtList.Add(new MGroupCard(g)));
             var gList = new MGroupList()
             {
-                GroupId = gId_,
                 GroupList = gExtList
             };
             return gList;
+        }
+        /// <summary>
+        /// Получить список групп 
+        /// </summary>
+        /// <param name="gId_"></param>
+        /// <returns></returns>
+        public JsonResult GetGroupList()
+        {
+            try
+            {
+                var groupList = getMGroupExtList();
+                return Json(groupList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex, JsonRequestBehavior.AllowGet);
+            }
         }
 
         private IExpensesRepository _repository = null;

@@ -70,10 +70,8 @@ namespace WebExpenses.Controllers
         public ViewResult CreateItemCard(int gId_)
         {
             var itView = new MItemCard() { GId = gId_ };
-            ViewData["Title"] = "Добавить товар";
-            ViewData["Head"] = "Добавить";
-            ViewData["SelectGroupName"] = "GId";
-            return View("ItemCard", itView);
+            ViewData["SelectGroupName"] = "GId"; //Потом уберём
+            return View("CreateItemCard", itView);
         }
 
         public ActionResult CreateItem(string name_, int gId_)
@@ -89,18 +87,27 @@ namespace WebExpenses.Controllers
             return CreateItem(name_, gId.Value);
         }
 
+        /// <summary>
+        /// Запрос на создание карточки товара и добавление в репозиторий
+        /// </summary>
+        /// <param name="mItemCard_"></param>
+        /// <returns>Возвращает получившуюся карточку товара или ошибку</returns>
         [HttpPost]
-       public ActionResult CreateItemCard(MItemCard mItemCard_)
+       public JsonResult CreateItemCard(MItemCard mItemCard_)
        {
-            if (ModelState.IsValid)
-            {
+            try
+            { 
                 var item = _repository.ItemRep.Create(mItemCard_);
-                return RedirectToAction("List", "Group", new { gId_ = mItemCard_.GId });
+                return Json(item);
             }
-            else
-                return CreateItemCard(mItemCard_.GId);
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+                
 
         }
+
 
         public ViewResult EditItemCard()
         {
@@ -109,15 +116,19 @@ namespace WebExpenses.Controllers
             ViewData["Title"] = "Редактировать карточку товара";
             ViewData["Head"] = "Редактировать";
             ViewData["SelectGroupName"] = "GId";
-            return View("ItemCard", itView);
+            return View("EditItemCard", itView);
         }
 
-        public ActionResult EditItem(int id_, string name_, int gId_)
+        public JsonResult EditItem(int id_, string name_, int gId_)
         {
             var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
-            var mItem = new MItemCard(item) { Name = name_, GId = gId_ };
-            return EditItemCard(mItem);
+            item.Name = name_;
+            item.GId = gId_;
+            var mItem = new MItemCard(item);
+            return Json(mItem, JsonRequestBehavior.AllowGet);
         }
+
+
         public ActionResult EditItem2(int id_, string name_)
         {
             var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
