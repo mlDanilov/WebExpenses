@@ -27,11 +27,11 @@ namespace WebExpenses.Controllers
             _repository = rep_;
         }
 
-        public PartialViewResult Groups(MGroupList gListView_)
-        {
+        //public PartialViewResult Groups(MGroupList gListView_)
+        //{
 
-            return PartialView(gListView_);
-        }
+        //    return PartialView(gListView_);
+        //}
 
 
         //public PartialViewResult GroupDropDownList(int gId_,

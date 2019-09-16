@@ -1034,10 +1034,10 @@
     <Content Include="Views\Group\EditGroupCard.cshtml" />
     <Content Include="Views\Group\List.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="Views\Group\GroupsTableBodyRowsNew.cshtml" />
-    <Content Include="Views\Group\GroupsTableNew.cshtml" />
-    <Content Include="Views\Item\ItemsTableNew.cshtml" />
-    <Content Include="Views\Item\ItemsTableBodyRowsNew.cshtml" />
+    <Content Include="Views\Group\GroupsTableBodyRows.cshtml" />
+    <Content Include="Views\Group\GroupsTable.cshtml" />
+    <Content Include="Views\Item\ItemsTable.cshtml" />
+    <Content Include="Views\Item\ItemsTableBodyRows.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

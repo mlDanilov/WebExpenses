@@ -6,11 +6,11 @@
 }
 <div id="groups" ng-controller="groupListController">
     @{
-        Html.RenderPartial("GroupsTableNew", Model);
+        Html.RenderPartial("GroupsTable", Model);
     };
 </div>
 <div id="items" ng-controller="itemListController">
     @{
-        Html.RenderAction("ItemsTableNew", "Item");
+        Html.RenderAction("ItemsTable", "Item");
     }
 </div>

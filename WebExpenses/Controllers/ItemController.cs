@@ -105,12 +105,12 @@ namespace WebExpenses.Controllers
         /// Получить список товаров по текущей группе
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult ItemsTableNew()
+        public PartialViewResult ItemsTable()
         {
             //int? iid = _repository.ItemRep.CurrentIId;
             
             //IMItemList itList =
-            return PartialView("ItemsTableNew", getItemsViewByCurrentGId());
+            return PartialView("ItemsTable", getItemsViewByCurrentGId());
         }
 
         /// <summary>
