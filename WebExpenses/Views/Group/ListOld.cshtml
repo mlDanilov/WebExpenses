@@ -1,0 +1,21 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Group
+@model MGroupList
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="groups">
+    @{
+        Html.RenderPartial("GroupsTable", Model);
+    };
+</div>
+<div id="items">
+    @{
+        //Html.RouteLink("Groups", null, null);
+       Html.RenderAction("ItemsTable", "Item");
+    }
+</div>
+
+
+
+

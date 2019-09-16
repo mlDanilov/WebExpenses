@@ -10,7 +10,7 @@ purchApp.directive("groupList", function () {
                 let data = scope[attrs["source"]];
                 scope.data = data;
 
-                //Устанавливаем выбранную группу по id
+                //Устанавливаем выбранную группу по id, если она указана
                 let selectedId = attrs["selectedid"];
                 if (selectedId == undefined)
                     return;

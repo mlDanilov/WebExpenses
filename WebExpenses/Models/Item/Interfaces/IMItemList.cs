@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-using DomainExpenses.Abstract;
 using WebExpenses.Models.Item.Interfaces;
 
-namespace WebExpenses.Models.Item
+namespace WebExpenses.Models.Item.Interfaces
 {
     /// <summary>
-    /// Список товаров + текущая группа
+    /// Список товаров для отображения
     /// </summary>
-    public class MItemList : IMItemList
+    public interface IMItemList
     {
         /// <summary>
         /// Текущая группа
         /// </summary>
-        public int? GroupId { get; set; } = null;
+        int? GroupId { get;  }
         /// <summary>
         /// Список товаров
         /// </summary>
-        public List<IMItemCard> ItemList { get; set; } = new List<IMItemCard>();
+        List<IMItemCard> ItemList { get; } 
     }
-
-    
 }
+

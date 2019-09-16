@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 
 using DomainExpenses;
 using DomainExpenses.Abstract;
@@ -32,30 +33,30 @@ namespace WebExpenses.Controllers
             return PartialView(gListView_);
         }
 
-      
-        public PartialViewResult GroupDropDownList(int gId_, 
-            string selectGroupId_, string selectGroupName_)
-        {
-            ViewData["SelectGroupId"] = selectGroupId_;
-            ViewData["SelectGroupName"] = selectGroupName_;
-            
 
-            if (gId_ == -1)
-                gId_ = _repository.GroupRep.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
+        //public PartialViewResult GroupDropDownList(int gId_,
+        //    string selectGroupId_, string selectGroupName_)
+        //{
+        //    ViewData["SelectGroupId"] = selectGroupId_;
+        //    ViewData["SelectGroupName"] = selectGroupName_;
 
-            var gList = getMGroupExtList();
 
-            return PartialView(gList);
-        }
+        //    if (gId_ == -1)
+        //        gId_ = _repository.GroupRep.GroupExt.Where(g => g.IdParent == null).FirstOrDefault().Id;
 
-        public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
-        {
-            if ((gListView_ == null) || (gListView_.GroupList == null))
-            {
-                PartialView(getMGroupExtList());
-            }
-            return PartialView(gListView_);
-        }
+        //    var gList = getMGroupExtList();
+
+        //    return PartialView(gList);
+        //}
+
+        //public PartialViewResult GroupsTableBodyRows(MGroupList gListView_)
+        //{
+        //    if ((gListView_ == null) || (gListView_.GroupList == null))
+        //    {
+        //        PartialView(getMGroupExtList());
+        //    }
+        //    return PartialView(gListView_);
+        //}
 
         public ViewResult List()
         {
@@ -68,26 +69,26 @@ namespace WebExpenses.Controllers
 
         public ActionResult CreateGroupCard(int? idParent_)
         {
-            int? idParent =  idParent_ ?? getGIdIfIdParentIsNull();
+            int? idParent = idParent_ ?? getGIdIfIdParentIsNull();
 
             var mGroup = new MGroupCard() { IdParent = idParent };
             ViewData["Title"] = "Добавить группу товаров";
             ViewData["Head"] = "Добавить";
             ViewData["SelectGroupId"] = "IdParent";
             ViewData["SelectGroupName"] = "IdParent";
-            return View("GroupCard", mGroup);
+            return View("CreateGroupCard", mGroup);
         }
-
-        public ActionResult CreateNewGroup(string name_, int? idParent_)
+        [HttpPost]
+        public JsonResult CreateNewGroup(string name_, int? idParent_)
         {
             int? idParent = idParent_ ?? getGIdIfIdParentIsNull();
 
-            var mGroup = new MGroupCard() { Name= name_, IdParent = idParent };
-            return CreateGroupCard(mGroup);
+            var group = _repository.GroupRep.Create(new Group() { Name = name_, IdParent = idParent });
+            return Json(group);
         }
 
         [HttpPost]
-        public ActionResult CreateGroupCard(MGroupCard mGroup_)
+        public ActionResult CreateGroupCard(IMGroupCard mGroup_)
         {
             if (ModelState.IsValid)
             {
@@ -102,87 +103,75 @@ namespace WebExpenses.Controllers
 
         public void SetCurrentGId(int gId_) =>  _repository.GroupRep.CurrentGId = gId_;
        
-        public ViewResult EditGroup(int? gId_ = null)
+        public ViewResult EditGroup(int gId_)
         {
-            if (gId_ != null)
-            _repository.GroupRep.CurrentGId = gId_;
-
-            int id = _repository.GroupRep.CurrentGId.Value;
-            var group = _repository.GroupRep.Entities.Where(it => it.Id == id).FirstOrDefault();
-
+            var group = _repository.GroupRep.Entities.Where(it => it.Id == gId_).FirstOrDefault();
             var gView = new MGroupCard(group);
-            ViewData["Head"] = "Редактировать";
-            ViewData["Title"] = "Редактировать группу";
-            ViewData["SelectGroupId"] = "IdParent";
-            ViewData["SelectGroupName"] = "IdParent";
-            return View("GroupCard", gView);
+            return View("EditGroupCard", gView);
         }
 
-        public ActionResult EditGroupCard(int id_, string name_, int? idParent_)
+        public JsonResult EditGroupCard(int id_, string name_, int? idParent_)
         {
-            int? idParent = idParent_ ?? getGIdIfIdParentIsNull();
-            var mGroup = new MGroupCard() { Id = id_, Name = name_, IdParent = idParent };
-            return EditGroup(mGroup);  
+            //Правим список групп
+            var group = _repository.GroupRep.Entities.Where(g => g.Id == id_).FirstOrDefault();
+            group.Name = name_;
+            group.IdParent = idParent_;
+
+            //Костыль
+            var groupExt = _repository.GroupRep.GroupExt.Where(g => g.Id == id_).FirstOrDefault();
+            groupExt.Name = name_;
+            groupExt.IdParent = idParent_;
+
+            IMGroupCard mGroup = new MGroupCard(group);
+            return Json(mGroup, JsonRequestBehavior.AllowGet);  
         }
 
-        public ActionResult ChangeGroupName(int id_, string name_)
-        {
-            var group = _repository.GroupRep.Entities.Where(g => g.Id == id_).First();
+        //[HttpPost]
+        //public PartialViewResult DeleteGroupAjax(int gId_)
+        //{
+        //    var group = _repository.GroupRep.Entities.Where(g => g.Id == gId_).First();
+        //    var idParent = group.IdParent;
+        //    if (group != null)
+        //    {
+        //        _repository.GroupRep.Delete(group);
+        //        _repository.GroupRep.CurrentGId = idParent;
+        //    }
 
-            var mGroup = new MGroupCard() { Id = id_, Name = name_, IdParent = group.IdParent };
-            return EditGroup(mGroup);
-        }
-
-        [HttpPost]
-        public ActionResult EditGroup(MGroupCard mGroup_)
-        {
-            if ((ModelState.IsValid) && (mGroup_.IdParent != null))
-            {
-                _repository.GroupRep.Update(mGroup_);
-                return RedirectToAction("List", new { gId_ = mGroup_.IdParent });
-            }
-            else
-                return EditGroup();
-
-        }
-
-        [HttpPost]
-        public PartialViewResult DeleteGroupAjax(int gId_)
-        {
-            var group = _repository.GroupRep.Entities.Where(g => g.Id == gId_).First();
-            var idParent = group.IdParent;
-            if (group != null)
-            {
-                _repository.GroupRep.Delete(group);
-                _repository.GroupRep.CurrentGId = idParent;
-            }
-
-            var gList = getMGroupExtList();
-            return PartialView("GroupsTableBodyRows", gList);
-        }
+        //    var gList = getMGroupExtList();
+        //    return PartialView("GroupsTableBodyRows", gList);
+        //}
 
       
-        [ActionName("DeleteGroup"), HttpGet]
-        public ActionResult DeleteGroupById(int gId_)
+        [ActionName("DeleteGroup"), HttpPost]
+        public HttpStatusCodeResult DeleteGroupById(int groupId_)
         {
-            _repository.GroupRep.CurrentGId = gId_;
-            return DeleteGroupByCurrentGId();
+            try
+            {
+                var grp = _repository.GroupRep.Entities.Where(g => g.Id == groupId_).First();
+                _repository.GroupRep.Delete(grp);
+                return new HttpStatusCodeResult(HttpStatusCode.OK,
+                    $"Удаление группы товаров c кодом {groupId_} прошло успешно");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, $"При удалении группы товаров c кодом {groupId_} произошла ошибка: {ex.Message}");
+            }
         }
 
-        [HttpPost]
-        [HttpDelete]
-        [ActionName("DeleteGroup")]
-        public ActionResult DeleteGroupByCurrentGId()
-        {
-            int? gId = _repository.GroupRep.CurrentGId;
-            var group = getGroupById(gId);
-            if (group != null)
-            {
-                _repository.GroupRep.Delete(group);
-                _repository.GroupRep.CurrentGId = group.IdParent;
-            }
-            return RedirectToAction("List");
-        }
+        //[HttpPost]
+        //[HttpDelete]
+        //[ActionName("DeleteGroup")]
+        //public ActionResult DeleteGroupByCurrentGId()
+        //{
+        //    int? gId = _repository.GroupRep.CurrentGId;
+        //    var group = getGroupById(gId);
+        //    if (group != null)
+        //    {
+        //        _repository.GroupRep.Delete(group);
+        //        _repository.GroupRep.CurrentGId = group.IdParent;
+        //    }
+        //    return RedirectToAction("List");
+        //}
 
         private int? getGIdIfIdParentIsNull()
         {

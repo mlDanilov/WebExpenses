@@ -1,16 +1,16 @@
 ﻿'use strict'
-var purchApp = angular.module('purchApp', ['ngResource']);
+var purchApp = angular.module('purchApp');
 purchApp.controller("groupController", function ($scope, $http, Groups) {
 
     $scope.init = function (model) {
         $scope.Id = model.Id;
         $scope.Name = model.Name;
-        $scope.GroupId = model.GId;
+        $scope.ParentGroupId = model.GId;
     }
 
     $scope.Header = "Карточка товара";
     //Текущая выбранная группа
-    $scope.GroupId;
+    $scope.ParentGroupId;
     //Код товара
     $scope.Id;
     //Название
@@ -35,15 +35,17 @@ purchApp.controller("groupController", function ($scope, $http, Groups) {
             //Установить в контроллер
             $scope.Groups = groups;
         }, function error(response) {
-            console.log('$scope.getGroups => Groups.getAll спешно' + response.data);
+            console.log('$scope.getGroups => Groups.getAll ошибка' + response.data);
             console.log(response);
         });
 
 
     }
 
-    $scope.getGroups(2);
+    $scope.getGroups();
 
+
+   
     //Список групп и текущая выбранная
     $scope.Groups = {
         Items: [],
@@ -52,14 +54,63 @@ purchApp.controller("groupController", function ($scope, $http, Groups) {
         //        { Id: 2, Name: 'Тестовая группа2' },
         //        { Id: 3, Name: 'Тестовая группа3' },
         //    ],
-        SelectedItem: undefined
+        SelectedItem: undefined,
+      
     }
     //$scope.Groups.SelectedItem = $scope.Groups.Items[1];
 
+    //Создать новую карточку товара
+    $scope.CreateGroup = function () {
 
-    $scope.deleteGroup = function () {
-        delete $scope.Groups.Items[0];
+        console.log('CreateGroup');
+
+        $http(
+            {
+                method: 'POST',
+                url: '/Group/CreateNewGroup',
+                params: {
+                    name_: $scope.Name,
+                    idParent_: $scope.Groups.SelectedItem.Id
+                }
+            }
+            ).then(
+            function success(response) {
+                console.log('/Group/CreateNewGroup успех');
+                console.log(response);
+                window.location.href = "/Groups";
+            },
+            function error(response) {
+                console.log('/Group/CreateNewGroup ошибка');
+                console.log(response);
+            }
+            )
     }
 
+    //Создать новую карточку товара
+    $scope.EditGroup = function () {
 
+        console.log('EditGroup');
+
+        $http(
+               {
+                   method: 'POST',
+                   url: '/Group/EditGroupCard',
+                   params: {
+                       id_: $scope.Id,
+                       name_: $scope.Name,
+                       idParent_: $scope.Groups.SelectedItem.Id
+                   }
+               }
+               ).then(
+               function success(response) {
+                   console.log('/Group/EditGroupCard успех');
+                   console.log(response);
+                   window.location.href = "/Groups";
+               },
+               function error(response) {
+                   console.log('/Group/EditGroupCard ошибка');
+                   console.log(response);
+               }
+               )
+    }
 });

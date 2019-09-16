@@ -1,0 +1,38 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item.Interfaces
+@model IMItemList
+@{
+        var deleteItemAjaxOptions = new AjaxOptions
+        {
+            HttpMethod = "Post",
+            Url = "DeleteItemCardAjax",
+            UpdateTargetId = "itemsTableBody",
+            OnSuccess = "OnSuccess"
+    };
+}
+
+<tr ng-repeat="item in Items.getItems()">
+    <th class="itemOrder"></th>
+    <th class="itemId">{{item.Id}}</th>
+    <th class="itemName">{{item.Name}}</th>
+    <th class="itemEdit">
+        <input type="button" value="Редактировать" ng-click="EditItem(item)" /> 
+    </th>
+    <th class="itemDelete">
+        <input type="button" value="Удалить" ng-click="DeleteItem(item)" /> 
+    </th>
+      
+</tr>
+<script>
+    setEditDeleteItemClickEventHandler();
+</script>
+
+<script type="text/javascript">
+    function OnSuccess(data) {
+        setEditDeleteItemClickEventHandler();
+    }
+    function OnFailure(request, error) {
+        alert("Items Ошибка:\n" + error.toString() + ' '+ request.toString() + ' ');
+    }
+
+</script>

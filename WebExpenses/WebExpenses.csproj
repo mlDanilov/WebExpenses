@@ -179,10 +179,14 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angularJS\group\controller\groupController.js" />
+    <Content Include="Scripts\angularJS\group\controller\groupListController.js" />
+    <Content Include="Scripts\angularJS\group\css\groupList.css" />
     <Content Include="Scripts\angularJS\group\service\Groups.js" />
     <Content Include="Scripts\angularJS\item\controller\itemController.js" />
     <Content Include="Scripts\angularJS\group\directive\groupList.js" />
     <Content Include="Scripts\angularJS\group\directive\groupListTemplate.html" />
+    <Content Include="Scripts\angularJS\item\controller\itemListController.js" />
+    <Content Include="Scripts\angularJS\item\service\Items.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -980,6 +984,7 @@
     <Compile Include="Models\Group\MGroupCard.cs" />
     <Compile Include="Models\Group\MGroupList.cs" />
     <Compile Include="Models\Item\Interfaces\IMItemCard.cs" />
+    <Compile Include="Models\Item\Interfaces\IMItemList.cs" />
     <Compile Include="Models\Item\MItemCard.cs" />
     <Compile Include="Models\Item\MItemDDList.cs" />
     <Compile Include="Models\Item\MItemList.cs" />
@@ -1003,7 +1008,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Views\Group\ListOld.cshtml" />
     <Content Include="Views\Group\GroupsTable.cshtml" />
     <Content Include="Views\Group\Groups.cshtml" />
     <Content Include="Views\Item\ItemsTable.cshtml" />
@@ -1038,6 +1043,14 @@
     <Content Include="Views\Item\ItemCard.cshtml" />
     <Content Include="Views\Item\CreateItemCard.cshtml" />
     <Content Include="Views\Item\EditItemCard.cshtml" />
+    <Content Include="Views\Group\CreateGroupCard.cshtml" />
+    <Content Include="Views\Group\EditGroupCard.cshtml" />
+    <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Group\GroupsTableBodyRowsNew.cshtml" />
+    <Content Include="Views\Group\GroupsTableNew.cshtml" />
+    <Content Include="Views\Item\ItemsTableNew.cshtml" />
+    <Content Include="Views\Item\ItemsTableBodyRowsNew.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

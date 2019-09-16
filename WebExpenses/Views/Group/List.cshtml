@@ -2,20 +2,15 @@
 @using WebExpenses.Models.Group
 @model MGroupList
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Menu.cshtml";
 }
-<div id="groups">
+<div id="groups" ng-controller="groupListController">
     @{
-        Html.RenderPartial("GroupsTable", Model);
+        Html.RenderPartial("GroupsTableNew", Model);
     };
 </div>
-<div id="items">
+<div id="items" ng-controller="itemListController">
     @{
-        //Html.RouteLink("Groups", null, null);
-       Html.RenderAction("ItemsTable", "Item");
+        Html.RenderAction("ItemsTableNew", "Item");
     }
 </div>
-
-
-
-

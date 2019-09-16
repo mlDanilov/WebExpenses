@@ -1,0 +1,38 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item.Interfaces
+
+@model IMItemList
+
+<table id="itemsTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Код</th>
+            <th>Товар</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="itemsTableBody">
+        @{
+            Html.RenderPartial("ItemsTableBodyRowsNew", @Model);
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <!--
+            <th>Html.ActionLink("Добавить", "CreateItemCard", new { gId_ = Model.GroupId })</th>
+            -->
+            <th><input type="button"  value="Добавить" ng-click="CreateNewItem()"/></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+    
+   
+</table>
+
+
+

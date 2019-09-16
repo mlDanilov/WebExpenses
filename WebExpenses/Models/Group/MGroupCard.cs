@@ -26,6 +26,14 @@ namespace WebExpenses.Models.Group
             Id = group_.Id;
             IdParent = group_.IdParent;
             Name = group_.Name;
+            NameExt = group_.Name;
+        }
+        public MGroupCard(IGroup group_, string nameExt_)
+        {
+            Id = group_.Id;
+            IdParent = group_.IdParent;
+            Name = group_.Name;
+            NameExt = nameExt_;
         }
         /// <summary>
         /// Уникальный код
