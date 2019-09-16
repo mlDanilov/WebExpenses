@@ -1,8 +1,0 @@
-﻿@using WebExpenses.Models.Item;
-@model MItemDDList
-<select id="@ViewData["SelectItemId"]" name="@ViewData["SelectItemName"]">
-    @{
-        Html.RenderPartial("ItemOptions", Model);
-    }
-</select>
-

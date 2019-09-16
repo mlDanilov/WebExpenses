@@ -5,13 +5,14 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 using DomainExpenses.Abstract;
+using WebExpenses.Models.Shop.Interfaces;
 
 namespace WebExpenses.Models.Shop
 {
     /// <summary>
     /// Класс для отображения в виде "Карточка магазина"
     /// </summary>
-    public class MShopCard : IShop
+    public class MShopCard : IMShopCard
     {
         public MShopCard()
         {

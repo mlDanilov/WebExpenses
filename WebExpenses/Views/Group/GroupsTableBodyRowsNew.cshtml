@@ -2,20 +2,6 @@
 @using WebExpenses.Models.Group
 @using WebExpenses.Models.Group.Interface
 @model IMGroupList
-@{
-    var deleteGroupAjaxOption = new AjaxOptions
-    {
-        UpdateTargetId = "groupsTableBody",
-        HttpMethod = "POST"
-
-    };
-}
-
-<!--
-groupUnselected : (group.Id != Groups.SelectedItem.Id) && (group.Id != Groups.ItemOver.Id),    
-    groupSelected : group.Id == Groups.SelectedItem.Id, 
-    groupSelected : group.Id == Groups.SelectedItem.Id,
--->
 <tr ng-repeat="group in Groups.Items" 
     ng-class="{ 
     groupUnselected : (group.Id != Groups.SelectedItem.Id) && (group.Id != Groups.ItemOver.Id),    
