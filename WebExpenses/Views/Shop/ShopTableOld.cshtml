@@ -1,9 +1,9 @@
-﻿@using WebExpenses.Models.Shop.Interfaces;
-@model IMShopList
+﻿@using WebExpenses.Models.Shop
+@model MShopList
 <table>
     <thead>
         <tr>
-           <!--<th></th>-->
+            <th></th>
             <th>Код</th>
             <th>Магазин</th>
             <th></th>
@@ -20,7 +20,7 @@
             <th></th>
             <th></th>
             <th>
-                <input type="button" value="Добавить"  ng-click="CreateNewShop()"/>
+                @Html.ActionLink("Добавить", "CreateShop")
             </th>
             <th></th>
             <th></th>

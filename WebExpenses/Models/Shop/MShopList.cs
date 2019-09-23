@@ -8,10 +8,20 @@ using WebExpenses.Models.Shop.Interfaces;
 
 namespace WebExpenses.Models.Shop
 {
+    /// <summary>
+    /// Список магазинов + текущий выбранный 
+    /// для отображения в виде
+    /// </summary>
     public class MShopList : IMShopList
     {
-        public int? ShopId { get; set; } = null;
+        /// <summary>
+        /// Текущий выбранный магазин
+        /// </summary>
+        public IMShopCard Current { get; set; }
 
-        public List<IShop> ShopList { get; set; }
+        /// <summary>
+        /// Список магазинов
+        /// </summary>
+        public List<IMShopCard> Shops { get; private set; } = new List<IMShopCard>();
     }
 }

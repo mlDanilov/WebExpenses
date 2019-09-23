@@ -1,0 +1,13 @@
+﻿  
+
+.shopOver {
+    background:  green;
+}
+
+.shopSelected {
+    background:  red;
+}
+
+.shopUnselected  {
+    background:  #93d9a8;
+}

@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="purchApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="~/Content/menu.css" rel="stylesheet" />
+   <!--  
+    <link href="~/Content/groupsTable.css" rel="stylesheet" />
+     -->
+    <link href="~/Content/shops.css" rel="stylesheet" />
+        
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/shop/controller/shopListController.js"></script>
+    <script src="~/Scripts/angularJS/shop/controller/shopController.js"></script>
+    <script src="~/Scripts/angularJS/shop/service/Shops.js"></script>
+
+    <link href="~/Scripts/angularJS/shop/css/shopList.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="root">
+        <div id="menu">
+            <div id="groupsAndItems">
+                @Html.ActionLink("Группы и товары", "List", "Group")
+            </div>
+            <div id="shops">
+                @Html.ActionLink("Магазины", "List", "Shop")
+            </div>
+            <div id="purchase">
+                @Html.ActionLink("Покупки", "List", "Purchase")
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

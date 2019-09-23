@@ -107,9 +107,6 @@ namespace WebExpenses.Controllers
         /// <returns></returns>
         public PartialViewResult ItemsTable()
         {
-            //int? iid = _repository.ItemRep.CurrentIId;
-            
-            //IMItemList itList =
             return PartialView("ItemsTable", getItemsViewByCurrentGId());
         }
 

@@ -187,6 +187,10 @@
     <Content Include="Scripts\angularJS\group\directive\groupListTemplate.html" />
     <Content Include="Scripts\angularJS\item\controller\itemListController.js" />
     <Content Include="Scripts\angularJS\item\service\Items.js" />
+    <Content Include="Scripts\angularJS\shop\controller\shopListController.js" />
+    <Content Include="Scripts\angularJS\shop\controller\shopController.js" />
+    <Content Include="Scripts\angularJS\shop\css\shopList.css" />
+    <Content Include="Scripts\angularJS\shop\service\Shops.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -1010,8 +1014,8 @@
     </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shop\List.cshtml" />
-    <Content Include="Views\Shop\ShopTable.cshtml" />
-    <Content Include="Views\Shop\ShopTableBody.cshtml" />
+    <Content Include="Views\Shop\ShopTableOld.cshtml" />
+    <Content Include="Views\Shop\ShopTableBodyOld.cshtml" />
     <Content Include="Views\Shop\ShopCard.cshtml" />
     <Content Include="Views\Purchase\List.cshtml" />
     <Content Include="Views\Purchase\PeriodSelect.cshtml" />
@@ -1038,6 +1042,11 @@
     <Content Include="Views\Group\GroupsTable.cshtml" />
     <Content Include="Views\Item\ItemsTable.cshtml" />
     <Content Include="Views\Item\ItemsTableBodyRows.cshtml" />
+    <Content Include="Views\Shop\ShopTable.cshtml" />
+    <Content Include="Views\Shop\ShopTableBody.cshtml" />
+    <Content Include="Views\Shared\_AngularJsShopLayout.cshtml" />
+    <Content Include="Views\Shop\CreateShopCard.cshtml" />
+    <Content Include="Views\Shop\EditShopCard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

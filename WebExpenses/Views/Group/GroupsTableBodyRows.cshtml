@@ -1,8 +1,4 @@
-﻿@using DomainExpenses.Abstract
-@using WebExpenses.Models.Group
-@using WebExpenses.Models.Group.Interface
-@model IMGroupList
-<tr ng-repeat="group in Groups.Items" 
+﻿<tr ng-repeat="group in Groups.Items" 
     ng-class="{ 
     groupUnselected : (group.Id != Groups.SelectedItem.Id) && (group.Id != Groups.ItemOver.Id),    
     groupSelected : group.Id == Groups.SelectedItem.Id,

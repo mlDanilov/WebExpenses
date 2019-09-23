@@ -1,10 +1,10 @@
-﻿@using DomainExpenses.Abstract
-@using WebExpenses.Models.Shop
-@model MShopList
+﻿@using WebExpenses.Models.Shop.Interfaces;
+@model IMShopList
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AngularJsShopLayout.cshtml";
 }
-<div id="shops" class="dTable">
+<div id="shops" class="dTable" 
+     ng-controller="shopListController">
     @{
         Html.RenderPartial("ShopTable", @Model);
     }

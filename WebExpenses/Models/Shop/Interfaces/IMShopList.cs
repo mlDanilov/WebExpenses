@@ -7,10 +7,20 @@ using DomainExpenses.Abstract;
 
 namespace WebExpenses.Models.Shop.Interfaces
 {
+    /// <summary>
+    /// Список магазинов + текущий выбранный 
+    /// для отображения в виде
+    /// </summary>
     public interface IMShopList
     {
-        int? ShopId { get; set; }
+        /// <summary>
+        /// Текущий магазин
+        /// </summary>
+        IMShopCard Current { get; set; }
 
-        List<IShop> ShopList { get; set; }
+        /// <summary>
+        /// Список магазинов
+        /// </summary>
+        List<IMShopCard> Shops { get;  }
     }
 }
