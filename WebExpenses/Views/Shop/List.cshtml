@@ -5,7 +5,30 @@
 }
 <div id="shops" class="dTable" 
      ng-controller="shopListController">
-    @{
-        Html.RenderPartial("ShopTable", @Model);
-    }
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Код</th>
+                <th>Магазин</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="shopTableBody">
+            @{
+                Html.RenderPartial("ShopTableBody", @Model);
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>
+                    <input type="button" value="Добавить" ng-click="CreateNewShop()" />
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
 </div>

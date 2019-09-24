@@ -16,9 +16,25 @@
             </tr>
         </thead>
         <tbody id="groupsTableBody">
-            @{
-                Html.RenderPartial("GroupsTableBodyRows", @Model);
-             }
+            <tr ng-repeat="group in Groups.Items"
+                ng-class="{
+                    groupUnselected : (group.Id != Groups.SelectedItem.Id) && (group.Id != Groups.ItemOver.Id),
+                    groupSelected : group.Id == Groups.SelectedItem.Id,
+                    groupOver : group.Id == Groups.ItemOver.Id
+                    }"
+                ng-click="setSelected(group)">
+                <th class="groupOrder">{{$index+1}}.</th>
+                <th class="groupId">{{group.Id}}</th>
+                <th class="groupName">{{group.Name}}</th>
+                <th class="groupEdit">
+                    <input type="button" value="Редактировать" ng-click="EditGroup(group)" />
+                </th>
+                <th class="groupDelete">
+                    <input type="button" value="Удалить" ng-click="DeleteGroup(group)" />
+                </th>
+            </tr>
+
+
         </tbody>
         <tfoot>
             <tr>

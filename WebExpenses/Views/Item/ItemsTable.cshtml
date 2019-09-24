@@ -14,9 +14,19 @@
         </tr>
     </thead>
     <tbody id="itemsTableBody">
-        @{
-            Html.RenderPartial("ItemsTableBodyRows", @Model);
-        }
+        <tr ng-repeat="item in Items.getItems()">
+            <th class="itemOrder">{{$index+1}}.</th>
+            <th class="itemId">{{item.Id}}</th>
+            <th class="itemName">{{item.Name}}</th>
+            <th class="itemEdit">
+                <input type="button" value="Редактировать" ng-click="EditItem(item)" />
+            </th>
+            <th class="itemDelete">
+                <input type="button" value="Удалить" ng-click="DeleteItem(item)" />
+            </th>
+
+        </tr>
+
     </tbody>
     <tfoot>
         <tr>

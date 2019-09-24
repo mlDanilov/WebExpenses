@@ -100,8 +100,6 @@ namespace WebExpenses.Controllers
                 return CreateGroupCard(mGroup_.IdParent);
            // return RedirectToAction("GroupsAndItems", new { gId_ = parentGroupId_ });
         }
-
-        public void SetCurrentGId(int gId_) =>  _repository.GroupRep.CurrentGId = gId_;
        
         public ViewResult EditGroup(int gId_)
         {
@@ -126,20 +124,6 @@ namespace WebExpenses.Controllers
             return Json(mGroup, JsonRequestBehavior.AllowGet);  
         }
 
-        //[HttpPost]
-        //public PartialViewResult DeleteGroupAjax(int gId_)
-        //{
-        //    var group = _repository.GroupRep.Entities.Where(g => g.Id == gId_).First();
-        //    var idParent = group.IdParent;
-        //    if (group != null)
-        //    {
-        //        _repository.GroupRep.Delete(group);
-        //        _repository.GroupRep.CurrentGId = idParent;
-        //    }
-
-        //    var gList = getMGroupExtList();
-        //    return PartialView("GroupsTableBodyRows", gList);
-        //}
 
       
         [ActionName("DeleteGroup"), HttpPost]
@@ -158,21 +142,6 @@ namespace WebExpenses.Controllers
             }
         }
 
-        //[HttpPost]
-        //[HttpDelete]
-        //[ActionName("DeleteGroup")]
-        //public ActionResult DeleteGroupByCurrentGId()
-        //{
-        //    int? gId = _repository.GroupRep.CurrentGId;
-        //    var group = getGroupById(gId);
-        //    if (group != null)
-        //    {
-        //        _repository.GroupRep.Delete(group);
-        //        _repository.GroupRep.CurrentGId = group.IdParent;
-        //    }
-        //    return RedirectToAction("List");
-        //}
-
         private int? getGIdIfIdParentIsNull()
         {
             if (_repository.GroupRep.CurrentGId != null)
@@ -186,8 +155,6 @@ namespace WebExpenses.Controllers
                     return null;
             }
         }
-
-        private IGroup getGroupById(int? gId_) => _repository.GroupRep.Entities.Where(g => g.Id == gId_).FirstOrDefault();
 
         private IMGroupList getMGroupExtList()
         {

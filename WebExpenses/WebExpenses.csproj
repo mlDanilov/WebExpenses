@@ -142,6 +142,7 @@
   <ItemGroup>
     <Content Include="Content\groupCard.css" />
     <Content Include="Content\groups.css" />
+    <Content Include="Content\shopTable.css" />
     <Content Include="Content\groupsTable.css" />
     <Content Include="Content\itemCard.css" />
     <Content Include="Content\itemsTable.css" />
@@ -1014,9 +1015,6 @@
     </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shop\List.cshtml" />
-    <Content Include="Views\Shop\ShopTableOld.cshtml" />
-    <Content Include="Views\Shop\ShopTableBodyOld.cshtml" />
-    <Content Include="Views\Shop\ShopCard.cshtml" />
     <Content Include="Views\Purchase\List.cshtml" />
     <Content Include="Views\Purchase\PeriodSelect.cshtml" />
     <Content Include="Views\Purchase\WeekSelect.cshtml" />
@@ -1027,7 +1025,6 @@
     <Content Include="Views\Purchase\PurchaseDetail.cshtml" />
     <Content Include="Views\Purchase\PeriodPurchaseSumByGroupTotal.cshtml" />
     <Content Include="Views\Purchase\PurchaseCard.cshtml" />
-    <Content Include="Views\Shop\ShopDropDownList.cshtml" />
     <Content Include="Views\Purchase\PurchaseItem.cshtml" />
     <Content Include="Views\Purchase\Test.cshtml" />
     <Content Include="Scripts\version.json" />
@@ -1038,11 +1035,8 @@
     <Content Include="Views\Group\EditGroupCard.cshtml" />
     <Content Include="Views\Group\List.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="Views\Group\GroupsTableBodyRows.cshtml" />
     <Content Include="Views\Group\GroupsTable.cshtml" />
     <Content Include="Views\Item\ItemsTable.cshtml" />
-    <Content Include="Views\Item\ItemsTableBodyRows.cshtml" />
-    <Content Include="Views\Shop\ShopTable.cshtml" />
     <Content Include="Views\Shop\ShopTableBody.cshtml" />
     <Content Include="Views\Shared\_AngularJsShopLayout.cshtml" />
     <Content Include="Views\Shop\CreateShopCard.cshtml" />
