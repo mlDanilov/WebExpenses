@@ -1,0 +1,35 @@
+﻿@model WebExpenses.Models.Purchase.Interfaces.IMPurchaseCard
+
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_AngularJsPurchaseLayout.cshtml";
+}
+<div ng-controller="purchaseController"
+     data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+<!--
+<div ng-controller="purchaseController">
+    -->
+    <h2>Карточка покупки</h2>
+
+    
+   <p>Код  покупки: {{Id}}</p>
+    <p>
+        Магазин:
+        <shop-list source="Shops"
+
+                   ></shop-list>
+    </p>
+    <p>
+        Группа товаров:
+        <group-list source="Groups" currentChanged ="groupChanged"></group-list>
+    </p>
+    <p>
+        Товар:
+        <item-list source="Items"></item-list>
+    </p>
+
+    <p>Цена: <input ng-model="Price"/> руб</p>
+    <p>Количество: <input ng-model="Count" /></p>
+    <p>Дата: <input ng-model="Date" type="date"/></p>
+    <input type="button" value="Редактировать" ng-click="EditPurchase()"/>
+</div>

@@ -4,9 +4,6 @@ purchApp.factory('Items', function ($http) {
     var _selectedGroupId = undefined;
 
     return {
-
-        //ItemList: undefined,
-
         //Список товаров текущей группы
         getItems: function () {
             return _items;
@@ -29,6 +26,15 @@ purchApp.factory('Items', function ($http) {
 
             }
             );
+        },
+
+        //Перезагрузить текущий список товаров по группе
+        GetItemsByGId: function (gId_) {
+            return $http({
+                method: 'GET',
+                url: "/Item/GetItemListByGroupId",
+                params: { groupId_: gId_ }
+            });
         },
         //Создать карточку товара в указанной группе товаров
         CreateNewItemCard: function (groupId_) {

@@ -11,7 +11,8 @@ using DomainExpenses.Concrete;
 using WebExpenses.Models.Item;
 using WebExpenses.Models.Group;
 using WebExpenses.Models.Purchase;
-
+using WebExpenses.Models.Shop;
+using System.Net;
 
 namespace WebExpenses.Controllers
 {
@@ -522,61 +523,43 @@ namespace WebExpenses.Controllers
 
         public void SetCurrentPurchaseId(int purchaseId_) => _repository.PurchaseRep.CurrentPurchaseId = purchaseId_;
 
-        public ViewResult CreatePurchase(int? gId_)
+        /// <summary>
+        /// Создать новую покупку
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult CreatePurchaseCard()
         {
-            var mPurch = new MPurchase();
-            ViewData["Title"] = "Добавить покупку";
-            ViewData["Head"] = "Добавить";
-            return View("PurchaseCard", mPurch);
+            return View("CreatePurchaseCard");
         }
 
-        public ActionResult CreatePurchaseCardWithShop(
-            int? shopId_,
-            int itemId_,
-            float price_,
-            float count_,
-            DateTime date_
-            )
-        {
-            var mPurch = new MPurchase()
-            {
-                Shop_Id = shopId_,
-                Item_Id = itemId_,
-                Price = price_,
-                Count = count_,
-                Date = date_
-            };
-            return CreatePurchase(mPurch);
-        }
-        public ActionResult CreatePurchaseCard(
-            int itemId_,
-            float price_,
-            float count_,
-            DateTime date_
-            )
-        {
-            return CreatePurchaseCardWithShop(null, itemId_, price_, count_, date_);
-        }
-        public ActionResult EditPurchaseCard(
-            int id_,
-            int? shopId_,
-            int itemId_,
-            float price_,
-            float count_,
-            DateTime date_
-            )
-        {
-            var purch = _repository.PurchaseRep.Entities.Where(p => p.Id == id_).First();
-            MPurchase mPurch = new MPurchase(purch)
-            {
-                 Shop_Id = shopId_,
-                Item_Id = itemId_,
-                Price = price_,
-                Count = count_,
-                Date = date_
-            };
-            return EditPurchase(mPurch);
-        }
+        //public ActionResult CreatePurchaseCardWithShop(
+        //    int? shopId_,
+        //    int itemId_,
+        //    float price_,
+        //    float count_,
+        //    DateTime date_
+        //    )
+        //{
+        //    var mPurch = new MPurchase()
+        //    {
+        //        Shop_Id = shopId_,
+        //        Item_Id = itemId_,
+        //        Price = price_,
+        //        Count = count_,
+        //        Date = date_
+        //    };
+        //    return CreatePurchase(mPurch);
+        //}
+        //public ActionResult CreatePurchaseCard(
+        //    int itemId_,
+        //    float price_,
+        //    float count_,
+        //    DateTime date_
+        //    )
+        //{
+        //    return CreatePurchaseCardWithShop(null, itemId_, price_, count_, date_);
+        //}
+    
 
         public ActionResult DeletePurchaseById(int id_)
         {
@@ -585,50 +568,19 @@ namespace WebExpenses.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult CreatePurchase(MPurchase purchase_)
-        {
-            if (ModelState.IsValid)
-            {
-                if (purchase_.Shop_Id == -1) purchase_.Shop_Id = null;
-                var purchase = _repository.PurchaseRep.Create(purchase_);
-                return RedirectToAction("List");
-            }
-            else
-                return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
-        }
+        //[HttpPost]
+        //public ActionResult CreatePurchase(MPurchase purchase_)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (purchase_.Shop_Id == -1) purchase_.Shop_Id = null;
+        //        var purchase = _repository.PurchaseRep.Create(purchase_);
+        //        return RedirectToAction("List");
+        //    }
+        //    else
+        //        return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
+        //}
 
-        public ViewResult EditPurchase()
-        {
-            var purchase =
-                (from p in _repository.PurchaseRep.Entities
-                 join it in _repository.ItemRep.Entities on p.Item_Id equals it.Id
-                 join g in _repository.GroupRep.Entities on it.GId equals g.Id
-                 join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
-                 from pSh in p_sh.DefaultIfEmpty()
-                 where p.Id == _repository.PurchaseRep.CurrentPurchaseId
-                 select new MPurchase()
-                 {
-                     Id = p.Id,
-                     Item_Id = p.Item_Id,
-                     ItemName = it.Name,
-                     GroupId = it.GId,
-                     GroupExtName = g.Name,
-                     Shop_Id = p.Shop_Id,
-                     ShopName = (pSh == null) ? string.Empty : pSh.Name,
-                     ShopAddress = (pSh == null) ? string.Empty : pSh.Address,
-                     Price = p.Price,
-                     Count = p.Count,
-                     Date = p.Date,
-                 }).FirstOrDefault();
-                //.Where(p => p.Id == _repository.CurrentPurchaseId).FirstOrDefault();
-            
-
-            ViewData["Title"] = "Редактировать покупку";
-            ViewData["Head"] = "Редактировать";
-            
-            return View("PurchaseCard",purchase);
-        }
 
         public JsonResult ValidateDate(string Date)
         {
@@ -645,18 +597,34 @@ namespace WebExpenses.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-
-        [HttpPost]
-        public ActionResult EditPurchase(MPurchase purchase_)
+        /// <summary>
+        /// Открыть на редактирование карточку покупки
+        /// </summary>
+        /// <param name="purchaseId_"></param>
+        /// <returns></returns>
+        public ViewResult EditPurchase(int purchaseId_)
         {
-            if (ModelState.IsValid)
-            {
-                _repository.PurchaseRep.Update(purchase_);
-                return RedirectToAction("List");
-            }
-            else
-                return CreatePurchase(_repository.PurchaseRep.CurrentPurchaseGId);
+            var purchase =
+                (from p in _repository.PurchaseRep.Entities
+                 join it in _repository.ItemRep.Entities on p.Item_Id equals it.Id
+                 join g in _repository.GroupRep.Entities on it.GId equals g.Id
+                 join sh in _repository.ShopRep.Entities on p.Shop_Id equals sh.Id into p_sh
+                 from pSh in p_sh.DefaultIfEmpty()
+                 where p.Id == purchaseId_
+                 select new MPurchaseCard()
+                 {
+                     Id = p.Id,
+                     Item = new MItemCard(it), //Перепишем. Будем брать из контейнера(паттерн Proxy)
+                     Shop = (pSh == null) ? null: new MShopCard(pSh),
+                     Price = p.Price,
+                     Count = p.Count,
+                     Date = p.Date,
+                 }).FirstOrDefault();
+            //.Where(p => p.Id == _repository.CurrentPurchaseId).FirstOrDefault();
+            ViewData["Title"] = "Редактировать покупку";
+            ViewData["Head"] = "Редактировать";
 
+            return View("EditPurchaseCard", purchase);
         }
 
         public ActionResult DeletePurchase()
@@ -680,6 +648,50 @@ namespace WebExpenses.Controllers
             var purch = _repository.PurchaseRep.Entities.Where(p => p.Id == purchId_).FirstOrDefault();
             return purch;
         }
+
+
+        #region Web Api
+
+        /// <summary>
+        /// Изменить покупку
+        /// </summary>
+        /// <param name="purchaseCard_"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpStatusCodeResult EditPurchase(PurchaseEditParams purchaseCard_)
+        {
+            try
+            {
+                _repository.PurchaseRep.Update(purchaseCard_);
+                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Покупка с кодом {purchaseCard_.Id} успешно изменена");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Создать покупку
+        /// </summary>
+        /// <param name="purchArgs_"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpStatusCodeResult CreatePurchase(PurchaseCreateParams purchArgs_)
+        {
+            try
+            {
+                var p = _repository.PurchaseRep.Create(purchArgs_.Convert());
+                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Покупка с кодом {p.Id} успешно создана");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        #endregion
 
 
         private IExpensesRepository _repository = null;

@@ -25,7 +25,7 @@
           <SQLDebugging>False</SQLDebugging>
           <ExternalProgram>
           </ExternalProgram>
-          <StartExternalURL>http://localhost:50013/Groups</StartExternalURL>
+          <StartExternalURL>http://localhost:50013/Purchases</StartExternalURL>
           <StartCmdLineArguments>
           </StartCmdLineArguments>
           <StartWorkingDirectory>

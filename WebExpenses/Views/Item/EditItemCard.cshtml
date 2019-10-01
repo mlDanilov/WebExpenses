@@ -6,7 +6,8 @@
     //Layout = null;
     Layout = "~/Views/Shared/_AngularJsLayout.cshtml";
 }
-<div ng-controller="itemController" data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+<div ng-controller="itemController" 
+     data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <h4>Редактировать</h4>
     <p>Код: <input ng-model="Id" value="@Model.Id"  readonly/></p>
     <p>Наименование: <input ng-model="Name" value="@Model.Name" /></p>
