@@ -2,14 +2,82 @@
 @{
     Layout = "~/Views/Shared/_AngularJsPurchaseListLayout.cshtml";
 }
-<!--
-<div id="header">
-        Html.RenderAction("PeriodSelect");
-        Html.RenderAction("WeekSelect");
-        Html.RenderAction("DaysOfWeekSelect");
+<div id="purchases" ng-controller="purchaseListController">
+    <div ng-controller="periodController">
+        <!--Годы-->
+        <select ng-model="currentYear"
+                ng-change='selectedYearChanged()'
+                ng-options='year as year for year in getAllYears()'></select>
+        <!--Месяцы-->
+        <select ng-model="currentMonth"
+                ng-change='selectedMonthChanged()'
+                ng-options='month as month.Name for month in getMonthes()'></select>
+        <!--Недели-->
+        <select ng-model="currentWeek"
+                ng-change='selectedWeekChanged()'
+                ng-options='week as week.Display for week in weekList'></select>
+        <!--Недели-->
+        <select ng-model="currentDay"
+                ng-change='selectedDayChanged()'
+                ng-options='day as day.Display for day in dayList'></select>
+    </div>
+    <!--Каждая таблице соответствует покупкам, отсортированным по группе товаров-->
+    <table ng-repeat="groupOfPurchase in getGroupedPurchases() | purchGroupsByPeriod:BDate:EDate">
+        <thead>
+            <tr ng-if="$index == 0">
+                @*<th>Группа</th>
+                    <th>Сумма, руб</th>
+                    <th></th>*@
+                <th></th>
+                <th>Группа</th>
+                <th>Сумма</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>{{groupOfPurchase.Group.Name}}</th>
+                <th>{{calcGroupSum(groupOfPurchase)}}р</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Код</th>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Кол-во</th>
+                <th>Сумма</th>
+                <th>Магазин</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Покупки-->
+            <tr ng-repeat="purchase in groupOfPurchase.Purchases | purchasesByPeriod:BDate:EDate"
+                ng-class="{
+                    purchaseSelected : purchase.Id == purchaseSelected.Id,
+                    purchaseUnselected : (purchase.Id != purchaseSelected.Id) && (purchase.Id != purchaseOver.Id),
+                    purchaseOver : purchase.Id == purchaseOver.Id
+                    }"
+                ng-mouseover="setOver(purchase)"
+                ng-click="setSelected(purchase)">
+                <td>{{$index+1}}.</td>
+                <td>{{purchase.Id}}</td>
+                <td>{{purchase.Item.Name}}</td>
+                <td>{{purchase.Price}}р</td>
+                <td>{{purchase.Count}}</td>
+                <td>{{purchase.Price * purchase.Count}}р</td>
+                <td>{{purchase.Shop.Name}}</td>
+                <td>{{purchase.Date | date:'yyyy-MM-dd'}}</td>
+                <td><input type="button" value="Редактировать" ng-click="EditPurchaseCard(purchase)" /></td>
+                <td><input type="button" value="Удалить" ng-click="DeletePurchaseCard(purchase)" /></td>
+            </tr>
+        </tbody>
+        <tfoot ng-if="$last">
+            <tr>
+                <th></th>
+                <th>
+                    <input type="button" value="Добавить" ng-click="CreatePurchaseCard()" />
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
 </div>
-    -->
-    @{
-        Html.RenderPartial("ListGroups");
-        //Html.RenderPartial("ListBody");
-    };

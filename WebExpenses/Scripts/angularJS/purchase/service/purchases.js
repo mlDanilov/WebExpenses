@@ -57,7 +57,7 @@ purchApp.factory('Purchases', function ($http) {
         deletePurchase: function (purchaseId_) {
             return $http({
                 method: 'DELETE',
-                url: "/Purchase/DeleteShopById",
+                url: "/Purchase/DeletePurchase",
                 params: { purchaseId_ }
             });
         },

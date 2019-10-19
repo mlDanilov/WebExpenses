@@ -21,7 +21,9 @@ namespace DomainExpenses.Moq
         {
             setPurchaseBehavior();
         }
-
+        /// <summary>
+        /// Задать поведение моку
+        /// </summary>
         private void setPurchaseBehavior()
         {
             var fBus = EntitiesFactory.Get();
@@ -29,20 +31,7 @@ namespace DomainExpenses.Moq
 
             //Список покупок
             _purchRepMock.Setup(m => m.Entities).Returns(_purchaseList.AsQueryable());
-            ////Список покупок
-            //_purchRepMock.Setup(m => m.SelectAllPeriods()).Returns(_periods.AsQueryable());
-            ////Список недель
-            //_purchRepMock.Setup(m => m.SelectWeeksByPeriod(It.IsAny<IPeriod>())
-            //).Returns(
-            //    (IPeriod period_) =>
-            //    {
-            //        return _weeks.Where(
-            //            week =>
-            //            ((period_.MonthYear.Month == week.BDate.Month) && (period_.MonthYear.Year == week.BDate.Year)) ||
-            //            ((period_.MonthYear.Month == week.EDate.Month) && (period_.MonthYear.Year == week.EDate.Year))
-            //            ).AsQueryable();
-            //    }
-            //    );
+           
             //Добавить новую покупку
             _purchRepMock.Setup<Purchase>(m => m.Create(
                 It.IsAny<IPurchase>())).Returns(
@@ -79,75 +68,7 @@ namespace DomainExpenses.Moq
                    _purchRepMock.Setup(m => m.Entities).Returns(_purchaseList.AsQueryable());
                });
 
-            ////Текущий магазин(get)
-            //_purchRepMock.SetupGet(m => m.CurrentPurchaseId).Returns(
-            //    () => _currentPurchaseId);
-
-            ////Текущий магазин(set)
-            //_purchRepMock.SetupSet(m => m.CurrentPurchaseId = It.IsAny<int?>()).Callback(
-            //    (int? purchaseId_) =>
-            //    {
-            //        _currentPurchaseId = purchaseId_;
-            //        _purchRepMock.SetupGet(m => m.CurrentPurchaseId).Returns(
-            //          () => _currentPurchaseId);
-            //    });
-
-            //Текущий период(set)
-            //_purchRepMock.SetupSet(m => m.CurrentPeriod = It.IsAny<IPeriod>()).Callback(
-            //    (IPeriod period_) =>
-            //    {
-            //        _currentPeriod = period_;
-            //        _purchRepMock.SetupGet(m => m.CurrentPeriod).Returns(
-            //          () => _currentPeriod);
-            //    }
-            //    );
-
-            ////Текущий период(get)
-            //_purchRepMock.SetupGet(m => m.CurrentPeriod).Returns(
-            //          () => _currentPeriod);
-
-            ////Текущая неделя(set)
-            //_purchRepMock.SetupSet(m => m.CurrentWeek = It.IsAny<IWeek>()).Callback(
-            //    (IWeek week_) =>
-            //    {
-            //        _currentWeek = week_;
-            //        _purchRepMock.SetupGet(m => m.CurrentWeek).Returns(
-            //          () => _currentWeek);
-            //    });
-
-            ////Текущая неделя(get)
-            //_purchRepMock.SetupGet(m => m.CurrentWeek).Returns(
-            //          () => _currentWeek);
-
-            ////Текущий день (get)
-            //_purchRepMock.SetupGet(m => m.CurrentDay).Returns(
-            //       () => _currentDay);
-
-            ////Текущий день (set)
-            //_purchRepMock.SetupSet(m => m.CurrentDay = It.IsAny<DateTime?>()).Callback(
-            //       (DateTime? day_) =>
-            //       {
-            //           _currentDay = day_;
-            //           _purchRepMock.SetupGet(m => m.CurrentDay).Returns(
-            //        () => _currentDay);
-            //       }
-            //       );
-
-            //Получить все покупки за период
-            _purchRepMock.Setup(m => m.SelectPurchasesByPeriod(It.IsAny<IPeriod>())).Returns(
-                ((IPeriod period_) => {
-                    var bDate = new DateTime(period_.MonthYear.Year, period_.MonthYear.Month, 1);
-                    var eDate = new DateTime(period_.MonthYear.Year, period_.MonthYear.Month + 1, 1).AddSeconds(-1);
-                    return SelectPurchasesByBeginAndEndDates(bDate, eDate); })
-                );
-
-
-            //Получить все покупки за неделю
-            _purchRepMock.Setup(m => m.SelectPurchasesByWeek(It.IsAny<IWeek>())).Returns
-                ((IWeek week_) => { return SelectPurchasesByBeginAndEndDates(week_.BDate, week_.EDate); });
-            //Получить все покупки за день
-            _purchRepMock.Setup(m => m.SelectPurchaseByDate(It.IsAny<DateTime>())).Returns(
-                (DateTime day_) => { return SelectPurchaseByDay(day_); });
+           
             
             //Получить все покупки за день
             _purchRepMock.Setup(m => m.SelectPurchaseByBeginAndEndDates(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(
@@ -156,62 +77,16 @@ namespace DomainExpenses.Moq
             //Вернуть все доступные годы покупок
             _purchRepMock.Setup(m => m.SelectAllYears()).Returns(() => SelectAllYears());
 
-            ////Текущая группа покупок(get)
-            //_purchRepMock.SetupGet(m => m.CurrentPurchaseGId).Returns(
-            //       () => _currentPurchaseGId);
-
-            ////Текущая группа покупок(set)
-            //_purchRepMock.SetupSet(m => m.CurrentPurchaseGId = It.IsAny<int?>()).Callback(
-            //       (int? currentPurchaseGId_) =>
-            //       {
-            //           _currentPurchaseGId = currentPurchaseGId_;
-            //           _purchRepMock.SetupGet(m => m.CurrentPurchaseGId).Returns(
-            //        () => _currentPurchaseGId);
-            //       });
+           
 
         }
 
         /// <summary>
-        /// Получить все покупки за месяц
+        /// Получить покупки по начальной и конечной дате
         /// </summary>
-        /// <param name="week_"></param>
+        /// <param name="bDate_"></param>
+        /// <param name="eDate_"></param>
         /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        private IQueryable<Purchase> SelectPurchaseByPeriod(IPeriod period_)
-        {
-            var purchases =
-                _purchaseList.Where(
-                    p => (p.Date.Month == period_.MonthYear.Month) &&
-                    (p.Date.Year == period_.MonthYear.Year)).AsQueryable();
-            return purchases;
-        }
-        /// <summary>
-        /// Получить все покупки за неделю
-        /// </summary>
-        /// <param name="week_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        private IQueryable<Purchase> SelectPurchaseByWeek(IWeek week_)
-        {
-            var purchases =
-                _purchaseList.Where(
-                    p => (p.Date >= week_.BDate) &&
-                    (p.Date <= week_.EDate)).AsQueryable();
-            return purchases;
-        }
-
-        /// <summary>
-        /// Получить все покупки за день
-        /// </summary>
-        /// <param name="day_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        public IQueryable<Purchase> SelectPurchaseByDay(DateTime day_)
-        {
-            var purchases =
-                _purchaseList.Where(p => (p.Date == day_)).AsQueryable();
-            return purchases;
-        }
         public IQueryable<Purchase> SelectPurchasesByBeginAndEndDates(DateTime bDate_, DateTime eDate_)
         {
             var purchases =
@@ -292,37 +167,6 @@ namespace DomainExpenses.Moq
              EntitiesFactory.Get().CreatePurchase(39, null, 5, 18, 9, new DateTime(2019, 10, 4)),
              EntitiesFactory.Get().CreatePurchase(40, 1, 8, 46, 12, new DateTime(2019, 10, 5)),
         };
-
-        //private List<Period> _periods = new List<Period>
-        //{
-        //    EntitiesFactory.Get().CreatePeriod(new DateTime(2017, 12, 1)),
-        //    EntitiesFactory.Get().CreatePeriod(new DateTime(2017, 11, 1)),
-        //    EntitiesFactory.Get().CreatePeriod(new DateTime(2018, 01, 1))
-        //};
-
-        //private List<Week> _weeks = new List<Week>
-        //{
-        //    //Ноябрь 2017
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 10, 30), new DateTime(2017, 11, 5)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 6), new DateTime(2017, 11, 12)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 13), new DateTime(2017, 11, 19)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 20), new DateTime(2017, 11, 26)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 11, 27), new DateTime(2017, 12, 3)),
-
-        //    //Декабрь 2017
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 4), new DateTime(2017, 12, 10)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 11), new DateTime(2017, 12, 17)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 18), new DateTime(2017, 12, 24)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2017, 12, 25), new DateTime(2017, 12, 31)),
-
-        //    //Январь 2018
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 1), new DateTime(2018, 1, 7)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 8), new DateTime(2018, 1, 14)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 15), new DateTime(2018, 1, 21)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 22), new DateTime(2018, 1, 28)),
-        //    EntitiesFactory.Get().CreateWeek(new DateTime(2018, 1, 29), new DateTime(2018, 2, 4))
-
-        //};
 
         public Mock<IPurchaseRepository> Mock
         {

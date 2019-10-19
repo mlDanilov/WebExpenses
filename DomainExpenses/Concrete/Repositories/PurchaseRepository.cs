@@ -71,43 +71,44 @@ namespace DomainExpenses.Concrete.Repositories
         }
 
 
-        public IQueryable<Period> SelectAllPeriods()
-           => _dbContext.SelectAllPeriods().AsQueryable<Period>();
-
+        /// <summary>
+        /// Получить список годов, за которые есть покупки
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<int> SelectAllYears()
          => _dbContext.SelectAllYears().AsQueryable<int>();
-        /// <summary>
-        /// Получить все недели текущего периода
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Week> SelectWeeksByPeriod(IPeriod period_)
-        => _dbContext.SelectWeeksOfCurrentPeriod(period_).AsQueryable<Week>();
+        ///// <summary>
+        ///// Получить все недели текущего периода
+        ///// </summary>
+        ///// <returns></returns>
+        //public IQueryable<Week> SelectWeeksByPeriod(IPeriod period_)
+        //=> _dbContext.SelectWeeksOfCurrentPeriod(period_).AsQueryable<Week>();
 
 
-        /// <summary>
-        /// Получить все расходы за месяц
-        /// </summary>
-        /// <param name="period_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
-           => _dbContext.SelectPurchasesByPeriod(period_);
-        /// <summary>
-        /// Получить все расходы за неделю
-        /// </summary>
-        /// <param name="week_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
-                    => _dbContext.SelectPurchasesByWeek(week_);
-        /// <summary>
-        /// Получить все расходы за день
-        /// </summary>
-        /// <param name="date_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
-                   => _dbContext.SelectPurchasesByDay(date_);
+        ///// <summary>
+        ///// Получить все расходы за месяц
+        ///// </summary>
+        ///// <param name="period_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
+        //   => _dbContext.SelectPurchasesByPeriod(period_);
+        ///// <summary>
+        ///// Получить все расходы за неделю
+        ///// </summary>
+        ///// <param name="week_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
+        //            => _dbContext.SelectPurchasesByWeek(week_);
+        ///// <summary>
+        ///// Получить все расходы за день
+        ///// </summary>
+        ///// <param name="date_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
+        //           => _dbContext.SelectPurchasesByDay(date_);
 
         /// <summary>
         /// Получить все расходы за диапазон

@@ -1053,18 +1053,6 @@
     </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shop\List.cshtml" />
-    <Content Include="Views\Purchase\ListOld.cshtml" />
-    <Content Include="Views\Purchase\PeriodSelect.cshtml" />
-    <Content Include="Views\Purchase\WeekSelect.cshtml" />
-    <Content Include="Views\Purchase\WeekOptions.cshtml" />
-    <Content Include="Views\Purchase\DaysOfWeekSelect.cshtml" />
-    <Content Include="Views\Purchase\WeekPurchaseSumByGroupTotal.cshtml" />
-    <Content Include="Views\Purchase\DayPurchaseSumByGroupTotal.cshtml" />
-    <Content Include="Views\Purchase\PurchaseDetail.cshtml" />
-    <Content Include="Views\Purchase\PeriodPurchaseSumByGroupTotal.cshtml" />
-    <Content Include="Views\Purchase\PurchaseCardOld.cshtml" />
-    <Content Include="Views\Purchase\PurchaseItem.cshtml" />
-    <Content Include="Views\Purchase\Test.cshtml" />
     <Content Include="Scripts\libs\version.json" />
     <Content Include="Views\Shared\_AngularJsLayout.cshtml" />
     <Content Include="Views\Item\CreateItemCard.cshtml" />
@@ -1084,7 +1072,6 @@
     <Content Include="Views\Purchase\CreatePurchaseCard.cshtml" />
     <Content Include="Views\Purchase\List.cshtml" />
     <Content Include="Views\Shared\_AngularJsPurchaseListLayout.cshtml" />
-    <Content Include="Views\Purchase\ListGroups.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,8 +1,7 @@
 ﻿'use strict'
 var purchApp = angular.module('purchApp', []);
 purchApp.controller("purchaseListController", function ($scope, Purchases) {
-    //$scope.GroupedPurchases = undefined;
-    //$scope.test = "preved!!!";
+
     $scope.BDate = undefined;
     $scope.EDate = undefined;
 
@@ -176,9 +175,19 @@ purchApp.controller("purchaseListController", function ($scope, Purchases) {
     }
     //Удалить покупку
     $scope.DeletePurchaseCard = function (purchase) {
-        console.log('DeletePurchaseCard');
         let purchId = purchase.Id
-        window.location.href = "/Purchase/DeletePurchaseView?purchaseId_=" + purchId;
+
+        //window.location.href = "/Purchase/DeletePurchaseView?purchaseId_=" + purchId;
+        Purchases.deletePurchase(purchId).then(
+            function successCallback(response) {
+                console.log('DeletePurchaseCard purchId=' + purchId + ' успех');
+                //Костыль!
+                $scope.getPurchGroupsByBeginAndEndDates($scope.BDate, $scope.EDate);
+            },
+            function errorCallback(response) {
+                console.log('DeletePurchaseCard purchId=' + purchId + ' ошибка');
+                console.log(response);
+            });
     }
 
 

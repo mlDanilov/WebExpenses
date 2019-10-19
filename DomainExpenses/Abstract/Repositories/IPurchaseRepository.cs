@@ -15,11 +15,11 @@ namespace DomainExpenses.Abstract.Repositories
     public interface IPurchaseRepository : IEntityRepositiory<IPurchase, Purchase>
     {
 
-        /// <summary>
-        /// Получить все периоды, в которых есть покупки
-        /// </summary>
-        /// <returns></returns>
-        IQueryable<Period> SelectAllPeriods();
+        ///// <summary>
+        ///// Получить все периоды, в которых есть покупки
+        ///// </summary>
+        ///// <returns></returns>
+        //IQueryable<Period> SelectAllPeriods();
 
         /// <summary>
         /// Получить все годы, за которые есть покупки
@@ -29,27 +29,27 @@ namespace DomainExpenses.Abstract.Repositories
 
 
 
-        /// <summary>
-        /// Получить все расходы за месяц
-        /// </summary>
-        /// <param name="period_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_);
-        /// <summary>
-        /// Получить все расходы за неделю
-        /// </summary>
-        /// <param name="week_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_);
-        /// <summary>
-        /// Получить все расходы за день
-        /// </summary>
-        /// <param name="date_"></param>
-        /// <returns></returns>
-        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
-        IQueryable<Purchase> SelectPurchaseByDate(DateTime date_);
+        ///// <summary>
+        ///// Получить все расходы за месяц
+        ///// </summary>
+        ///// <param name="period_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_);
+        ///// <summary>
+        ///// Получить все расходы за неделю
+        ///// </summary>
+        ///// <param name="week_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_);
+        ///// <summary>
+        ///// Получить все расходы за день
+        ///// </summary>
+        ///// <param name="date_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //IQueryable<Purchase> SelectPurchaseByDate(DateTime date_);
 
         /// <summary>
         /// Получить все расходы за диапазон
