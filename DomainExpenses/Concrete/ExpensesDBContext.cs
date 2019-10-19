@@ -8,7 +8,7 @@ using System.Linq;
 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
 
 namespace DomainExpenses.Concrete
 {
@@ -44,6 +44,25 @@ namespace DomainExpenses.Concrete
         public DbRawSqlQuery<Period> SelectAllPeriods() 
             => Database.SqlQuery<Period>("SelectAllPeriods");
         /// <summary>
+        /// Получить все годы, за которые есть покупки
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<int> SelectAllYears()
+        {
+            var years = new HashSet<int>();
+            var t = Purchase.ForEachAsync(p =>
+            {
+                int year = p.Date.Year;
+                if (!years.Contains(year))
+                    years.Add(year);
+
+            });
+
+            t.Wait();
+
+            return years.AsQueryable<int>();
+        }
+        /// <summary>
         /// Получить все недели текущего периода
         /// </summary>
         /// <param name="period_"></param>
@@ -64,6 +83,7 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="week_"></param>
         /// <returns></returns>
+        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
         public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
         {
             var res = (from p in Purchase
@@ -76,19 +96,29 @@ namespace DomainExpenses.Concrete
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
+        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
         public IQueryable<Purchase> SelectPurchasesByDay(DateTime date_)
         {
             var res = (from p in Purchase
                        where (p.Date == date_) select p);
             return res;
         }
-
+        [Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
         public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
         {
             var res = (from p in Purchase
                        where
                        (p.Date.Month == period_.MonthYear.Month) &&
                        (p.Date.Year == period_.MonthYear.Year)
+                       select p);
+            return res;
+        }
+
+        public IQueryable<Purchase> SelectPurchasesByBeginAndEndDates(DateTime bDate_, DateTime eDate_)
+        {
+            var res = (from p in Purchase
+                       where
+                       (p.Date >= bDate_) && (p.Date <= eDate_)
                        select p);
             return res;
         }

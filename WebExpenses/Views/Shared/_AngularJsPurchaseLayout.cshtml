@@ -17,6 +17,7 @@
     <script src="~/Scripts/libs/angular-resource.min.js"></script>
     <script src="~/Scripts/libs/angular-route.min.js"></script>
     <script src="~/Scripts/angularJS/purchase/controller/purchaseController.js"></script>
+    <script src="~/Scripts/angularJS/purchase/service/purchases.js"></script>
     <script src="~/Scripts/angularJS/item/directive/itemList.js"></script>
     <script src="~/Scripts/angularJS/item/service/Items.js"></script>
     <script src="~/Scripts/angularJS/group/directive/groupList.js"></script>
@@ -25,19 +26,6 @@
     <script src="~/Scripts/angularJS/shop/service/Shops.js"></script>
 </head>
 <body>
-    <div id="root">
-        <div id="menu">
-            <div id="groupsAndItems">
-                @Html.ActionLink("Группы и товары", "List", "Group")
-            </div>
-            <div id="shops">
-                @Html.ActionLink("Магазины", "List", "Shop")
-            </div>
-            <div id="purchase">
-                @Html.ActionLink("Покупки", "List", "Purchase")
-            </div>
-        </div>
-        @RenderBody()
-    </div>
+    @RenderBody()
 </body>
 </html>

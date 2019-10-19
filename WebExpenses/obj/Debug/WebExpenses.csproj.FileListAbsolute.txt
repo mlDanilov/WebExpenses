@@ -159,3 +159,9 @@ C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.csprojResolveAssemblyReference.cache
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.dll
 C:\Users\danilovm\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\obj\Debug\WebExpenses.pdb
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Net.Http.Formatting.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Http.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Http.WebHost.dll
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Net.Http.Formatting.xml
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Http.xml
+C:\Users\mlDanilov\Documents\Visual Studio 2015\Projects\WebExpenses\WebExpenses\bin\System.Web.Http.WebHost.xml

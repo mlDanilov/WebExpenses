@@ -24,8 +24,8 @@
             <th class="purchCount">@Model[i].Count</th>
             <th class="purchShopName">@Model[i].ShopName - @Model[i].ShopAddress</th>
             <th class="purchDate">@Model[i].Date.ToShortDateString()</th>
-            <th class="purchEdit">@Html.ActionLink("Редактировать", "EditPurchase", new { purchaseId_ = Model[i].Id })</th>
-            <th class="purchDelete" >@Html.ActionLink("Удалить", "DeletePurchase")</th>
+            <th class="purchEdit">@Html.ActionLink("Редактировать", "EditPurchaseCard", new { purchaseId_ = Model[i].Id })</th>
+            <th class="purchDelete" >@Html.ActionLink("Удалить", "DeletePurchaseView", new { purchaseId_ = Model[i].Id })</th>
         </tr>
     }
 

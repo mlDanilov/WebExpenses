@@ -18,7 +18,7 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Уникальный код товара
         /// </summary>
-        public int Item_Id{ get; set; }
+        public int Item_Id { get; set; }
         /// <summary>
         /// Уникальный код магазина
         /// </summary>

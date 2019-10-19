@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="purchApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/Content/menu.css" rel="stylesheet" />
+    <link href="~/Scripts/angularJS/purchase/css/purchaseList.css" rel="stylesheet" />
+
+    <script src="~/Scripts/libs/angular.min.js"></script>
+    <script src="~/Scripts/libs/angular-resource.min.js"></script>
+    <script src="~/Scripts/libs/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/purchase/controller/purchaseListController.js"></script>
+    <script src="~/Scripts/angularJS/period/service/periods.js"></script>
+    <script src="~/Scripts/angularJS/period/service/years.js"></script>
+    <script src="~/Scripts/angularJS/period/constant/month.js"></script>
+    <script src="~/Scripts/angularJS/period/constant/dayOfWeek.js"></script>
+    <script src="~/Scripts/angularJS/period/controller/periodController.js"></script>
+    <script src="~/Scripts/angularJS/purchase/filter/purchasesByPeriod.js"></script>
+    <script src="~/Scripts/angularJS/purchase/filter/purchGroupsByPeriod.js"></script>
+    <script src="~/Scripts/angularJS/purchase/service/purchases.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div id="menu">
+            <div id="groupsAndItems">
+                @Html.ActionLink("Группы и товары", "List", "Group")
+            </div>
+            <div id="shops">
+                @Html.ActionLink("Магазины", "List", "Shop")
+            </div>
+            <div id="purchase">
+                @Html.ActionLink("Покупки", "List", "Purchase")
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

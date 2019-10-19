@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using WebExpenses.Models.Item.Interfaces;
 using WebExpenses.Models.Purchase.Interfaces;
 using WebExpenses.Models.Shop.Interfaces;
@@ -39,6 +43,19 @@ namespace WebExpenses.Models.Purchase
         /// <summary>
         /// Дата
         /// </summary>
+        //[DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Костыль
+        /// </summary>
+        [Obsolete("Костыль для сериализации в JSON")]
+        public string DateStr
+        {
+            get
+            {
+                return Date.ToString("yyyy-MM-dd");
+            }
+        }
     }
 }
