@@ -1,7 +1,4 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="purchApp">
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -13,6 +10,8 @@
     <script src="~/Scripts/libs/angular-resource.min.js"></script>
     <script src="~/Scripts/libs/angular-route.min.js"></script>
     <script src="~/Scripts/angularJS/app.js"></script>
+    <script src="~/Scripts/angularJS/menu/menu.js"></script>
+    <script src="~/Scripts/angularJS/purchase/controller/purchaseListController.js"></script>
     <script src="~/Scripts/angularJS/purchase/controller/purchaseListController.js"></script>
     <script src="~/Scripts/angularJS/period/service/periods.js"></script>
     <script src="~/Scripts/angularJS/period/service/years.js"></script>
@@ -24,11 +23,11 @@
     <script src="~/Scripts/angularJS/purchase/service/purchases.js"></script>
 </head>
 <body>
-    <div id="menu">
-                @Html.ActionLink("Группы и товары", "List", "Group")
-                @Html.ActionLink("Магазины", "List", "Shop")
-                @Html.ActionLink("Покупки", "List", "Purchase")
-    </div>
-        @RenderBody()
+    <nav>
+        <a href="#groups">Группы и товары</a>
+        <a href="#shops">Магазины</a>
+        <a href="#purchases">Покупки</a> 
+    </nav>
+    <ng-view></ng-view>
 </body>
 </html>

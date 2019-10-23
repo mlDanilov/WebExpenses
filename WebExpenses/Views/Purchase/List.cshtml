@@ -1,8 +1,10 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_AngularJsPurchaseListLayout.cshtml";
+    //Layout = "~/Views/Shared/_AngularJsSPARouting.html";
 }
-<div id="purchases" ng-controller="purchaseListController">
+<div id="purchases" 
+     ng-controller="purchaseListController">
     <div ng-controller="periodController">
         <!--Годы-->
         <select ng-model="currentYear"
@@ -25,9 +27,6 @@
     <table ng-repeat="groupOfPurchase in getGroupedPurchases() | purchGroupsByPeriod:BDate:EDate">
         <thead>
             <tr ng-if="$index == 0">
-                @*<th>Группа</th>
-                    <th>Сумма, руб</th>
-                    <th></th>*@
                 <th></th>
                 <th>Группа</th>
                 <th>Сумма</th>

@@ -27,6 +27,7 @@
     <script src="~/Scripts/libs/angular.min.js"></script>
     <script src="~/Scripts/libs/angular-resource.min.js"></script>
     <script src="~/Scripts/libs/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/app.js"></script>
     <script src="~/Scripts/angularJS/item/controller/itemController.js"></script>
     <script src="~/Scripts/angularJS/item/controller/itemListController.js"></script>
     <script src="~/Scripts/angularJS/item/service/Items.js"></script>
@@ -37,19 +38,11 @@
     <link href="~/Scripts/angularJS/group/css/groupList.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="root">
-        <div id="menu">
-            <div id="groupsAndItems">
-                @Html.ActionLink("Группы и товары", "List", "Group")
-            </div>
-            <div id="shops">
-                @Html.ActionLink("Магазины", "List", "Shop")
-            </div>
-            <div id="purchase">
-                @Html.ActionLink("Покупки", "List", "Purchase")
-            </div>
-        </div>
-        @RenderBody()
+    <div id="menu">
+            @Html.ActionLink("Группы и товары", "List", "Group")
+            @Html.ActionLink("Магазины", "List", "Shop")
+            @Html.ActionLink("Покупки", "List", "Purchase")
     </div>
+        @RenderBody()
 </body>
 </html>

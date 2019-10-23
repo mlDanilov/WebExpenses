@@ -1,5 +1,5 @@
 ﻿'use strict'
-var purchApp = angular.module('purchApp', ['ngResource']);
+var purchApp = angular.module('purchApp');
 purchApp.controller("itemController", function ($scope, $http, Groups) {
 
     $scope.init = function (model) {
@@ -103,11 +103,6 @@ purchApp.controller("itemController", function ($scope, $http, Groups) {
     //Список групп и текущая выбранная
     $scope.Groups  = {
         Items: [],
-        //Items: [
-        //        { Id: 1, Name: 'Тестовая группа1' },
-        //        { Id: 2, Name: 'Тестовая группа2' },
-        //        { Id: 3, Name: 'Тестовая группа3' },
-        //    ],
         SelectedItem: undefined
     }
     //$scope.Groups.SelectedItem = $scope.Groups.Items[1];

@@ -8,7 +8,6 @@ purchApp.controller("groupController", function ($scope, $http, Groups) {
         $scope.ParentGroupId = model.GId;
     }
 
-    $scope.Header = "Карточка товара";
     //Текущая выбранная группа
     $scope.ParentGroupId;
     //Код товара
@@ -49,11 +48,6 @@ purchApp.controller("groupController", function ($scope, $http, Groups) {
     //Список групп и текущая выбранная
     $scope.Groups = {
         Items: [],
-        //Items: [
-        //        { Id: 1, Name: 'Тестовая группа1' },
-        //        { Id: 2, Name: 'Тестовая группа2' },
-        //        { Id: 3, Name: 'Тестовая группа3' },
-        //    ],
         SelectedItem: undefined,
       
     }

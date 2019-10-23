@@ -26,7 +26,7 @@ purchApp.directive("itemList", function () {
 
                 
 
-                let selectedItem = scope.data.Items.find(it => it.Id == selectedId);
+                let selectedItem = scope.Items.Items.find(it => it.Id == selectedId);
                 data.SelectedItem = selectedItem;
             })
         },

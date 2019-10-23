@@ -24,7 +24,7 @@ purchApp.directive("groupList", function () {
                 if (selectedId == undefined)
                     return;
 
-                let selectedItem = scope.data.Items.find(g => g.Id == selectedId);
+                let selectedItem = scope.Groups.Items.find(g => g.Id == selectedId);
                 data.SelectedItem = selectedItem;
             })          
         },

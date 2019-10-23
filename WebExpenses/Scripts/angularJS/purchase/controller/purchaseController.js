@@ -1,5 +1,5 @@
 ﻿'use strict'
-var purchApp = angular.module('purchApp', []);
+var purchApp = angular.module('purchApp');
 purchApp.controller("purchaseController", function ($scope, $http, Items, Groups, Shops, Purchases) {
     //Код покупки
     $scope.Id;
