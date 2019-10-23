@@ -1,0 +1,11 @@
+﻿@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_AngularJsShopLayout.cshtml";
+}
+
+<div ng-controller="shopController">
+    <h4>Создать магазин</h4>
+    <p>Наименование: <input ng-model="Name"/></p>
+    <p>Адрес: <input ng-model="Address"/></p>
+    <input type="button" value="Создать" ng-click="CreateShop()" />
+</div>

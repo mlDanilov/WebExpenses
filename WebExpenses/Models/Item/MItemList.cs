@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 
 using DomainExpenses.Abstract;
+using WebExpenses.Models.Item.Interfaces;
 
 namespace WebExpenses.Models.Item
 {
     /// <summary>
     /// Список товаров + текущая группа
     /// </summary>
-    public class MItemList
+    public class MItemList : IMItemList
     {
         /// <summary>
         /// Текущая группа
@@ -19,7 +20,7 @@ namespace WebExpenses.Models.Item
         /// <summary>
         /// Список товаров
         /// </summary>
-        public List<IItem> ItemList { get; set; } = new List<IItem>();
+        public List<IMItemCard> ItemList { get; set; } = new List<IMItemCard>();
     }
 
     

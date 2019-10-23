@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="purchApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="~/Content/menu.css" rel="stylesheet" />
+   <!--  
+    <link href="~/Content/groupsTable.css" rel="stylesheet" />
+     -->
+    <link href="~/Content/shopTable.css" rel="stylesheet" />
+    <link href="~/Content/shops.css" rel="stylesheet" />
+        
+    <script src="~/Scripts/libs/angular.min.js"></script>
+    <script src="~/Scripts/libs/angular-resource.min.js"></script>
+    <script src="~/Scripts/libs/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/app.js"></script>
+    <script src="~/Scripts/angularJS/purchase/controller/purchaseController.js"></script>
+    <script src="~/Scripts/angularJS/purchase/service/purchases.js"></script>
+    <script src="~/Scripts/angularJS/item/directive/itemList.js"></script>
+    <script src="~/Scripts/angularJS/item/service/Items.js"></script>
+    <script src="~/Scripts/angularJS/group/directive/groupList.js"></script>
+    <script src="~/Scripts/angularJS/group/service/Groups.js"></script>
+    <script src="~/Scripts/angularJS/shop/directive/shopList.js"></script>
+    <script src="~/Scripts/angularJS/shop/service/Shops.js"></script>
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>

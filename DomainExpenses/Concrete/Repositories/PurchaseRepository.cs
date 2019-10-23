@@ -71,55 +71,73 @@ namespace DomainExpenses.Concrete.Repositories
         }
 
 
-        public IQueryable<Period> SelectAllPeriods()
-           => _dbContext.SelectAllPeriods().AsQueryable<Period>();
         /// <summary>
-        /// Получить все недели текущего периода
+        /// Получить список годов, за которые есть покупки
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Week> SelectWeeksByPeriod(IPeriod period_)
-        => _dbContext.SelectWeeksOfCurrentPeriod(period_).AsQueryable<Week>();
+        public IQueryable<int> SelectAllYears()
+         => _dbContext.SelectAllYears().AsQueryable<int>();
+        ///// <summary>
+        ///// Получить все недели текущего периода
+        ///// </summary>
+        ///// <returns></returns>
+        //public IQueryable<Week> SelectWeeksByPeriod(IPeriod period_)
+        //=> _dbContext.SelectWeeksOfCurrentPeriod(period_).AsQueryable<Week>();
+
+
+        ///// <summary>
+        ///// Получить все расходы за месяц
+        ///// </summary>
+        ///// <param name="period_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
+        //   => _dbContext.SelectPurchasesByPeriod(period_);
+        ///// <summary>
+        ///// Получить все расходы за неделю
+        ///// </summary>
+        ///// <param name="week_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
+        //            => _dbContext.SelectPurchasesByWeek(week_);
+        ///// <summary>
+        ///// Получить все расходы за день
+        ///// </summary>
+        ///// <param name="date_"></param>
+        ///// <returns></returns>
+        //[Obsolete("Используй SelectPurchaseByBeginAndEndDates")]
+        //public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
+        //           => _dbContext.SelectPurchasesByDay(date_);
+
         /// <summary>
-        /// Получить все расходы за месяц
-        /// </summary>
-        /// <param name="period_"></param>
-        /// <returns></returns>
-        public IQueryable<Purchase> SelectPurchasesByPeriod(IPeriod period_)
-           => _dbContext.SelectPurchasesByPeriod(period_);
-        /// <summary>
-        /// Получить все расходы за неделю
-        /// </summary>
-        /// <param name="week_"></param>
-        /// <returns></returns>
-        public IQueryable<Purchase> SelectPurchasesByWeek(IWeek week_)
-                    => _dbContext.SelectPurchasesByWeek(week_);
-        /// <summary>
-        /// Получить все расходы за день
+        /// Получить все расходы за диапазон
         /// </summary>
         /// <param name="date_"></param>
         /// <returns></returns>
-        public IQueryable<Purchase> SelectPurchaseByDate(DateTime date_)
-                   => _dbContext.SelectPurchasesByDay(date_);
-        /// <summary>
-        /// Текущая покупка
-        /// </summary>
-        public int? CurrentPurchaseId { get; set; }
-        /// <summary>
-        /// Текущая выбранная группа покупок
-        /// </summary>
-        public int? CurrentPurchaseGId { get; set; }
-        /// <summary>
-        /// Текущий выбраный день
-        /// </summary>
-        public DateTime? CurrentDay { get; set; }
-        /// <summary>
-        /// Текущий период(месяц)
-        /// </summary>
-        public IPeriod CurrentPeriod { get; set; }
-        /// <summary>
-        /// Текущая неделя
-        /// </summary>
-        public IWeek CurrentWeek { get; set; }
+        public IQueryable<Purchase> SelectPurchaseByBeginAndEndDates(DateTime bDate_, DateTime eDate_) 
+            => _dbContext.SelectPurchasesByBeginAndEndDates(bDate_, eDate_);
+        
+        ///// <summary>
+        ///// Текущая покупка
+        ///// </summary>
+        //public int? CurrentPurchaseId { get; set; }
+        ///// <summary>
+        ///// Текущая выбранная группа покупок
+        ///// </summary>
+        //public int? CurrentPurchaseGId { get; set; }
+        ///// <summary>
+        ///// Текущий выбраный день
+        ///// </summary>
+        //public DateTime? CurrentDay { get; set; }
+        ///// <summary>
+        ///// Текущий период(месяц)
+        ///// </summary>
+        //public IPeriod CurrentPeriod { get; set; }
+        ///// <summary>
+        ///// Текущая неделя
+        ///// </summary>
+        //public IWeek CurrentWeek { get; set; }
 
         private ExpensesDBContext _dbContext;
     }

@@ -8,6 +8,7 @@ using DomainExpenses.Abstract;
 using DomainExpenses.Abstract.Repositories;
 using DomainExpenses.Concrete;
 using DomainExpenses.Concrete.Repositories;
+using DomainExpenses.Concrete.Repositories.Facotries;
 
 
 
@@ -21,63 +22,35 @@ namespace DomainExpenses.Concrete
 
         public ExpensesRepository()
         {
-            //_purchaseModule = new PurchaseModule(_context.SelectWeeksOfCurrentPeriod);
-            _itemRep = new ItemRepository(_context);
-            _groupRep = new GroupRepository(_context);
-            _shopRep = new ShopRepository(_context);
-            _purchRep = new PurchaseRepository(_context);
 
+            ItemRep = _repFctry.GetItemRep();
+            GroupRep = _repFctry.GetGroupRep();
+            ShopRep = _repFctry.GetShopRep();
+            PurchaseRep = _repFctry.GetPurchaseRep();
         }
+        /// <summary>
+        /// Фабрика, возвращающая репозитории
+        /// </summary>
+        private readonly IRepositoryFactory _repFctry = RepositoryFactory.Get();
 
         /// <summary>
         /// Репозиторий для работы с товарами
         /// </summary>
-        public IItemRepository ItemRep
-        {
-            get { return _itemRep; }
-        }
+        public IItemRepository ItemRep { get; private set;}
 
         /// <summary>
         /// Репозиторий для работы с группами товаров
         /// </summary>
-        public IGroupRepository GroupRep
-        {
-            get { return _groupRep; }
-        }
+        public IGroupRepository GroupRep { get; private set; }
 
         /// <summary>
         /// Репозиторий для работы с магазинами
         /// </summary>
-        public IShopRepository ShopRep
-        {
-            get { return _shopRep; }
-        }
+        public IShopRepository ShopRep { get; private set; }
 
         /// <summary>
         /// Репозиторий для работы с покупками
         /// </summary>
-        public IPurchaseRepository PurchaseRep
-        {
-            get { return _purchRep; }
-        }
-
-        private ExpensesDBContext _context = new ExpensesDBContext();
-
-        /// <summary>
-        /// Репозиторий для работы с товарами
-        /// </summary>
-        private ItemRepository _itemRep = null;
-        /// <summary>
-        /// Репозиторий для работы с группами товаров
-        /// </summary>
-        private GroupRepository _groupRep = null;
-        /// <summary>
-        /// Репозиторий для работы с магазинами
-        /// </summary>
-        private ShopRepository _shopRep = null;
-        /// <summary>
-        /// Репозиторий для работы с магазинами
-        /// </summary>
-        private PurchaseRepository _purchRep = null;
+        public IPurchaseRepository PurchaseRep { get; private set; }
     }
 }

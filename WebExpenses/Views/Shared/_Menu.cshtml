@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+   // Layout = "~/Views/Shared/_Menu.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html ng-app="purchApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/Content/menu.css" rel="stylesheet" />
+    <!--
+    <link href="~/Content/groupsTable.css" rel="stylesheet" />
+        -->
+    <link href="~/Content/itemsTable.css" rel="stylesheet" />
+    <link href="~/Content/shops.css" rel="stylesheet" />
+    <link href="~/Content/periodAndWeek.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+    <script src="~/Scripts/items.js" type="text/javascript"></script>
+    <script src="~/Scripts/groups.js" type="text/javascript"></script>
+    <script src="~/Scripts/shops.js" type="text/javascript"></script>
+    <script src="~/Scripts/periodsAndWeeks.js" type="text/javascript"></script>
+    <script src="~/Scripts/purchase.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/libs/angular.min.js"></script>
+    <script src="~/Scripts/libs/angular-resource.min.js"></script>
+    <script src="~/Scripts/libs/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/app.js"></script>
+    <script src="~/Scripts/angularJS/item/controller/itemController.js"></script>
+    <script src="~/Scripts/angularJS/item/controller/itemListController.js"></script>
+    <script src="~/Scripts/angularJS/item/service/Items.js"></script>
+    <script src="~/Scripts/angularJS/group/controller/groupController.js"></script>
+    <script src="~/Scripts/angularJS/group/controller/groupListController.js"></script>
+    <script src="~/Scripts/angularJS/group/directive/groupList.js"></script>
+    <script src="~/Scripts/angularJS/group/service/Groups.js"></script>
+    <link href="~/Scripts/angularJS/group/css/groupList.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="menu">
+            @Html.ActionLink("Группы и товары", "List", "Group")
+            @Html.ActionLink("Магазины", "List", "Shop")
+            @Html.ActionLink("Покупки", "List", "Purchase")
+    </div>
+        @RenderBody()
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿@using DomainExpenses.Abstract
+@using WebExpenses.Models.Item.Interfaces;
+@using WebExpenses.Models.Group.Interface;
+@using Newtonsoft.Json;
+@model IMGroupCard
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_AngularJsLayout.cshtml";
+}
+<div ng-controller="groupController" data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+    <h4>Добавить</h4>
+    <p>Код: <input ng-model="Id" value="@Model.Id" readonly /></p>
+    <p>Наименование: <input ng-model="Name" value="@Model.Name" /></p>
+    <div>
+        Родительская группа:
+        <group-list source="Groups" selectedId="@Model.IdParent"></group-list>
+    </div>
+    <input type="button" value="Редактировать" ng-click="EditGroup()" />
+</div>

@@ -1,0 +1,38 @@
+﻿div#purchases {
+        float:left;
+    }
+
+div#purchases table {
+    border-collapse:collapse;
+    width: auto
+}
+div#purchases th {
+        
+    border: 1px solid black;
+    text-align:left;
+    padding: 5px;
+}
+
+div#purchases tbody td {
+        
+    border: 1px solid black;
+    text-align:left;
+    padding: 3px;
+}
+
+div#purchases thead > tr {
+    background:  #53290d;
+}
+
+
+.purchaseOver  {
+    background:  green;
+}
+
+.purchaseSelected {
+    background:  red;
+}
+
+.purchaseUnselected  {
+    background:  #93d9a8;
+}

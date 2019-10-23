@@ -9,10 +9,12 @@ using DomainExpenses.Abstract;
 
 namespace WebExpenses.Models.Item
 {
+    using Interfaces;
+        
     /// <summary>
     /// Класс для отображения в виде "Карточка товара"
     /// </summary>
-    public class MItemCard : IItem
+    public class MItemCard : IMItemCard
     {
         public MItemCard()
         {

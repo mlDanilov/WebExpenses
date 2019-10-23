@@ -1,9 +1,0 @@
-﻿@using WebExpenses.Models.Purchase;
-@using System.Globalization;
-@model MWeekList
-
-<select id="@ViewData["OptionName"]" name="@ViewData["OptionName"]" onchange="setCurrentWeek()">
-    @{
-        Html.RenderPartial("WeekOptions", @Model);
-    }
-</select>

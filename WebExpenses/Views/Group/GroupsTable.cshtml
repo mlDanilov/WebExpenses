@@ -1,10 +1,10 @@
 ﻿@using DomainExpenses.Abstract
-@using WebExpenses.Models.Group
-@model MGroupList
+@using WebExpenses.Models.Group.Interface
+@model IMGroupList
 @{
 
 }
-<div class="dTable">
+<div class="dTable" >
     <table>
         <thead>
             <tr>
@@ -16,16 +16,32 @@
             </tr>
         </thead>
         <tbody id="groupsTableBody">
-            @{
-                Html.RenderPartial("GroupsTableBodyRows", @Model);
-             }
+            <tr ng-repeat="group in Groups.Items"
+                ng-class="{
+                    groupUnselected : (group.Id != Groups.SelectedItem.Id) && (group.Id != Groups.ItemOver.Id),
+                    groupSelected : group.Id == Groups.SelectedItem.Id,
+                    groupOver : group.Id == Groups.ItemOver.Id
+                    }"
+                ng-click="setSelected(group)">
+                <th class="groupOrder">{{$index+1}}.</th>
+                <th class="groupId">{{group.Id}}</th>
+                <th class="groupName">{{group.Name}}</th>
+                <th class="groupEdit">
+                    <input type="button" value="Редактировать" ng-click="EditGroup(group)" />
+                </th>
+                <th class="groupDelete">
+                    <input type="button" value="Удалить" ng-click="DeleteGroup(group)" />
+                </th>
+            </tr>
+
+
         </tbody>
         <tfoot>
             <tr>
                 <th></th>
                 <th></th>
                 <th>
-                    @Html.ActionLink("Добавить", "CreateGroupCard", new { gId_ = Model.GroupId })
+                    <input type="button" value="Добавить" ng-click="CreateNewGroup()" />
                 </th>
                 <th></th>
                 <th></th>
@@ -33,14 +49,4 @@
         </tfoot>
     </table>
 </div>
-<script>
-    $(document).ready(function () {
-        console.log('groupClick.b');
-        $('div#groups tbody tr th.groupOrder').click(setCurrentGroupByClick);
-        $('div#groups tbody tr th.groupId').click(setCurrentGroupByClick);
-        $('div#groups tbody tr th.groupName').click(setCurrentGroupByClick);
-        $('div#groups tbody tr th.groupEdit a').click(setCurrentGId);
-        $('div#groups tbody tr th.groupDelete a').click(setCurrentGId);
-        console.log('groupClick.e');
-    });
-</script>
+

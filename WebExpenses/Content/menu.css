@@ -1,10 +1,9 @@
 ﻿div#menu 
 {
-    float: left;
-    padding-right:  0em;
+    padding-bottom: 1%;
 }
 
-div#menu div
+div#menu a
 {
     width: 8em;
     font: bold 1em "Arial Narrow", "Franklin Gothic Medium", Arial;
@@ -13,5 +12,10 @@ div#menu div
     margin-bottom: 3px;
     border: 2px solid #111;
     
-    
 }
+
+.menuitem {
+    float: left
+}
+
+
