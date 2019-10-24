@@ -1,5 +1,5 @@
 ﻿'use strict'
-var purchApp = angular.module('purchApp',[]);
+var purchApp = angular.module('purchApp');
 purchApp.controller("shopListController", function ($scope, $http, Shops) {
 
 

@@ -2,14 +2,13 @@
 purchApp.config(
     function ($routeProvider) {
         $routeProvider.when('/groups', {
-            templateUrl: 'Views/Group/List.cshtml'
+            templateUrl: '/Scripts/angularJS/group/views/List.html'
         });
         $routeProvider.when('/shops', {
-            templateUrl: 'Views/Shop/List.cshtml'
+            templateUrl: '/Scripts/angularJS/shop/views/List.html'
         });
-        $routeProvider.when('/purchases', { 
-            //templateUrl: '/Views/Purchases/List.cshtml'
-            templateUrl: '/Views/Menu/preved.html'
-        })
-
+        $routeProvider.when('/purchases', {
+            templateUrl: '/Scripts/angularJS/menu/views/List.html'
+        });
+        
     });

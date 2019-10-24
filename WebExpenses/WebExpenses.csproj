@@ -163,7 +163,6 @@
     <Content Include="Content\periodAndWeek.css" />
     <Content Include="Content\purchaseCard.css" />
     <Content Include="Content\shopCard.css" />
-    <Content Include="Content\shops.css" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\WebExpensesProfile.pubxml" />
     <Content Include="Scripts\angularJS\app.js" />
@@ -236,7 +235,6 @@
     <Content Include="Scripts\libs\angular-aria.min.js.map" />
     <Content Include="Scripts\libs\angular-animate.min.js.map" />
     <None Include="Scripts\libs\jquery-1.8.0.intellisense.js" />
-    <Content Include="Scripts\libs\groups.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
@@ -975,7 +973,6 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="Scripts\libs\items.js" />
     <Content Include="Scripts\libs\jquery-1.8.0.js" />
     <Content Include="Scripts\libs\jquery-1.8.0.min.js" />
     <Content Include="Scripts\libs\jquery.unobtrusive-ajax.js" />
@@ -985,10 +982,6 @@
     <Content Include="Scripts\libs\jquery.validate.min.js" />
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\libs\purchase.js" />
-    <Content Include="Scripts\libs\purchaseCard.js" />
-    <Content Include="Scripts\libs\shops.js" />
-    <Content Include="Scripts\libs\periodsAndWeeks.js" />
     <Content Include="Scripts\libs\sitemap.xml" />
     <Content Include="Scripts\test-bundles\angular-aria.js" />
     <Content Include="Scripts\test-bundles\angular-cookies.js" />
@@ -998,7 +991,6 @@
     <Content Include="Scripts\test-bundles\angular-route.js" />
     <Content Include="Scripts\test-bundles\angular-sanitize.js" />
     <Content Include="Scripts\test-bundles\angular-touch.js" />
-    <Content Include="Views\Menu\preved.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1056,26 +1048,26 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shop\List.cshtml" />
+    <Content Include="Scripts\angularJS\shop\views\List.html" />
     <Content Include="Scripts\libs\version.json" />
     <Content Include="Views\Shared\_AngularJsLayout.cshtml" />
     <Content Include="Views\Item\CreateItemCard.cshtml" />
     <Content Include="Views\Item\EditItemCard.cshtml" />
     <Content Include="Views\Group\CreateGroupCard.cshtml" />
     <Content Include="Views\Group\EditGroupCard.cshtml" />
-    <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Scripts\angularJS\group\views\List.html" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="Views\Group\GroupsTable.cshtml" />
-    <Content Include="Views\Item\ItemsTable.cshtml" />
-    <Content Include="Views\Shop\ShopTableBody.cshtml" />
+    <Content Include="Scripts\angularJS\group\views\GroupsTable.html" />
+    <Content Include="Scripts\angularJS\shop\views\ShopTableBody.html" />
     <Content Include="Views\Shared\_AngularJsShopLayout.cshtml" />
     <Content Include="Views\Shop\CreateShopCard.cshtml" />
     <Content Include="Views\Shop\EditShopCard.cshtml" />
     <Content Include="Views\Purchase\EditPurchaseCard.cshtml" />
     <Content Include="Views\Shared\_AngularJsPurchaseLayout.cshtml" />
     <Content Include="Views\Purchase\CreatePurchaseCard.cshtml" />
-    <Content Include="Views\Purchase\List.cshtml" />
+    <Content Include="Scripts\angularJS\menu\views\List.html" />
     <Content Include="Views\Shared\_AngularJsPurchaseListLayout.cshtml" />
+    <Content Include="Scripts\angularJS\item\views\ItemsTable.html" />
     <None Include="Views\Menu\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

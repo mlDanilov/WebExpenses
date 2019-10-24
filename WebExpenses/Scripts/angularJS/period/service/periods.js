@@ -7,7 +7,7 @@ purchApp.factory('Periods', function ($http) {
         getAllYears: function () {
             return $http({
                 method: 'GET',
-                url: 'api/Period/GetYears',
+                url: '/api/Period/GetYears',
                 isArray: false,
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });

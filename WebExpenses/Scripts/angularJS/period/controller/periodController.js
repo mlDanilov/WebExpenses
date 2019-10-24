@@ -122,6 +122,8 @@ purchApp.controller("periodController", function ($scope,
             },
             function errorCallback(response){
                 console.log('getAllYears ошибка');
+                //window.document = response.data;
+                window.document.body.innerHTML = response.data;
 
             });
     }

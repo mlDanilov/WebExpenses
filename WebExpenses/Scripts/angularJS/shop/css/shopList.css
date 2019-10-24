@@ -11,3 +11,7 @@
 .shopUnselected  {
     background:  #93d9a8;
 }
+
+tr div.shopAddressInner {
+   font: italic 0.8em "Times New Roman";
+}
