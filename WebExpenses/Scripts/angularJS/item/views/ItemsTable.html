@@ -14,10 +14,14 @@
             <th class="itemId">{{item.Id}}</th>
             <th class="itemName">{{item.Name}}</th>
             <th class="itemEdit">
-                <input type="button" value="Редактировать" ng-click="EditItem(item)" />
+                <input type="button" 
+                       value="Редактировать" 
+                       ng-click="EditItem(item)" />
             </th>
             <th class="itemDelete">
-                <input type="button" value="Удалить" ng-click="DeleteItem(item)" />
+                <input type="button" 
+                       value="Удалить" 
+                       ng-click="DeleteItem(item)" />
             </th>
 
         </tr>
@@ -27,9 +31,6 @@
         <tr>
             <th></th>
             <th></th>
-            <!--
-            <th>Html.ActionLink("Добавить", "CreateItemCard", new { gId_ = Model.GroupId })</th>
-            -->
             <th><input type="button"  value="Добавить" ng-click="CreateNewItem()"/></th>
             <th></th>
             <th></th>

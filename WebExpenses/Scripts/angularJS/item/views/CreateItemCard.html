@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html ng-app="modalApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/libs/angular.min.js"></script>
+    <script src="~/Scripts/libs/angular-resource.min.js"></script>
+    <script src="~/Scripts/libs/angular-route.min.js"></script>
+    <script src="~/Scripts/angularJS/modal.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js" ></script>
+    <script src="~/Scripts/angularJS/item/controller/itemController.js"></script>
+    <script src="~/Scripts/angularJS/item/controller/itemListController.js"></script>
+    <script src="~/Scripts/angularJS/group/controller/groupController.js"></script>
+    <script src="~/Scripts/angularJS/group/directive/groupList.js"></script>
+    <script src="~/Scripts/angularJS/group/service/Groups.js"></script>
+</head>
+<body>
+    <div ng-controller="itemControllerModal">
+        <div class="modal-header">
+            <h4 class="modal-title">Добавить</h4>
+        </div>
+        <div class="modal-body">
+            <p>Наименование: <input ng-model="Name" /></p>
+            <group-list source="Groups"></group-list>
+        </div>
+        <div class="modal-footer">
+            <input type="button" value="Добавить" ng-click="CreateItem()" />
+        </div>
+    </div>
+</body>
+</html>
+
+
+

@@ -1,6 +1,8 @@
 ﻿'use strict'
 var purchApp = angular.module('purchApp');
-purchApp.controller("itemListController", function ($scope, $http, Items, Groups) {
+purchApp.controller("itemListController", function ($scope, $http,
+    //$modalInstance,
+    Items, Groups) {
 
     $scope.Items = Items;
    
