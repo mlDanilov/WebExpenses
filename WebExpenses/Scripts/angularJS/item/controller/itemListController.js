@@ -12,7 +12,6 @@ purchApp.controller("itemListController", function ($scope, $http,
         
         var selectedGroupId = Groups.getSelectedGroupId();
         console.log('CreateNewItem, selectedGroupId = ' + selectedGroupId);
-        //Items.CreateNewItemCard(selectedGroupId);
         window.location.href = "/Item/CreateItemCard?gId_=" + selectedGroupId;
     }
 

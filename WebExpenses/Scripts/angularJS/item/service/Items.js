@@ -37,21 +37,13 @@ purchApp.factory('Items', function ($http) {
             });
         },
         //Создать карточку товара в указанной группе товаров
-        CreateNewItemCard: function (groupId_) {
-
-            $http({
-                method: 'GET',
-                url: "/Item/GetItemListByGroupId",
-                params: { groupId_: gId_ }
-            }).then(function success(response) {
-                console.log('/Item/GetItemListByGroupId успех');
-                _items = response.data.ItemList;
-
-            }, function error(response) {
-                console.log('/Item/GetItemListByGroupId ошибка');
-
-            }
-            );
+        CreateNewItemCard: function (name_, gId_) {
+            return $http({
+                method: 'POST',
+                url: "/Item/CreateItem",
+                params:
+                    { name_, gId_ }
+                    });
         },
         //Удалить карточку товара
         DeleteItemCard: function (itemId_) {
@@ -62,11 +54,11 @@ purchApp.factory('Items', function ($http) {
             });
         },
         //Редактировать карточку товара
-        EditItemCard : function (itemId_){
+        EditItemCard: function (id_, name_, gId_) {
             return $http({
                 method: 'POST',
-                url: "/Item/EditItemCard",
-                params: { itemId_: itemId_ }
+                url: '/Item/EditItem',
+                params: { id_, name_, gId_ }
             });
         }
 

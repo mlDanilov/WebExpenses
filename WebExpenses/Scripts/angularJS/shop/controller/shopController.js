@@ -1,5 +1,6 @@
 ﻿'use strict'
 var purchApp = angular.module('purchApp');
+let menuUrl = "/Menu/Index#!shops"
 purchApp.controller("shopController", function ($scope, $http, Shops) {
 
     $scope.init = function (model) {
@@ -23,7 +24,7 @@ purchApp.controller("shopController", function ($scope, $http, Shops) {
             function success(response) {
                 console.log('/Shop/EditShopCard успех');
                 console.log(response);
-                window.location.href = "/Shops";
+                window.location.href = menuUrl;
             },
             function error(response) {
                 console.log('/Shop/EditShopCard ошибка');
@@ -39,7 +40,7 @@ purchApp.controller("shopController", function ($scope, $http, Shops) {
             function success(response) {
                 console.log('/Shop/CreateShop успех');
                 console.log(response);
-                window.location.href = "/Shops";
+                window.location.href = menuUrl;
             },
             function error(response) {
                 console.log('/Shop/CreateShop ошибка');

@@ -50,27 +50,52 @@ namespace WebExpenses.Controllers
             return View("CreateItemCard", itView);
         }
 
-        public ActionResult CreateItem(string name_, int gId_)
+        [HttpPost]
+        public HttpStatusCodeResult CreateItem(string name_, int gId_)
         {
             try
             {
                 IMItemCard item = new MItemCard() { Name = name_, GId = gId_ };
                 var res = _repository.ItemRep.Create(item);
-                return Json(res);
+                return new HttpStatusCodeResult(HttpStatusCode.OK, 
+                    $"Создание товара '{item.Name}'(код: {item.Id}) успешно");
             }
             catch (Exception ex)
             {
-                return Json(ex);
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
+                    $"При создании товара '{name_}' произошла ошибка: {ex.Message}");
             }
         }
 
-        public JsonResult EditItem(int id_, string name_, int gId_)
+        [HttpPost]
+        public HttpStatusCodeResult EditItem(int id_, string name_, int gId_)
         {
-            var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
-            item.Name = name_;
-            item.GId = gId_;
-            var mItem = new MItemCard(item);
-            return Json(mItem, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var item = _repository.ItemRep.Entities.Where(it => it.Id == id_).First();
+                item.Name = name_;
+                item.GId = gId_;
+                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Редактирование товара '{item.Name}'(код: {item.Id}) успешно");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public HttpStatusCodeResult DeleteItemCard(int itemId_)
+        {
+            try
+            {
+                var item = _repository.ItemRep.Entities.First(it => it.Id == itemId_);
+                _repository.ItemRep.Delete(item);
+                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Товар с кодом {item.Id} удалён успешно");
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, $"Ошибка при удалении товара с кодом {itemId_} : {ex.Message.ToString()}");
+            }
         }
 
         /// <summary>
@@ -86,35 +111,20 @@ namespace WebExpenses.Controllers
             return View("EditItemCard", mItem);
         }
 
-
-        [HttpPost]
-        public HttpStatusCodeResult DeleteItemCard(int itemId_)
-        {
-            try
-            {
-                var item = _repository.ItemRep.Entities.First(it => it.Id == itemId_);
-                _repository.ItemRep.Delete(item);
-                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Товар с кодом {item.Id} удалён успешно");
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, $"Ошибка при удалении товара с кодом {itemId_} : {ex.Message.ToString()}");
-            }
-        }
-        /// <summary>
-        /// Получить список товаров по текущей группе
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult ItemsTable()
-        {
-            return PartialView("ItemsTable", getItemsViewByCurrentGId());
-        }
+        ///// <summary>
+        ///// Получить список товаров по текущей группе
+        ///// </summary>
+        ///// <returns></returns>
+        //public PartialViewResult ItemsTable()
+        //{
+        //    return PartialView("ItemsTable", getItemsViewByCurrentGId());
+        //}
 
         /// <summary>
         /// Получить список товаров по текущей группе
         /// </summary>
         /// <returns></returns>
-        private IMItemList getItemsViewByCurrentGId() => getItemsViewByGId(_repository.GroupRep.CurrentGId);
+        //private IMItemList getItemsViewByCurrentGId() => getItemsViewByGId(_repository.GroupRep.CurrentGId);
         private IMItemList getItemsViewByGId(int? gId_)
         {
             IMItemList itView = new MItemList() { GroupId = gId_, ItemList = new List<IMItemCard>() };
@@ -130,8 +140,8 @@ namespace WebExpenses.Controllers
             return itView;
         }
 
-        private IItem getItemById(int? iid_)
-            => _repository.ItemRep.Entities.Where(it => it.Id == iid_).FirstOrDefault();
+        //private IItem getItemById(int? iid_)
+        //    => _repository.ItemRep.Entities.Where(it => it.Id == iid_).FirstOrDefault();
 
         private IExpensesRepository _repository = null;
     }

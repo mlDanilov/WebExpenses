@@ -1,5 +1,6 @@
 ﻿'use strict'
 var purchApp = angular.module('purchApp');
+var menuUrl = "/Menu/Index#!/purchases";
 purchApp.controller("purchaseController", function ($scope, $http, Items, Groups, Shops, Purchases) {
     //Код покупки
     $scope.Id;
@@ -179,7 +180,7 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
           function success(response) {
               console.log('/Purchase/CreatePurchase успех');
               console.log(response);
-              window.location.href = "/Purchases";
+              window.location.href = menuUrl;
           },
           function error(response) {
               console.log('/Purchase/CreatePurchase ошибка');
@@ -208,7 +209,7 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
           function success(response) {
               console.log('/Purchase/EditPurchase успех');
               console.log(response);
-              window.location.href = "/Purchases";
+              window.location.href = menuUrl;
           },
           function error(response) {
               console.log('/Purchase/EditPurchase ошибка');
@@ -217,27 +218,4 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
           )
     }
 
-    ////Редактировать текущую покупку
-    //$scope.DeletePurchase = function (purchId) {
-
-    //    $http(
-    //      {
-    //          method: 'POST',
-    //          url: '/Purchase/DeletePurchase',
-    //          params: {
-    //              purchId_: purchId
-    //          }
-    //      }
-    //      ).then(
-    //      function success(response) {
-    //          console.log('/Purchase/DeletePurchase успех');
-    //          console.log(response);
-    //          window.location.href = "/Purchases";
-    //      },
-    //      function error(response) {
-    //          console.log('/Purchase/DeletePurchase ошибка');
-    //          console.log(response);
-    //      }
-    //      )
-    //}
 });

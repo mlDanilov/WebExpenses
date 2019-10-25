@@ -1,6 +1,8 @@
 ﻿'use strict'
+var menuUrl = "/Menu/Index#!/groups";
+
 var purchApp = angular.module('purchApp');
-purchApp.controller("itemController", function ($scope, $http, Groups) {
+purchApp.controller("itemController", function ($scope, $http, Items, Groups) {
 
     $scope.init = function (model) {
         $scope.Id = model.Id;
@@ -20,25 +22,29 @@ purchApp.controller("itemController", function ($scope, $http, Groups) {
     $scope.CreateItem = function () {
 
         console.log('CreateItem');
-
-        $http(
-            {
-                method: 'POST',
-                url: '/Item/CreateItem',
-                params: {
-                    name_ : $scope.Name, 
-                    gId_: $scope.Groups.SelectedItem.Id
-                }
-            }
-            ).then(
+        //Items.create
+        //$http(
+        //    {
+        //        method: 'POST',
+        //        url: '/Item/CreateItem',
+        //        params: {
+        //            name_ : $scope.Name, 
+        //            gId_: $scope.Groups.SelectedItem.Id
+        //        }
+        //    }
+        //    ).
+        Items.CreateNewItemCard($scope.Name, $scope.Groups.SelectedItem.Id)
+            .then(
             function success(response) {
                 console.log('/Item/CreateItem успех');
                 console.log(response);
-                window.location.href = "/Groups";
+                window.location.href = menuUrl;
             },
             function error(response) {
                 console.log('/Item/CreateItem ошибка');
+                window.document.body.innerHTML = response.data;
                 console.log(response);
+                
             }
             )
     }
@@ -47,21 +53,14 @@ purchApp.controller("itemController", function ($scope, $http, Groups) {
     $scope.EditItem = function () {
         console.log('EditItem');
 
-            $http(
-                   {
-                       method: 'POST',
-                       url: '/Item/EditItem',
-                       params: {
-                           id_ : $scope.Id,
-                           name_: $scope.Name,
-                           gId_: $scope.Groups.SelectedItem.Id
-                       }
-                   }
-                   ).then(
+        Items.EditItemCard(
+            $scope.Id,
+            $scope.Name,
+            $scope.Groups.SelectedItem.Id).then(
                    function success(response) {
                        console.log('/Item/EditItem успех');
                        console.log(response);
-                       window.location.href = "/Groups";
+                       window.location.href = menuUrl;
                    },
                    function error(response) {
                        console.log('/Item/EditItem ошибка');
