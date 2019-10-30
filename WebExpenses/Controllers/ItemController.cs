@@ -67,7 +67,7 @@ namespace WebExpenses.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public HttpStatusCodeResult EditItem(int id_, string name_, int gId_)
         {
             try

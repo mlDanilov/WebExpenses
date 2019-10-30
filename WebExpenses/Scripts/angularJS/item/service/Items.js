@@ -56,7 +56,7 @@ purchApp.factory('Items', function ($http) {
         //Редактировать карточку товара
         EditItemCard: function (id_, name_, gId_) {
             return $http({
-                method: 'POST',
+                method: 'PUT',
                 url: '/Item/EditItem',
                 params: { id_, name_, gId_ }
             });

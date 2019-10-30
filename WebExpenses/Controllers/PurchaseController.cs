@@ -15,19 +15,32 @@ using WebExpenses.Models.Shop;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Web.Http;
 
 namespace WebExpenses.Controllers
 {
+    using HttpConfiguration = System.Web.Http.HttpConfiguration;
+    using HttpDeleteAttribute = System.Web.Mvc.HttpDeleteAttribute;
+    using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
     /// <summary>
     /// Контроллер для работы с покупками
     /// </summary>
     public class PurchaseController : Controller
     {
+        
+
         public PurchaseController(IExpensesRepository rep_)
+             : this(System.Web.Http.GlobalConfiguration.Configuration)
         {
             _repository = rep_;
         }
+
+        public PurchaseController(HttpConfiguration config)
+        {
+            Configuration = config;
+        }
+        public HttpConfiguration Configuration { get; private set; }
 
         public ActionResult List()
         {
@@ -51,6 +64,9 @@ namespace WebExpenses.Controllers
         /// <returns></returns>
         public ViewResult EditPurchaseCard(int purchaseId_)
         {
+
+            var apiDescr = Configuration.Services.GetApiExplorer().ApiDescriptions;
+
             var purchase =
                 (from p in _repository.PurchaseRep.Entities
                  join it in _repository.ItemRep.Entities on p.Item_Id equals it.Id
@@ -84,12 +100,13 @@ namespace WebExpenses.Controllers
         /// <param name="purchArgs_"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpStatusCodeResult CreatePurchase(PurchaseCreateParams purchArgs_)
+        public HttpStatusCodeResult CreatePurchase([FromBody] PurchaseCreateParams purchArgs_)
         {
             try
             {
                 var p = _repository.PurchaseRep.Create(purchArgs_.Convert());
-                return new HttpStatusCodeResult(HttpStatusCode.OK, $"Покупка с кодом {p.Id} успешно создана");
+                return new HttpStatusCodeResult(HttpStatusCode.OK,
+                    $"Покупка с кодом {p.Id} успешно создана");
             }
             catch (Exception ex)
             {
@@ -103,7 +120,7 @@ namespace WebExpenses.Controllers
         /// <param name="purchaseCard_"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpStatusCodeResult EditPurchase(PurchaseEditParams purchaseCard_)
+        public HttpStatusCodeResult EditPurchase([FromBody] PurchaseEditParams purchaseCard_)
         {
             try
             {

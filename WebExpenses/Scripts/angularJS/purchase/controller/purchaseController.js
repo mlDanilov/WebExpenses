@@ -127,7 +127,7 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
 
         $scope.getGroups();
         $scope.getShops();
-        $scope.getItems();
+        //$scope.getItems();
     }
 
     //текущая выбранная группа изменилась
@@ -171,7 +171,7 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
 
         //Создать покупку
         Purchases.createPurchase(
-            $scope.shop_id,
+            shop_id,
             $scope.Items.SelectedItem.Id,
             $scope.Date,
             $scope.Count,

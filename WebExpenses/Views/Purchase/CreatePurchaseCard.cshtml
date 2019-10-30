@@ -19,8 +19,8 @@
         Товар:
         <item-list source="Items"></item-list>
     </p>
-    <p>Цена: <input ng-model="Price"/> руб</p>
-    <p>Количество: <input ng-model="Count" /></p>
-    <p>Дата: <input ng-model="Date" type="date"/></p>
+    <p>Цена: <input id="purchPrice" ng-model="Price"/> руб</p>
+    <p>Количество: <input id="purchCount" ng-model="Count" /></p>
+    <p>Дата: <input id="purchDate" ng-model="Date" type="date"/></p>
     <input type="button" value="Добавить покупку" ng-click="CreatePurchase()"/>
 </div>
