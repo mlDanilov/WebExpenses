@@ -4,7 +4,7 @@ purchApp.factory('Groups', function ($http) {
 
     return {
         //Получить список групп
-        getAll : function() { 
+        getAll: function () {
             return $http({
                     method: 'GET',
                     url: "/Group/GetGroupList"

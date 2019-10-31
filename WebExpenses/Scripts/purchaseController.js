@@ -2,22 +2,7 @@
 var purchApp = angular.module('purchApp');
 var menuUrl = "/Menu/Index#!/purchases";
 purchApp.controller("purchaseController", function ($scope, $http, Items, Groups, Shops, Purchases) {
-    //$scope.test = "preved medved*";
-
-
-
-    
-
-    //$http({
-    //    method: 'GET',
-    //    url: "/Group/GetGroupList"
-    //}).then(function successCallback(response) {
-    //    $scope.testData = response.data.GroupList;
-    //    //console.log(response.data);
-    //});
-
-
-
+    $scope.test = "preved medved*";
     //Код покупки
     $scope.Id;
 
@@ -33,10 +18,7 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
     $scope.getGroups = function (currentGroupId) {
         Groups.getAll().then(function success(response) {
             console.log('$scope.getGroups => Groups.getAll успешно');
-            //console.log(response);
             //Список групп
-            //console.log('response.data=' + response.data);
-            //console.log('response.preved=' + response.preved);
             let groupList = response.data.GroupList;
             let groups = {
                 Items: groupList,
@@ -49,15 +31,13 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
             //Установить в контроллер
             $scope.Groups = groups;
         }, function error(response) {
-            console.log('$scope.getGroups => Groups.getAll ошибка');
-            //console.log(response);
+            console.log('$scope.getGroups => Groups.getAll ошибка' + response.data);
+            console.log(response);
         });
 
 
     }
 
-
-    //$scope.getGroups(1);
     //Получить объект с магазинами
     //и текущим магазином
     $scope.getShops = function (currentShopId) {
@@ -135,7 +115,6 @@ purchApp.controller("purchaseController", function ($scope, $http, Items, Groups
         //{0:yyyy-MM-dd}
         $scope.Date = new Date(model.Date);
 
-        //console.log("model.Item.GId=" + model.Item.GId);
         $scope.getGroups(model.Item.GId);
         if (model.Shop != null)
             $scope.getShops(model.Shop.Id);
