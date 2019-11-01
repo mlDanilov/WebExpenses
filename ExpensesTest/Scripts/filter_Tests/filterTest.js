@@ -1,6 +1,9 @@
 ﻿'use strict';
 describe("Real Purchase Controller Test", function () {
 
+    let bDate = new Date(2017, 10, 3);
+    let eDate = new Date(2017, 10, 18);
+
     let fPurchByPeriod;
     let fPurchGroupsByPeriod;
 
@@ -14,12 +17,10 @@ describe("Real Purchase Controller Test", function () {
 
     it("Фильтрация покупок по периоду", function () {
 
-        console.log("purchases=");
-        console.log(purchases);
-            //let bDate = new Date(2017, 10, 3);
-            //let eDate = new Date(2017, 10, 18);
-            //let res = fPurchByPeriod(purchases, bDate, eDate);
-            //console.log("(purchase + filter).length=");
+            
+            let res = fPurchByPeriod(purchases, bDate, eDate);
+            expect(res.length).toEqual(13);
+            console.log("(purchase + filter).length=" + res.length);
             //console.log(res.length);
         });
 });
