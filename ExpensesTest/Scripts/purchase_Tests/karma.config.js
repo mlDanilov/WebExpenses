@@ -20,6 +20,7 @@ module.exports = function(config) {
         '../../../WebExpenses/Scripts/libs/angular-mocks.js',
 
         '../../../WebExpenses/Scripts/angularJS/app.js',
+        '../entities.js', 
         '../../../WebExpenses/Scripts/angularJS/group/service/Groups.js',
         '../../../WebExpenses/Scripts/angularJS/item/service/Items.js',
         '../../../WebExpenses/Scripts/angularJS/purchase/service/purchases.js',
