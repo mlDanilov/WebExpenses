@@ -120,8 +120,8 @@ purchApp.controller("periodController", function ($scope,
                 Years.setYears(years);
                 console.log('getAllYears успех');
             },
-            function errorCallback(response){
-                console.log('getAllYears ошибка');
+            function errorCallback(response) {
+                console.log('getAllYears ошибка:' + response.data.Message);
                 //window.document = response.data;
                 window.document.body.innerHTML = response.data;
 

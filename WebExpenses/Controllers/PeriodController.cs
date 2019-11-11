@@ -34,13 +34,19 @@ namespace WebExpenses.Controllers
         {
             try
             {
+               // throw new Exception("GetYears ошибка");
                 var apiDescr = Configuration.Services.GetApiExplorer().ApiDescriptions;
                 var years = _repository.PurchaseRep.SelectAllYears().ToArray();
+                
+                
                 return Request.CreateResponse(HttpStatusCode.OK, years);
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                var errorMessage = Request.CreateErrorResponse(
+                    HttpStatusCode.InternalServerError, 
+                    ex.Message);
+                return errorMessage;
             }
 
         }

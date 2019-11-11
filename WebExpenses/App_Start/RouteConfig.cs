@@ -16,16 +16,24 @@ namespace WebExpenses
         {
             routes_.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
             registerGroupRoutes(routes_);
             registerShopRoutes(routes_);
             registerItemRoutes(routes_);
             registerPurchasePoutes(routes_);
 
-            
+
+         
+
             routes_.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}"
             );
+
+           // routes_.MapRoute(
+           //name: "Test",
+           //url: "Test",
+           // new { controller = "Menu", action = "Test" });
         }
 
 

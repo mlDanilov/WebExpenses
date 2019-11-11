@@ -2,21 +2,6 @@
 var purchApp = angular.module('purchApp');
 var menuUrl = "/Menu/Index#!/purchases";
 purchApp.controller("purchaseController", function ($scope, $http, Items, Groups, Shops, Purchases) {
-    //$scope.test = "preved medved*";
-
-
-
-    
-
-    //$http({
-    //    method: 'GET',
-    //    url: "/Group/GetGroupList"
-    //}).then(function successCallback(response) {
-    //    $scope.testData = response.data.GroupList;
-    //    //console.log(response.data);
-    //});
-
-
 
     //Код покупки
     $scope.Id;
